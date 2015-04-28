@@ -1,11 +1,14 @@
 from django.shortcuts import render
-from QuickCatalog.models import ProgramInfo
-from django.core.serializers import serialize,deserialize
+from django.http import HttpResponse
+
+from QuickCatalog.models import DateTimeEncoder
+
+
 
 # Create your views here.
 import json
-from django.http import HttpResponse
 from django.db import connection
+
 
 def index(request):
     cursor = connection.cursor()
@@ -21,4 +24,16 @@ def index(request):
 
 
 
-    #return HttpResponse(programJson, content_type="application/json")
+    # return HttpResponse(programJson, content_type="application/json")
+    # 26383
+
+
+def getProgramInfo(request, id):
+    cursor = connection.cursor()
+    cursor.execute("select * from mediainfo where id = " + id)
+    DESC = cursor.description
+    program = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+    cursor.close()
+    programJson = json.dumps(program[0], ensure_ascii=False, cls=DateTimeEncoder)
+    return HttpResponse(programJson, content_type="application/json")
+

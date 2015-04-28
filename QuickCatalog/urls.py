@@ -1,8 +1,11 @@
 __author__ = 'ho'
 
-from QuickCatalog import views
 from django.conf.urls import patterns, url
 
+from QuickCatalog import views
+
+
 urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-)
+                       url(r'^$', views.index, name='index'),
+                       url(r'^(?P<id>\d+)/programinfo/$', views.getProgramInfo, name='getProgramInfo'),
+                       )
