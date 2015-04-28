@@ -818,13 +818,7 @@
             <div class="tab-content">
                 <div class="tab-pane active pre-scrollable" id="KeyframeTab">
                     <!-- 关键帧预览 -->
-
-
-                            <canvas width="150"; height="150" id="keyframeCtrl"></canvas>
-
-
-
-
+                    <canvas width="150" height="150" id="keyframeCtrl"></canvas>
                     <div class="tab-pane">
                         <!-- 节目树状结构 -->
                         LayerTree
@@ -850,18 +844,13 @@
 
 
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script> -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-    <!--
-    作者：baixibao@gmail.com
-    时间：2014-07-25
-    描述：video.js
-    -->
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="http://vjs.zencdn.net/4.3/video.js"></script>
+    <script type="text/javascript" src="{% static "QuickCatalog/bootstrap-3.3.4-dist/js/bootstrap.min.js" %}"></script>
+    <!-- 描述：video.js 带有圆点功能的 video-mark plug-->
+    <script type="text/javascript" src="{% static "QuickCatalog/player/video-js/video.js" %}"></script>
     <script type="text/javascript" src="{% static "QuickCatalog/player/src/videojs.markers.js" %}"></script>
     <script>
         var player = videojs('player');
@@ -888,10 +877,11 @@
             ]
         });
     </script>
+    <!-- video.js 结束 -->
 
-    <!-- player.js -->
+    <!-- 自定义播放器JS脚本 player.js -->
     <script type="text/javascript" src="{% static "QuickCatalog/JS/player.js" %}"></script>
-
-
+    <!-- 自定义结束 -->
+</div>
 </body>
 </html>
