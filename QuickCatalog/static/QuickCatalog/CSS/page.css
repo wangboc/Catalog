@@ -1,0 +1,39 @@
+.pre-scrollable {
+    max-height: 350px;
+}
+
+#OnCatalogTab{
+    max-height: 300px;
+}
+
+#programForm {
+    text-align: center;
+}
+
+#sectionForm {
+    text-align: center;
+}
+
+#sceneForm {
+    text-align: center;
+}
+
+#shotForm {
+    text-align: center;
+}
+
+.btn-toolbar {
+    margin-left: 10px;
+}
+
+.col-md-5{
+    padding-right: 0px;
+}
+
+.col-md-6{
+    padding-left: 0px;
+    padding-bottom: 0px;
+}
+
+
+ 

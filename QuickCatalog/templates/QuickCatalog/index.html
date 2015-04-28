@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>全媒资编目子系统</title>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <!--自定义css文件-->
+    <link href="{% static "QuickCatalog/CSS/page.css" %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link href="http://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
+    <link href="{% static "QuickCatalog/player/dist/videojs.markers.css" %}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h2>全媒资内容管理
+                <small>编目子系统</small>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success">
+                    <div><strong>Welcome!</strong> 欢迎您，
+                        <a href="#" class="alert-link">
+                            <em>王博丞</em>
+                        </a>
+                        。本次登录，您有 <span class="badge">42</span> 条节目待编目，请及时完成。
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="col-md-4 col-xs-12">
+
+            <button type="button" class="btn btn-success">
+                保存
+            </button>
+            <button type="button" class="btn btn-success">
+                提交
+            </button>
+            <button type="button" class="btn btn-success">
+                配置
+            </button>
+            <button type="button" class="btn btn-success">
+                帮助
+            </button>
+            <button type="button" class="btn btn-success">
+                注销
+            </button>
+
+        </div>
+        <div class="col-md-2 col-xs-12">
+            <div class="progress">
+                <div class="progress-bar active progress-bar-warning  progress-bar-striped" role="progressbar"
+                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    <span class="sr-only">40% Complete (success)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+
+            <video id="player" controls preload="auto" class="video-js vjs-default-skin" width="470" height="320">
+                <source src="http://192.168.1.105:808/1.mp4" type="video/mp4">
+                <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+            </video>
+
+
+            <!--播放控制区域-->
+            <div class="row">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group btn-group-sm ">
+                        <button type="button" id="playCtr" class="btn btn-primary"><span id="playIcon"
+                                                                                         class="glyphicon glyphicon-play"></span>
+                        </button>
+                        <button type="button" id="stopCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-stop"></span>
+                        </button>
+                        <button type="button" id="frontFrameCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-step-backward"></span></button>
+                        <button type="button" id="nextFrameCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-step-forward"></span></button>
+                        <button type="button" id="normalCtr" class="btn btn-primary"> x 1</button>
+                        <button type="button" id="fastCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-fast-forward"></span></button>
+                    </div>
+                    <div class="btn-group  btn-group-sm ">
+                        <button type="button" id="cutlayerCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-plus-sign"> 切层</span>
+                        </button>
+                        <button type="button" id="sublayerCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-plus-sign"> 子层</span>
+                        </button>
+                    </div>
+                    <div class="btn-group  btn-group-sm ">
+                        <button type="button" id="keyframeCtr" class="btn btn-primary"><span id="keyframeSpan"
+                                                                                             class="glyphicon glyphicon-camera"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group  btn-group-sm ">
+                        <button type="button" id="minuslayerCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-minus-sign"> 删除</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="tab-content">
+                <div class="tab-pane pre-scrollable active" id="programsTab">
+                    <form id="programForm" role="form">
+                        <table class="table table-striped table-bordered table-condensed">
+                            <tr>
+                                <td><label class="form-control-static">正题名</label></td>
+                                <td><input type="text" class="form-control" id="Title__Pro" placeholder="输入正题名">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">题名说明</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Title_description__Pro"
+                                           placeholder="输入题名说明">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">系列</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Series__Pro" placeholder="输入系列"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">分集总数</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Class_num__Pro" placeholder="输入分集总数">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">分集次</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Class_time__Pro" placeholder="输入分集次">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">广电分类</label></td>
+                                <td><input type="text" class="form-control" id="Tv_class__Pro" placeholder="输入广电分类">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">关键词</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Key_words__Pro" placeholder="输入关键词">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">内容描述</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Description__Pro" placeholder="输入内容描述">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">主题人物</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Character__Pro" placeholder="输入主题人物">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">获奖</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Awards_list__Pro" placeholder="输入获奖">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">栏目</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Column_list__Pro" placeholder="输入栏目">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">创建者项</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Creater_list__Pro" placeholder="输入创建者项">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">其他责任者项</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Duty_list__Pro" placeholder="输入其他责任者项">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">版权所有者名称</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Name_of_cpo__Pro"
+                                           placeholder="输入版权所有者名称">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">版权说明</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Cp_statement1__Pro"
+                                           placeholder="输入版权说明">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">制作完成日期</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Produced_date__Pro"
+                                           placeholder="输入制作完成日期">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">节目类型</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Media_type__Pro" placeholder="输入节目类型">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">节目形态</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Xintai__Pro" placeholder="输入节目形态"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">实长</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Time_end__Pro" placeholder="输入实长"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">入点</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Time_start__Pro" placeholder="输入入点">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">色彩</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Color__Pro" placeholder="输入色彩"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">字幕形式</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Subtitle__Pro" placeholder="输入字幕形式">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">声道格式</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Audio_format__Pro" placeholder="输入声道格式">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">画面宽高比</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Aspect__Pro" placeholder="输入画面宽高比"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">制式</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Zhishi__Pro" placeholder="输入制式"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">载体</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Carry_type__Pro" placeholder="输入载体">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">语种</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Yuzhong__Pro" placeholder="输入语种"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">受众</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Audience__Pro" placeholder="输入受众"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">来源方式</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Source_id__Pro" placeholder="输入来源方式">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">附加标示</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Additional_logo__Pro"
+                                           placeholder="输入附加标示">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">资料获取方式</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Source_method__Pro"
+                                           placeholder="输入资料获取方式">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">资料提供者</label>
+                                </td>
+                                <td><input type="text" class="form-control" id="Source_provider__Pro"
+                                           placeholder="输入资料提供者">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="tab-pane pre-scrollable" id="sectionsTab">
+                    <form id="sectionForm" role="form">
+                        <table class="table table-striped table-bordered table-condensed">
+                            <tr>
+                                <td><label class="form-control-static">正题名</label></td>
+                                <td><input type="text" class="form-control" id="Title__Sec" placeholder="输入正题名">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">系列题名</label></td>
+                                <td><input type="text" class="form-control" id="Series__Sec" placeholder="输入系列题名">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">关键词</label></td>
+                                <td><input type="text" class="form-control" id="Key_words__Sec" placeholder="输入关键词">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">广电分类</label></td>
+                                <td><input type="text" class="form-control" id="Class_name__Sec" placeholder="输入广电分类">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">事件发生日期</label></td>
+                                <td><input type="text" class="form-control" id="Date_time__Sec" placeholder="输入事件发生日期">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">获奖</label></td>
+                                <td><input type="text" class="form-control" id="Awards_list__Sec" placeholder="输入获奖">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">现场同期声</label></td>
+                                <td><input type="text" class="form-control" id="Actual_sound__Sec"
+                                           placeholder="输入现场同期声">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">创建者项</label></td>
+                                <td><input type="text" class="form-control" id="Creater_list__Sec" placeholder="输入创建者项">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">其他责任者项</label></td>
+                                <td><input type="text" class="form-control" id="Duty_list__Sec" placeholder="输入其他责任者项">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">节目形态</label></td>
+                                <td><input type="text" class="form-control" id="Program_form__Sec" placeholder="输入节目形态">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">字幕</label></td>
+                                <td><input type="text" class="form-control" id="Subtitle__Sec" placeholder="输入字幕">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">实长</label></td>
+                                <td><input type="text" class="form-control" id="Time_end_Sec" placeholder="输入实长">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">入点</label></td>
+                                <td><input type="text" class="form-control" id="Time_start_Sec" placeholder="输入入点">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">时间范围</label></td>
+                                <td><input type="text" class="form-control" id="Years_covered__Sec"
+                                           placeholder="输入时间范围">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">空间范围</label></td>
+                                <td><input type="text" class="form-control" id="Spatial__Sec" placeholder="输入空间范围">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">内容描述</label></td>
+                                <td><input type="text" class="form-control" id="Description__Sec" placeholder="输入内容描述">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">资料获取方式</label></td>
+                                <td><input type="text" class="form-control" id="Data_source_way__Sec"
+                                           placeholder="输入资料获取方式">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">资料提供者</label></td>
+                                <td><input type="text" class="form-control" id="Data_source_man__Sec"
+                                           placeholder="输入资料提供者">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="tab-pane pre-scrollable" id="scenesTab">
+                    <form id="sceneForm" role="form">
+                        <table class="table table-striped table-bordered table-condensed">
+                            <tr>
+                                <td><label class="form-control-static">场景名</label></td>
+                                <td><input type="text" class="form-control" id="Title__Sce" placeholder="输入场景名">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">主题词</label></td>
+                                <td><input type="text" class="form-control" id="Topic_words__Sce" placeholder="输入主题词">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">关键词</label></td>
+                                <td><input type="text" class="form-control" id="Key_words__Sce" placeholder="输入关键词">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">内容描述</label></td>
+                                <td><input type="text" class="form-control" id="Description__Sce" placeholder="输入内容描述">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">事件发生日期</label></td>
+                                <td><input type="text" class="form-control" id="Date_of_event__Sce"
+                                           placeholder="输入事件发生日期">
+                                </td>
+                            <tr>
+                            <tr>
+                                <td><label class="form-control-static">现场同期声</label></td>
+                                <td><input type="text" class="form-control" id="Natural_sound__Sce"
+                                           placeholder="输入现场同期声">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">实长</label></td>
+                                <td><input type="text" class="form-control" id="Time_end__Sce" placeholder="输入实长">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">入点</label></td>
+                                <td><input type="text" class="form-control" id="Time_start__Sce" placeholder="输入入点">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">字幕形式</label></td>
+                                <td><input type="text" class="form-control" id="Subtitle__Sce" placeholder="输入字幕形式">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="tab-pane pre-scrollable" id="shotsTab">
+                    <form id="shotForm" role="form">
+                        <table class="table table-striped table-bordered table-condensed">
+                            <tr>
+                                <td><label class="form-control-static">镜头名</label></td>
+                                <td><input type="text" class="form-control" id="Title__Shot" placeholder="输入镜头名">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">主题词</label></td>
+                                <td><input type="text" class="form-control" id="Topic_words__Shot" placeholder="输入主题词">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">关键词</label></td>
+                                <td><input type="text" class="form-control" id="Key_words__Shot" placeholder="输入关键词">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">内容描述</label></td>
+                                <td><input type="text" class="form-control" id="Description__Shot" placeholder="输入内容描述">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">拍摄地点</label></td>
+                                <td><input type="text" class="form-control" id="Location__Shot" placeholder="输入拍摄地点">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">拍摄方式</label></td>
+                                <td><input type="text" class="form-control" id="Shootway__Shot" placeholder="输入拍摄方式">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">景别</label></td>
+                                <td><input type="text" class="form-control" id="Sense_range__Shot" placeholder="输入景别">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">拍摄角度</label></td>
+                                <td><input type="text" class="form-control" id="Angle__Shot" placeholder="输入拍摄角度">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">现场同期声</label></td>
+                                <td><input type="text" class="form-control" id="Actual_sound__Shot"
+                                           placeholder="输入现场同期声">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">拍摄日期</label></td>
+                                <td><input type="text" class="form-control" id="Date_time__Shot" placeholder="输入拍摄日期">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">入点</label></td>
+                                <td><input type="text" class="form-control" id="Time_start__Shot" placeholder="输入入点">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-control-static">实长</label></td>
+                                <td><input type="text" class="form-control" id="Time_end__Shot" placeholder="输入实长">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <ul class="nav nav-pills nav-stacked" role="tablist">
+                <li class="active">
+                    <a href="#programsTab" role="tab" data-toggle="tab">
+                        节目
+                    </a>
+                </li>
+                <li>
+                    <a href="#sectionsTab" role="tab" data-toggle="tab">
+                        片段
+                    </a>
+                </li>
+                <li>
+                    <a href="#scenesTab" role="tab" data-toggle="tab">
+                        场景
+                    </a>
+                </li>
+                <li>
+                    <a href="#shotsTab" role="tab" data-toggle="tab">
+                        镜头
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 table-responsive">
+            <div class="tab-content">
+                <div class="tab-pane active pre-scrollable" id="OnCatalogTab">
+                    <!-- 待编目节目汇总 -->
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                        <tr class="success">
+                            <th><label class="form-control-static">节目名称</label></th>
+                            <th><label class="form-control-static">当前状态</label></th>
+                            <th><label class="form-control-static">提交时间</label></th>
+                        </tr>
+                        </thead>
+
+
+                        <tr>
+                            <td>新闻视野 20110-12-1</td>
+                            <td>2014-10-12</td>
+                            <td>待编目</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-2</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+
+                        <tr class="success">
+                            <td>新闻视野 20110-12-3</td>
+                            <td>2014-10-12</td>
+                            <td>待编目</td>
+                        </tr>
+
+                        <tr>
+                            <td>新闻视野 20110-12-4</td>
+                            <td>2014-10-12</td>
+                            <td>待编目</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-5</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-6</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>新闻视野 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+                        <tr>
+                            <td>桐乡新闻 20110-12-12</td>
+                            <td>2014-10-12</td>
+                            <td>一审未通过</td>
+                        </tr>
+
+
+                    </table>
+                </div>
+                <div class="tab-pane" id="LayerTreeTab">
+                    <!-- 节目树状结构 -->
+                    LayerTree
+                </div>
+            </div>
+            <div>
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                    <li class="active">
+                        <a href="#OnCatalogTab" role="tab" data-toggle="tab">
+                            待编目
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#LayerTreeTab" role="tab" data-toggle="tab">
+                            详细信息
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="tab-content">
+                <div class="tab-pane active pre-scrollable" id="KeyframeTab">
+                    <!-- 关键帧预览 -->
+
+
+                            <canvas width="150"; height="150" id="keyframeCtrl"></canvas>
+
+
+
+
+                    <div class="tab-pane">
+                        <!-- 节目树状结构 -->
+                        LayerTree
+                    </div>
+                </div>
+                <div>
+                    <ul class="nav nav-pills nav-justified" role="tablist">
+                        <li class="active">
+                            <a href="#OnCatalogTab" role="tab" data-toggle="tab">
+                                待编目
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#LayerTreeTab" role="tab" data-toggle="tab">
+                                详细信息
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <!--
+    作者：baixibao@gmail.com
+    时间：2014-07-25
+    描述：video.js
+    -->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="http://vjs.zencdn.net/4.3/video.js"></script>
+    <script type="text/javascript" src="{% static "QuickCatalog/player/src/videojs.markers.js" %}"></script>
+    <script>
+        var player = videojs('player');
+
+        //load the marker plugin
+        player.markers({
+            markers: [
+                {
+                    time: 950,
+                    text: "put"
+                },
+                {
+                    time: 16,
+                    text: "any"
+                },
+                {
+                    time: 23.6,
+                    text: "text"
+                },
+                {
+                    time: 28,
+                    text: "here"
+                }
+            ]
+        });
+    </script>
+
+    <!-- player.js -->
+    <script type="text/javascript" src="{% static "QuickCatalog/JS/player.js" %}"></script>
+
+
+</body>
+</html>
