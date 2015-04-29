@@ -39,12 +39,13 @@ body {
     background-color: #f9f9f9;
 }
 
-.progress {
-    margin: auto;
+.progress{
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-.btn-toolbar {
-    margin-bottom: 1px;
+.row{
+
     padding-bottom: 1px;
 }
 
