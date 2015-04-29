@@ -93,9 +93,9 @@ DATABASES = {
         'HOST': '10.1.70.88',
         'USER': 'sa',
         'PASSWORD': 'wangwang123',
-        # 'OPTIONS':{
-        #     'provider': 'SQLNCLI.1',
-        # }
+        'OPTIONS':{
+            'provider': 'SQLOLEDB',
+        }
     }
 }
 # Internationalization

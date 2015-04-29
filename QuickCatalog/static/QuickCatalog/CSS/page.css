@@ -39,6 +39,16 @@ body {
     background-color: #f9f9f9;
 }
 
+.progress{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.row{
+
+    padding-bottom: 1px;
+}
+
 /* tree css */
 /* http://runjs.cn/code/yb2n864s */
 .tree {

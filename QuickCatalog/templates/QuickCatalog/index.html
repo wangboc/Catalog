@@ -35,48 +35,49 @@
         </div>
     </div>
     <div class="row">
+        <table class="col-md-12">
+            <tr>
+                <td class="col-md-4 col-xs-12">
 
-        <div class="col-md-6">
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-success">
-                    <div><strong>Welcome!</strong> 欢迎您，
-                        <a href="#" class="alert-link">
-                            <em>王博丞</em>
-                        </a>
-                        。本次登录，您有 <span class="badge">42</span> 条节目待编目，请及时完成。
+                    <button type="button" class="btn btn-info">
+                        保存
+                    </button>
+                    <button type="button" class="btn btn-info">
+                        提交
+                    </button>
+                    <button type="button" class="btn btn-info">
+                        配置
+                    </button>
+                    <button type="button" class="btn btn-info">
+                        帮助
+                    </button>
+                    <button type="button" class="btn btn-info">
+                        注销
+                    </button>
+
+                </td>
+
+                <td class="col-md-5  col-xs-12 text-right">
+                    <div class="badge btn-info">
+                        <div><strong>Welcome!</strong> 欢迎您，
+                            <a href="#" class="alert-link">
+                                 王博丞
+                            </a>
+                            。本次登录，您有 <span class="badge">42</span> 条节目待编目，请及时完成。
+                        </div>
                     </div>
-                </li>
-            </ul>
-
-        </div>
-
-        <div class="col-md-4 col-xs-12">
-
-            <button type="button" class="btn btn-success">
-                保存
-            </button>
-            <button type="button" class="btn btn-success">
-                提交
-            </button>
-            <button type="button" class="btn btn-success">
-                配置
-            </button>
-            <button type="button" class="btn btn-success">
-                帮助
-            </button>
-            <button type="button" class="btn btn-success">
-                注销
-            </button>
-
-        </div>
-        <div class="col-md-2 col-xs-12">
-            <div class="progress">
-                <div class="progress-bar active progress-bar-warning  progress-bar-striped" role="progressbar"
-                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                    <span class="sr-only">40% Complete (success)</span>
-                </div>
-            </div>
-        </div>
+                </td>
+                <td class="col-md-3 col-xs-12">
+                    <div class="progress">
+                        <div class="progress-bar active progress-bar-info  progress-bar-striped" role="progressbar"
+                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                            {#<span class="sr-only">40% Complete (success)</span>#}
+                            <span>加载...</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
     <div class="row">
         <div class="col-md-5">
