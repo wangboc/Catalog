@@ -83,7 +83,7 @@
         <div class="col-md-5">
 
             <video id="player" controls preload="auto" class="video-js vjs-default-skin" width="470" height="320">
-                <source src="http://192.168.1.105:808/1.mp4" type="video/mp4">
+                <source src="http://localhost/1.mp4" type="video/mp4">
                 <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
             </video>
 
@@ -875,70 +875,117 @@
             <div class="tab-content">
                 <div class="tab-pane active pre-scrollable" id="KeyframeTab">
                     <!-- 关键帧预览 -->
-                    <canvas width="150" height="150" id="keyframeCtrl"></canvas>
-                    <div class="tab-pane">
-                        <!-- 节目树状结构 -->
-                        LayerTree
+                    <div class="row text-center">
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <canvas width="150" height="150" id="keyframe"></canvas>
+                                <div class="caption">
+                                    <span class="badge btn-success">00:20:16:24</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <canvas width="150" height="150" id="keyframe"></canvas>
+                                <div class="caption">
+                                    <span class="badge btn-success">00:20:16:24</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <canvas width="150" height="150" id="keyframe2"></canvas>
+                                <div class="caption">
+                                    <span class="badge btn-success">00:20:16:24</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <canvas width="150" height="150" id="keyframe"></canvas>
+                                <div class="caption">
+                                    <span class="badge btn-success">00:20:16:24</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <canvas width="150" height="150" id="keyframe"></canvas>
+                                <div class="caption">
+                                    <span class="badge btn-success">00:20:16:24</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <canvas width="150" height="150" id="keyframe"></canvas>
+                                <div class="caption">
+                                    <span class="badge btn-success">00:20:16:24</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <ul class="nav nav-pills nav-justified" role="tablist">
-                        <li class="active">
-                            <a href="#OnCatalogTab" role="tab" data-toggle="tab">
-                                待编目
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#LayerTreeTab" role="tab" data-toggle="tab">
-                                详细信息
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+
+            </div>
+            <div>
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                    <li class="active">
+                        <a href="#OnCatalogTab" role="tab" data-toggle="tab">
+                            待编目
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#LayerTreeTab" role="tab" data-toggle="tab">
+                            详细信息
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
 
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <!-- <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script> -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<!-- <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script> -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script type="text/javascript" src="{% static "QuickCatalog/bootstrap-3.3.4-dist/js/bootstrap.min.js" %}"></script>
-    <!-- 描述：video.js 带有圆点功能的 video-mark plug-->
-    <script type="text/javascript" src="{% static "QuickCatalog/player/video-js/video.js" %}"></script>
-    <script type="text/javascript" src="{% static "QuickCatalog/player/src/videojs.markers.js" %}"></script>
-    <script>
-        var player = videojs('player');
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script type="text/javascript" src="{% static "QuickCatalog/bootstrap-3.3.4-dist/js/bootstrap.min.js" %}"></script>
+<!-- 描述：video.js 带有圆点功能的 video-mark plug-->
+<script type="text/javascript" src="{% static "QuickCatalog/player/video-js/video.js" %}"></script>
+<script type="text/javascript" src="{% static "QuickCatalog/player/src/videojs.markers.js" %}"></script>
+<script>
+    var player = videojs('player');
 
-        //load the marker plugin
-        player.markers({
-            markers: [
-                {
-                    time: 950,
-                    text: "put"
-                },
-                {
-                    time: 16,
-                    text: "any"
-                },
-                {
-                    time: 23.6,
-                    text: "text"
-                },
-                {
-                    time: 28,
-                    text: "here"
-                }
-            ]
-        });
-    </script>
-    <!-- video.js 结束 -->
+    //load the marker plugin
+    player.markers({
+        markers: [
+            {
+                time: 950,
+                text: "put"
+            },
+            {
+                time: 16,
+                text: "any"
+            },
+            {
+                time: 23.6,
+                text: "text"
+            },
+            {
+                time: 28,
+                text: "here"
+            }
+        ]
+    });
+</script>
+<!-- video.js 结束 -->
 
-    <!-- 自定义播放器JS脚本 player.js -->
-    <script type="text/javascript" src="{% static "QuickCatalog/JS/player.js" %}"></script>
-    <!-- 自定义结束 -->
+<!-- 自定义播放器JS脚本 player.js -->
+<script type="text/javascript" src="{% static "QuickCatalog/JS/player.js" %}"></script>
+<!-- 自定义结束 -->
 </div>
 </body>
 </html>
