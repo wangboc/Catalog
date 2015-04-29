@@ -76,16 +76,28 @@ WSGI_APPLICATION = 'Catalog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'NAME': 'MAM-LINE',
+#         'ENGINE': 'sqlserver_ado',
+#         'HOST': 'localhost',
+#         'USER': 'sa',
+#         'PASSWORD': 'wangwang123',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'NAME': 'MAM-LINE',
         'ENGINE': 'sqlserver_ado',
-        'HOST': 'localhost',
+        'HOST': '10.1.70.88',
         'USER': 'sa',
         'PASSWORD': 'wangwang123',
+        # 'OPTIONS':{
+        #     'provider': 'SQLNCLI.1',
+        # }
     }
 }
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
