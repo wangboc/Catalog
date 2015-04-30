@@ -1,7 +1,30 @@
+# coding:utf-8
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from QuickCatalog.models import DateTimeEncoder
+from models import ProgramInfo
+from models import SectionInfo
+from models import SceneInfo
+from models import ShotInfo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -30,10 +53,28 @@ def index(request):
 
 def getProgramInfo(request, id):
     cursor = connection.cursor()
+    # 获取节目层信息
     cursor.execute("select * from mediainfo where id = " + id)
     DESC = cursor.description
-    program = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
-    cursor.close()
-    programJson = json.dumps(program[0], ensure_ascii=False, cls=DateTimeEncoder)
-    return HttpResponse(programJson, content_type="application/json")
+    programList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+    program = ProgramInfo(programList[0])
+    # 获取片段层信息
+    cursor.execute("select * from sectioninfo where media_id=" + str(program.id))
+    DESC = cursor.description
+    sectionList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+    program.sectionList = [SectionInfo(section) for section in sectionList]
+    # 获取场景层信息
+    for section in program.sectionList:
+        cursor.execute("select * from sceneinfo where section_id=" + str(section.id))
+        DESC = cursor.description
+        sceneList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+        section.sceneList = [SceneInfo(scene) for scene in sceneList]
+        # 获取镜头层信息
+        if len(section.sceneList) > 0:
+            for scene in section.sceneList:
+                cursor.execute("select * from shotinfo where scene_id=" + str(scene.id))
+                DESC = cursor.description
+                shotList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+                scene.shotList = [ShotInfo(shot) for shot in shotList]
+    return HttpResponse(program.toJson(), content_type="application/json")
 
