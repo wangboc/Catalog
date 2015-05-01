@@ -10,30 +10,6 @@ from models import KeyFrame
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Create your views here.
 import json
 from django.db import connection
@@ -51,9 +27,6 @@ def index(request):
 
     return render(request, 'QuickCatalog/index.html', program)
 
-
-
-    # return HttpResponse(programJson, content_type="application/json")
     # 26383
 
 
