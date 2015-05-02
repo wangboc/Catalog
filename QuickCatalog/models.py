@@ -2,6 +2,7 @@
 # coding:utf-8
 import json
 import decimal
+import base64
 
 from django.db.models.base import ModelState
 
@@ -120,12 +121,15 @@ class ProgramInfo():
 class SectionInfo:
     sceneList = []
     __Json__ = ""
+    keyframeList = []
 
     def toJson(self):
         self.sectionDic.setdefault("scenes", [])
+        self.sectionDic.setdefault("keyframes", [])
         for scene in self.sceneList:
             self.sectionDic.get("scenes").append(scene.toJson())
-
+        for keyframe in self.keyframeList:
+            self.sectionDic.get("keyframes").append(keyframe.toJson())
         self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
                                    separators=(',', ':'))
         return self.__Json__
@@ -179,12 +183,16 @@ class SectionInfo:
 class SceneInfo:
     shotList = []
     __Json__ = ""
+    keyframeList = []
+
 
     def toJson(self):
         self.sceneDic.setdefault("shots", [])
+        self.sceneDic.setdefault("keyframes", [])
         for shot in self.shotList:
             self.sceneDic.get("shots").append(shot.toJson())
-
+        for keyframe in self.keyframeList:
+            self.sceneDic.get("keyframes").append(keyframe.toJson())
         self.__Json__ = json.dumps(self.sceneDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
                                    separators=(',', ':'))
         return self.__Json__
@@ -215,47 +223,50 @@ class SceneInfo:
 
 class ShotInfo:
     __Json__ = ""
+    keyframeList = []
 
     def toJson(self):
+        self.shotDic.setdefault("keyframes", [])
+        for keyframe in self.keyframeList:
+            self.shotDic.get("keyframes").append(keyframe.toJson())
         self.__Json__ = json.dumps(self.shotDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
                                    separators=(',', ':'))
         return self.__Json__
 
     def __init__(self, shotDic):
         self.shotDic = shotDic
-        self.id = ["id"]
-        self.scene_id = ["scene_id"]
-        self.title = ["title"]
-        self.description = ["description"]
-        self.topic_words = ["topic_words"]
-        self.key_words = ["key_words"]
-        self.post_picture = ["post_picture"]
-        self.time_start = ["time_start"]
-        self.time_end = ["time_end"]
-        self.rating = ["rating"]
-        self.reason = ["reason"]
-        self.location = ["location"]
-        self.date_time = ["date_time"]
-        self.subtitle = ["subtitle"]
-        self.shootway = ["shootway"]
-        self.rating2 = ["rating2"]
-        self.sense_range = ["sense_range"]
-        self.angle = ["angle"]
-        self.actual_sound = ["actual_sound"]
-        self.reason2 = ["reason2"]
-        self.upload_time = ["upload_time"]
-        self.reason3 = ["reason3"]
-        self.rating3 = ["rating3"]
-        self.ObjectID = ["ObjectID"]
+        self.id = shotDic["id"]
+        self.scene_id = shotDic["scene_id"]
+        self.title = shotDic["title"]
+        self.description = shotDic["description"]
+        self.topic_words = shotDic["topic_words"]
+        self.key_words = shotDic["key_words"]
+        self.post_picture = shotDic["post_picture"]
+        self.time_start = shotDic["time_start"]
+        self.time_end = shotDic["time_end"]
+        self.rating = shotDic["rating"]
+        self.reason = shotDic["reason"]
+        self.location = shotDic["location"]
+        self.date_time = shotDic["date_time"]
+        self.subtitle = shotDic["subtitle"]
+        self.shootway = shotDic["shootway"]
+        self.rating2 = shotDic["rating2"]
+        self.sense_range = shotDic["sense_range"]
+        self.angle = shotDic["angle"]
+        self.actual_sound = shotDic["actual_sound"]
+        self.reason2 = shotDic["reason2"]
+        self.upload_time = shotDic["upload_time"]
+        self.reason3 = shotDic["reason3"]
+        self.rating3 = shotDic["rating3"]
+        self.ObjectID = shotDic["ObjectID"]
 
 
 class KeyFrame:
     __Json__ = ""
 
     def toJson(self):
-        # self.__Json__ = json.dumps(self.keyframeDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
-        # separators = (',', ':'))
-
+        self.__Json__ = json.dumps(self.keyframeDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
+                                   separators=(',', ':'))
 
         return self.__Json__
 
@@ -265,6 +276,9 @@ class KeyFrame:
         self.id = keyframeDic["id"]
         self.title = keyframeDic["title"]
         self.keyframe = keyframeDic["keyframe"]
+        # 由于从数据库中读取的keyframe是buffer类型，无法直接序列化封装JSON，将其编码为base64形式，并放入keyframe键值中。
+        self.keyframeBase64 = base64.b64encode(self.keyframe)
+        self.keyframeDic["keyframe"] = self.keyframeBase64
         self.position = keyframeDic["position"]
         self.media_id = keyframeDic["media_id"]
         self.section_d = keyframeDic["section_id"]

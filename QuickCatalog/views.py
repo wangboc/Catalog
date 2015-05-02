@@ -10,6 +10,8 @@ from models import KeyFrame
 
 
 
+
+
 # Create your views here.
 import json
 from django.db import connection
@@ -53,12 +55,27 @@ def getProgramInfo(request, id):
         DESC = cursor.description
         sceneList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
         section.sceneList = [SceneInfo(scene) for scene in sceneList]
+        # 获取片段层关键帧信息
+        cursor.execute("select * from keyframe where section_id=" + str(section.id))
+        DESC = cursor.description
+        keyframeList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+        section.keyframeList = [KeyFrame(keyframe) for keyframe in keyframeList]
         # 获取镜头层信息
-        if len(section.sceneList) > 0:
-            for scene in section.sceneList:
-                cursor.execute("select * from shotinfo where scene_id=" + str(scene.id))
+        for scene in section.sceneList:
+            cursor.execute("select * from shotinfo where scene_id=" + str(scene.id))
+            DESC = cursor.description
+            shotList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+            scene.shotList = [ShotInfo(shot) for shot in shotList]
+            # 获取场景层关键帧信息
+            cursor.execute("select * from keyframe where scene_id=" + str(scene.id))
+            DESC = cursor.description
+            keyframeList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+            scene.keyframeList = [KeyFrame(keyframe) for keyframe in keyframeList]
+            for shot in scene.shotList:
+                # 获取镜头层关键镇信息
+                cursor.execute("select * from keyframe where shot_id=" + str(shot.id))
                 DESC = cursor.description
-                shotList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
-                scene.shotList = [ShotInfo(shot) for shot in shotList]
+                keyframeList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
+                shot.keyframeList = [KeyFrame(keyframe) for keyframe in keyframeList]
     return HttpResponse(program.toJson(), content_type="application/json")
 
