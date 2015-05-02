@@ -1,16 +1,22 @@
 /**
  * Created by ho on 2015/5/2.
  */
+function ProgramViewModel() {
+    // Data
+    var self = this;
+    self.id = ko.observable();
+    self.title = ko.observable();
 
-
-
-$(document).ready(function () {
-    $("tr").dblclick(function () {
-        $("#programsTab").load("/quickcatalog/23031/programinfo/", function (responseTxt, statusTxt, xhr) {
-            if (statusTxt == "success")
-                alert("外部内容加载成功！");
-            if (statusTxt == "error")
-                alert("Error: " + xhr.status + ": " + xhr.statusText);
+    self.getprograminfo = function () {
+        $.getJSON("/quickcatalog/23031/programinfo/", function (item) {
+            self.id(item.id);
+            self.title(item.title);
         });
-    });
-});
+    };
+
+    // Show inbox by default
+    //self.goToFolder('Inbox');
+}
+
+ko.applyBindings(new ProgramViewModel());
+

@@ -135,7 +135,8 @@
                         <table class="table table-striped table-bordered table-condensed">
                             <tr>
                                 <td><label class="form-control-static">正题名</label></td>
-                                <td><input type="text" class="form-control" id="Title__Pro" placeholder="输入正题名">
+                                <td><input data-bind="value: title" type="text" class="form-control" id="Title__Pro"
+                                           placeholder="输入正题名">
                                 </td>
                             </tr>
                             <tr>
@@ -618,7 +619,7 @@
                         </thead>
 
 
-                        <tr>
+                        <tr data-bind="event: { dblclick : getprograminfo}">
                             <td>新闻视野 20110-12-1</td>
                             <td>2014-10-12</td>
                             <td>待编目</td>
@@ -986,9 +987,12 @@
 <!-- 自定义JS -->
 <!-- 播放器脚本 -->
 <script type="text/javascript" src="{% static "QuickCatalog/JS/player.js" %}"></script>
+<!-- Knockout框架 -->
+<script type="text/javascript" src="{% static "QuickCatalog/knockoutJS/knockout-3.3.0.js" %}"></script>
 <!-- 界面交互脚本 -->
 <script type="text/javascript" src="{% static "QuickCatalog/JS/mainpageUI.js" %}"></script>
+
 <!-- 自定义结束 -->
-</div>
+
 </body>
 </html>
