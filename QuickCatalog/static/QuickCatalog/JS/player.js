@@ -78,17 +78,6 @@ $(document).ready(function () {
         // Grab the image from the video
         context.drawImage(video, 0, 0, 150, 150);
 
-        //just for testing keyframeCtrl 2015.04.29
-
-        var vs = document.querySelectorAll('canvas');
-
-        for (var i = 0; i < 6; i++) {
-            var vv = vs.item(i);
-            var conn = vv.getContext('2d');
-            conn.drawImage(video, 0, 0, 150, 150)
-        }
-
-        // testing end
 
     });
 

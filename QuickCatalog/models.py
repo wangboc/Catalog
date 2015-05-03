@@ -265,8 +265,7 @@ class KeyFrame:
     __Json__ = ""
 
     def toJson(self):
-        self.__Json__ = json.dumps(self.keyframeDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
-                                   separators=(',', ':'))
+        self.__Json__ = json.dumps(self.keyframeDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
 
         return self.__Json__
 
@@ -281,7 +280,7 @@ class KeyFrame:
         self.keyframeDic["keyframe"] = self.keyframeBase64
         self.position = keyframeDic["position"]
         self.media_id = keyframeDic["media_id"]
-        self.section_d = keyframeDic["section_id"]
+        self.section_id = keyframeDic["section_id"]
         self.scene_id = keyframeDic["scene_id"]
         self.shot_id = keyframeDic["shot_id"]
 

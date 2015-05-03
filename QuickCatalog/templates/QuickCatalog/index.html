@@ -143,7 +143,8 @@
                                 <td>
                                     <label class="form-control-static">题名说明</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Title_description__Pro"
+                                <td><input data-bind="value: title_description" type=" text" class="form-control"
+                                           id="Title_description__Pro"
                                            placeholder="输入题名说明">
                                 </td>
                             </tr>
@@ -151,82 +152,95 @@
                                 <td>
                                     <label class="form-control-static">系列</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Series__Pro" placeholder="输入系列"></td>
+                                <td><input data-bind="value: media_series" type="text" class="form-control"
+                                           id="Series__Pro"
+                                           placeholder="输入系列"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">分集总数</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Class_num__Pro" placeholder="输入分集总数">
+                                <td><input data-bind="value: class_num" type="text" class="form-control"
+                                           id="Class_num__Pro" placeholder="输入分集总数">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">分集次</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Class_time__Pro" placeholder="输入分集次">
+                                <td><input data-bind="value: class_time" type="text" class="form-control"
+                                           id="Class_time__Pro" placeholder="输入分集次">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">广电分类</label></td>
-                                <td><input type="text" class="form-control" id="Tv_class__Pro" placeholder="输入广电分类">
+                                <td><input data-bind="value:tv_class" type="text" class="form-control"
+                                           id="Tv_class__Pro" placeholder="输入广电分类">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">关键词</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Key_words__Pro" placeholder="输入关键词">
+                                <td><input data-bind="value: key_words" type="text" class="form-control"
+                                           id="Key_words__Pro" placeholder="输入关键词">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">内容描述</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Description__Pro" placeholder="输入内容描述">
+                                <td><input data-bind="value: description" type="text" class="form-control"
+                                           id="Description__Pro" placeholder="输入内容描述">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">主题人物</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Character__Pro" placeholder="输入主题人物">
+                                <td><input data-bind="value: character" type="text" class="form-control"
+                                           id="Character__Pro" placeholder="输入主题人物">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">获奖</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Awards_list__Pro" placeholder="输入获奖">
+                                <td><input data-bind="value: awards" type="text" class="form-control"
+                                           id="Awards_list__Pro" placeholder="输入获奖">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">栏目</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Column_list__Pro" placeholder="输入栏目">
+                                <td><input data-bind="value: media_column" type="text" class="form-control"
+                                           id="Column_list__Pro" placeholder="输入栏目">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">创建者项</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Creater_list__Pro" placeholder="输入创建者项">
+                                <td><input data-bind="value: creater" type="text" class="form-control"
+                                           id="Creater_list__Pro" placeholder="输入创建者项">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">其他责任者项</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Duty_list__Pro" placeholder="输入其他责任者项">
+                                <td><input data-bind="value: media_duty" type="text" class="form-control"
+                                           id="Duty_list__Pro" placeholder="输入其他责任者项">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">版权所有者名称</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Name_of_cpo__Pro"
+                                <td><input data-bind="value: name_of_cpo" type="text" class="form-control"
+                                           id="Name_of_cpo__Pro"
                                            placeholder="输入版权所有者名称">
                                 </td>
                             </tr>
@@ -234,7 +248,8 @@
                                 <td>
                                     <label class="form-control-static">版权说明</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Cp_statement1__Pro"
+                                <td><input data-bind="value: cp_statement1" type="text" class="form-control"
+                                           id="Cp_statement1__Pro"
                                            placeholder="输入版权说明">
                                 </td>
                             </tr>
@@ -242,99 +257,123 @@
                                 <td>
                                     <label class="form-control-static">制作完成日期</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Produced_date__Pro"
+                                <td><input data-bind="value: produced_date" type="text" class="form-control"
+                                           id="Produced_date__Pro"
                                            placeholder="输入制作完成日期">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-control-static">首播日期</label>
+                                </td>
+                                <td><input data-bind="value: publish_date" type="text" class="form-control"
+                                           id="Publish_date_Pro"
+                                           placeholder="输入首播日期">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">节目类型</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Media_type__Pro" placeholder="输入节目类型">
+                                <td><input data-bind="value: media_type" type="text" class="form-control"
+                                           id="Media_type__Pro" placeholder="输入节目类型">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">节目形态</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Xintai__Pro" placeholder="输入节目形态"></td>
+                                <td><input data-bind="value: xintai" type="text" class="form-control" id="Xintai__Pro"
+                                           placeholder="输入节目形态"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">实长</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Time_end__Pro" placeholder="输入实长"></td>
+                                <td><input data-bind="value: time_end" type="text" class="form-control"
+                                           id="Time_end__Pro" placeholder="输入实长"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">入点</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Time_start__Pro" placeholder="输入入点">
+                                <td><input data-bind="value: time_start" type="text" class="form-control"
+                                           id="Time_start__Pro" placeholder="输入入点">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">色彩</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Color__Pro" placeholder="输入色彩"></td>
+                                <td><input data-bind="value: color" type="text" class="form-control" id="Color__Pro"
+                                           placeholder="输入色彩"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">字幕形式</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Subtitle__Pro" placeholder="输入字幕形式">
+                                <td><input data-bind="value: subtitle" type="text" class="form-control"
+                                           id="Subtitle__Pro" placeholder="输入字幕形式">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">声道格式</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Audio_format__Pro" placeholder="输入声道格式">
+                                <td><input data-bind="value: audio_format" type="text" class="form-control"
+                                           id="Audio_format__Pro" placeholder="输入声道格式">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">画面宽高比</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Aspect__Pro" placeholder="输入画面宽高比"></td>
+                                <td><input data-bind="value: aspect" type="text" class="form-control" id="Aspect__Pro"
+                                           placeholder="输入画面宽高比"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">制式</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Zhishi__Pro" placeholder="输入制式"></td>
+                                <td><input data-bind="value: zhishi" type="text" class="form-control" id="Zhishi__Pro"
+                                           placeholder="输入制式"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">载体</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Carry_type__Pro" placeholder="输入载体">
+                                <td><input data-bind="value: carry_type" type="text" class="form-control"
+                                           id="Carry_type__Pro" placeholder="输入载体">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">语种</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Yuzhong__Pro" placeholder="输入语种"></td>
+                                <td><input data-bind="value: yuzhong" type="text" class="form-control" id="Yuzhong__Pro"
+                                           placeholder="输入语种"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">受众</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Audience__Pro" placeholder="输入受众"></td>
+                                <td><input data-bind="value: audience" type="text" class="form-control"
+                                           id="Audience__Pro" placeholder="输入受众"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">来源方式</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Source_id__Pro" placeholder="输入来源方式">
+                                <td><input data-bind="value: source_id" type="text" class="form-control"
+                                           id="Source_id__Pro" placeholder="输入来源方式">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">附加标示</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Additional_logo__Pro"
+                                <td><input data-bind="value: additional_logo" type="text" class="form-control"
+                                           id="Additional_logo__Pro"
                                            placeholder="输入附加标示">
                                 </td>
                             </tr>
@@ -342,7 +381,8 @@
                                 <td>
                                     <label class="form-control-static">资料获取方式</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Source_method__Pro"
+                                <td><input data-bind="value: source_method" type="text" class="form-control"
+                                           id="Source_method__Pro"
                                            placeholder="输入资料获取方式">
                                 </td>
                             </tr>
@@ -350,7 +390,8 @@
                                 <td>
                                     <label class="form-control-static">资料提供者</label>
                                 </td>
-                                <td><input type="text" class="form-control" id="Source_provider__Pro"
+                                <td><input data-bind="value: source_provider" type="text" class="form-control"
+                                           id="Source_provider__Pro"
                                            placeholder="输入资料提供者">
                                 </td>
                             </tr>
@@ -876,55 +917,18 @@
             <div class="tab-content">
                 <div class="tab-pane active pre-scrollable" id="KeyframeTab">
                     <!-- 关键帧预览 -->
-                    <div class="row text-center">
+                    <div data-bind="foreach:keyframes" class="row text-center">
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <canvas width="150" height="150" id="keyframe"></canvas>
+                                <canvas data-bind="attr:{id: 'canvas' + id()}, event:{change: $root.drawImage($data, event)}"
+                                        width="150"
+                                        height="150" id="keyframe"></canvas>
                                 <div>
-                                    <span class="badge btn-success">00:20:16:24</span>
+                                    <p data-bind="text: position" class="badge btn-success"></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <canvas width="150" height="150" id="keyframe"></canvas>
-                                <div>
-                                    <span class="badge btn-success">00:20:16:24</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <canvas width="150" height="150" id="keyframe"></canvas>
-                                <div>
-                                    <span class="badge btn-success">00:20:16:24</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <canvas width="150" height="150" id="keyframe"></canvas>
-                                <div>
-                                    <span class="badge btn-success">00:20:16:24</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <canvas width="150" height="150" id="keyframe"></canvas>
-                                <div>
-                                    <span class="badge btn-success">00:20:16:24</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <canvas width="150" height="150" id="keyframe"></canvas>
-                                <div>
-                                    <span class="badge btn-success">00:20:16:24</span>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
