@@ -2,7 +2,7 @@
     max-height: 350px;
 }
 
-#OnCatalogTab, #LayerTreeTab, #KeyframeTab {
+#OnCatalogTab, #LayerTreeTab, #KeyframeTab, #OtherInfoTab {
     height: 300px;
 }
 

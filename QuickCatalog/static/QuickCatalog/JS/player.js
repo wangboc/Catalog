@@ -1,6 +1,6 @@
 var video = document.querySelector('video');
-var canvas = document.querySelector('canvas');
-var context = canvas.getContext('2d');
+var canvas;//= document.querySelector('canvas');
+var context; //= canvas.getContext('2d');
 
 //暂停播放
 function pausePlay() {
@@ -89,22 +89,31 @@ $(document).ready(function () {
     });
 });
 
-
-$(function () {
-    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-    $('.tree li.parent_li > span').on('click', function (e) {
-        var children = $(this).parent('li.parent_li').find(' > ul > li');
-        if (children.is(":visible")) {
-            children.hide('fast');
-            $(this).attr('title', 'Expand this branch').find(' > i').addClass('glyphicon glyphicon-plus').removeClass('glyphicon glyphicon-minus');
-        } else {
-            children.show('fast');
-            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('glyphicon glyphicon-minus').removeClass('glyphicon glyphicon-plus');
-        }
-        e.stopPropagation();
-    });
+//左下方 tree 脚本
+$.extend({
+    ResetTree: function () {
+        $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+        $('.tree li.parent_li > span').on('click', function (e) {
+            var children = $(this).parent('li.parent_li').find(' > ul > li');
+            if (children.is(":visible")) {
+                children.hide('fast');
+                if ($(this).attr('title', 'Expand this branch').find(' > i').hasClass('glyphicon-minus'))
+                    $(this).attr('title', 'Expand this branch').find(' > i').addClass('glyphicon glyphicon-plus').removeClass('glyphicon-minus');
+            } else {
+                children.show('fast');
+                if ($(this).attr('title', 'Expand this branch').find(' > i').hasClass('glyphicon-plus'))
+                    $(this).attr('title', 'Collapse this branch').find(' > i').addClass('glyphicon glyphicon-minus').removeClass('glyphicon-plus');
+            }
+            e.stopPropagation();
+        });
+    }
 });
 
+$.extend({
+   ChangeToCatalogTree: function(){
+       $('#CatalogTab a[href="#LayerTreeTab"]').tab('show');
+   }
+});
 
 // initialize video.js
 var player = videojs("player");

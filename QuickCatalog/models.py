@@ -130,8 +130,8 @@ class SectionInfo:
             self.sectionDic.get("scenes").append(scene.toJson())
         for keyframe in self.keyframeList:
             self.sectionDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
-                                   separators=(',', ':'))
+        self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4
+                                   )
         return self.__Json__
 
     def __init__(self, sectionDic):

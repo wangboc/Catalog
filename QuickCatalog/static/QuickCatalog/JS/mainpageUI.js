@@ -13,11 +13,121 @@ function KeyframeInfo(data) {
     self.scene_id = self.json.scene_id;
     self.shot_id = self.json.shot_id;
 };
+function ShotInfo(data) {
+    var self = this;
+    self.json = $.parseJSON(data);
+    self.id = self.json.id;
+    self.scene_id = self.json.scene_id;
+    self.title = self.json.title;
+    self.description = self.json.description;
+    self.topic_words = self.json.topic_words;
+    self.key_words = self.json.key_words;
+    self.post_picture = self.json.post_picture;
+    self.time_start = self.json.time_start;
+    self.time_end = self.json.time_end;
+    self.rating = self.json.rating;
+    self.reason = self.json.reason;
+    self.location = self.json.location;
+    self.date_time = self.json.date_time;
+    self.subtitle = self.json.subtitle;
+    self.shootway = self.json.shootway;
+    self.rating2 = self.json.rating2;
+    self.sense_range = self.json.sense_range;
+    self.angle = self.json.angle;
+    self.actual_sound = self.json.actual_sound;
+    self.reason2 = self.json.reason2;
+    self.upload_time = self.json.upload_time;
+    self.reason3 = self.json.reason3;
+    self.rating3 = self.json.rating3;
+    self.ObjectID = self.json.ObjectID;
+}
+function SceneInfo(data) {
+    var self = this;
+    self.json = $.parseJSON(data);
+    self.id = self.json.id;
+    self.section_id = self.json.section_id;
+    self.title = self.json.title;
+    self.description = self.json.description;
+    self.topic_words = self.json.topic_words;
+    self.key_words = self.json.key_words;
+    self.post_picture = self.json.post_picture;
+    self.time_start = self.json.time_start;
+    self.time_end = self.json.time_end;
+    self.rating = self.json.rating;
+    self.reason = self.json.reason;
+    self.subtitle = self.json.subtitle;
+    self.rating2 = self.json.rating2;
+    self.reason2 = self.json.reason2;
+    self.date_of_event = self.json.date_of_event;
+    self.natural_sound = self.json.natural_sound;
+    self.upload_time = self.json.upload_time;
+    self.reason3 = self.json.reason3;
+    self.rating3 = self.json.rating3;
+    self.ObjectID = self.json.ObjectID;
+    self.shots = ko.observableArray([]);
+    for (var i = 0; i < self.json.shots.length; i++)
+        self.shots.push(new ShotInfo(self.json.shots[i]));
+}
+function SectionInfo(data) {
+    var self = this;
+    self.json = $.parseJSON(data);
+    self.id = ko.observable(self.json.id);
+    self.media_id = ko.observable(self.json.media_id);
+    self.title = ko.observable(self.json.title);
+    self.description = ko.observable(self.json.description);
+    self.topic_words = ko.observable(self.json.topic_words);
+    self.key_words = ko.observable(self.json.key_words);
+    self.post_picture = ko.observable(self.json.post_picture);
+    self.section_duty = ko.observable(self.json.section_duty);
+    self.time_start = ko.observable(self.json.time_start);
+    self.time_end = ko.observable(self.json.time_end);
+    self.subtitle = ko.observable(self.json.subtitle);
+    self.rating = ko.observable(self.json.rating);
+    self.reason = ko.observable(self.json.reason);
+    self.title2 = ko.observable(self.json.title2);
+    self.class_name = ko.observable(self.json.class_name);
+    self.actual_sound = ko.observable(self.json.actual_sound);
+    self.program_form = ko.observable(self.json.program_form);
+    self.date_time = ko.observable(self.json.date_time);
+    self.section_series = ko.observable(self.json.section_series);
+    self.rating2 = ko.observable(self.json.rating2);
+    self.reason2 = ko.observable(self.json.reason2);
+    self.contributor = ko.observable(self.json.contributor);
+    self.audio_channel_num = ko.observable(self.json.audio_channel_num);
+    self.audio_channel_lan = ko.observable(self.json.audio_channel_lan);
+    self.subtitle_num = ko.observable(self.json.subtitle_num);
+    self.subtitle_lan = ko.observable(self.json.subtitle_lan);
+    self.years_covered = ko.observable(self.json.years_covered);
+    self.spatial = ko.observable(self.json.spatial);
+    self.source = ko.observable(self.json.source);
+    self.data_source_way = ko.observable(self.json.data_source_way);
+    self.data_source_man = ko.observable(self.json.data_source_man);
+    self.yuzhong = ko.observable(self.json.yuzhong);
+    self.years = ko.observable(self.json.years);
+    self.awards = ko.observable(self.json.awards);
+    self.upload_time = ko.observable(self.json.upload_time);
+    self.reason3 = ko.observable(self.json.reason3);
+    self.rating3 = ko.observable(self.json.rating3);
+    self.creater = ko.observable(self.json.creater);
+    self.pcreater = ko.observable(self.json.pccreater);
+    self.create_method = ko.observable(self.json.create_method);
+    self.create_other_info = ko.observable(self.json.create_other_info);
+    self.ObjectID = ko.observable(self.json.ObjectID);
+    self.scenes = ko.observableArray([]);
+    for (var i = 0; i < self.json.scenes.length; i++)
+        self.scenes.push(new SceneInfo(self.json.scenes[i]));
+}
+
 
 var ProgramViewModel = function ViewModel() {
     // Data
     var self = this;
-    self.media_id = ko.observable;
+    self.currentSection = ko.observable();
+    self.currentScene = ko.observable();
+    self.currentShot = ko.observable();
+    self.currentKeyframes = ko.observableArray([]);
+
+    self.media_id = ko.observable();
     self.title = ko.observable();
     self.title2 = ko.observable();
     self.title_alter = ko.observable();
@@ -109,6 +219,7 @@ var ProgramViewModel = function ViewModel() {
     self.shengdao = ko.observable();
     self.ObjectID = ko.observable();
     self.keyframes = ko.observableArray([]);
+    self.sections = ko.observableArray([]);
     self.getprograminfo = function () {
         $.getJSON("/quickcatalog/23031/programinfo/", function (item) {
             self.media_id(item.media_id);
@@ -207,6 +318,17 @@ var ProgramViewModel = function ViewModel() {
                 return new KeyframeInfo(itemS);
             });
             self.keyframes(kflist);
+
+            var sectionlist = $.map(item.sections, function (itemS) {
+                return new SectionInfo(itemS);
+            });
+            self.sections(sectionlist);
+
+            self.currentSection(self.sections()[0]);
+
+
+            $.ChangeToCatalogTree();
+            $.ResetTree();
         });
 
     };
