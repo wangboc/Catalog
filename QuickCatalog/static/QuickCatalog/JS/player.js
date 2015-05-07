@@ -115,6 +115,7 @@ $.extend({
    }
 });
 
+
 // initialize video.js
 var player = videojs("player");
 

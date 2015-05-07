@@ -21,7 +21,7 @@
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link href="http://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
+    <link href="{% static "QuickCatalog/player/video-js/video-js.css" %}" rel="stylesheet">
     <link href="{% static "QuickCatalog/player/dist/videojs.markers.css" %}" rel="stylesheet">
 </head>
 <body>
@@ -82,7 +82,7 @@
         <div class="col-md-5">
 
             <video id="player" controls preload="auto" class="video-js vjs-default-skin" width="470" height="320">
-                <source src="http://localhost/1.mp4" type="video/mp4">
+                <source src="http://10.1.70.88/1.mp4" type="video/mp4">
                 {#                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">#}
             </video>
 
@@ -127,7 +127,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div id="DetailTabs" role="tabpanel" class="col-md-6 table-responsive">
             <div class="tab-content">
                 <div class="tab-pane pre-scrollable active" id="programsTab">
                     <form id="programForm" role="form">
@@ -399,20 +399,24 @@
                 </div>
                 <div class="tab-pane pre-scrollable" id="sectionsTab">
                     <form id="sectionForm" role="form">
-                        <table data-bind="with: currentSection" class="table table-striped table-bordered table-condensed">
+                        <table data-bind="with: currentSection"
+                               class="table table-striped table-bordered table-condensed">
                             <tr>
                                 <td><label class="form-control-static">正题名</label></td>
-                                <td><input data-bind="value: title" type="text" class="form-control" id="Title__Sec" placeholder="输入正题名">
+                                <td><input data-bind="value: title" type="text" class="form-control" id="Title__Sec"
+                                           placeholder="输入正题名">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">系列题名</label></td>
-                                <td><input data-bind="value: section_series" type="text" class="form-control" id="Series__Sec" placeholder="输入系列题名">
+                                <td><input data-bind="value: section_series" type="text" class="form-control"
+                                           id="Series__Sec" placeholder="输入系列题名">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">关键词</label></td>
-                                <td><input data-bind="value: key_words" type="text" class="form-control" id="Key_words__Sec" placeholder="输入关键词">
+                                <td><input data-bind="value: key_words" type="text" class="form-control"
+                                           id="Key_words__Sec" placeholder="输入关键词">
                                 </td>
                             </tr>
                             <tr>
@@ -619,30 +623,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-1">
-            <ul class="nav nav-pills nav-stacked" role="tablist">
-                <li class="active">
-                    <a href="#programsTab" role="tab" data-toggle="tab">
-                        节目
-                    </a>
-                </li>
-                <li>
-                    <a href="#sectionsTab" role="tab" data-toggle="tab">
-                        片段
-                    </a>
-                </li>
-                <li>
-                    <a href="#scenesTab" role="tab" data-toggle="tab">
-                        场景
-                    </a>
-                </li>
-                <li>
-                    <a href="#shotsTab" role="tab" data-toggle="tab">
-                        镜头
-                    </a>
-                </li>
-            </ul>
-        </div>
+        {#        <div class="col-md-1">#}
+        {#            <ul class="nav nav-pills nav-stacked" role="tablist">#}
+        {#                <li class="active">#}
+        {#                    <a href="#programsTab" role="tab" data-toggle="tab">#}
+        {#                        节目#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#                <li>#}
+        {#                    <a href="#sectionsTab" role="tab" data-toggle="tab">#}
+        {#                        片段#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#                <li>#}
+        {#                    <a href="#scenesTab" role="tab" data-toggle="tab">#}
+        {#                        场景#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#                <li>#}
+        {#                    <a href="#shotsTab" role="tab" data-toggle="tab">#}
+        {#                        镜头#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#            </ul>#}
+        {#        </div>#}
     </div>
     <div class="row">
         <div id="CatalogTab" role="tabpanel" class="col-md-5 table-responsive">
@@ -707,19 +711,20 @@
                     <div class="tree">
                         <ul class="ulCustom">
                             <li>
-                                <span class="btn btn-success"><i data-bind="text: title"
-                                                                 class="glyphicon glyphicon-calendar"></i></span>
+                                <span data-bind="click: changeToOtherLayer(0, $data, event)" class="btn btn-info"><i
+                                        data-bind="text: title"
+                                        class="glyphicon glyphicon-calendar"></i></span>
                                 <ul data-bind="foreach: sections">
                                     <li>
-                                        <span class="btn btn-success"><i data-bind="text: title"
-                                                                         class="glyphicon glyphicon-minus"></i></span>
+                                        <span  data-bind="click: $root.changeToOtherLayer(1, $data, event)"   class="btn btn-info"><i data-bind="text: title"
+                                                                      class="glyphicon glyphicon-minus"></i></span>
                                         <ul data-bind="foreach: scenes">
                                             <li>
-                                                <span class="btn btn-success"><i data-bind="text: title"
-                                                                                 class="glyphicon glyphicon-minus"></i></span>
+                                                <span  data-bind="click: $root.changeToOtherLayer(2, $data, event)" class="btn btn-info"><i data-bind="text: title"
+                                                                              class="glyphicon glyphicon-minus"></i></span>
                                                 <ul data-bind="foreach: shots">
                                                     <li>
-                                                        <span class="btn btn-success">
+                                                        <span  data-bind="click: $root.changeToOtherLayer(3, $data, event)" class="btn btn-info">
                                                             <i data-bind="text:title"
                                                                class="glyphicon glyphicon-minus"></i>
                                                         </span>
