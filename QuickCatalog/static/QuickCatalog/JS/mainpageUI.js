@@ -332,6 +332,7 @@ var ProgramViewModel = function ViewModel() {
         });
 
     };
+
     self.drawImage = function (param, event) {
         var canvas = document.getElementById('canvas' + param.json.id);
         var context = canvas.getContext('2d');
@@ -339,7 +340,26 @@ var ProgramViewModel = function ViewModel() {
         var image = new Image();
         image.src = 'data:image/jpg;base64,' + param.json.keyframe;
         context.drawImage(image, 0, 0, 150, 150);
+    };
+
+    self.changeToOtherLayer = function (param, data, event) {
+        if (event) {
+            var layerDepth = param;
+            if (layerDepth == 0) {
+                $("#DetailTabs a[href='#programsTab']").tab("show");
+            }
+            else if (layerDepth == 1) {
+                $("#DetailTabs a[href='#sectionsTab']").tab("show");
+            }
+            else if (layerDepth == 2) {
+                $('#DetailTabs a[href="#scenesTab"]').tab('show');
+            }
+            else if (layerDepth == 3) {
+                $('#DetailTabs a[href="#shotsTab"]').tab('show');
+            }
+        }
     }
+
 
 };
 
