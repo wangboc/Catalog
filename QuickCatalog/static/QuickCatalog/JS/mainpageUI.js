@@ -218,7 +218,10 @@ var ProgramViewModel = function ViewModel() {
     self.test = ko.observable();
     self.shengdao = ko.observable();
     self.ObjectID = ko.observable();
+    //用于保存节目层自身的关键帧
     self.keyframes = ko.observableArray([]);
+    //用于暂存界面上展现的关键帧
+    self.currentKeyframes = ko.observableArray([]);
     self.sections = ko.observableArray([]);
     self.getprograminfo = function () {
         $.getJSON("/quickcatalog/23031/programinfo/", function (item) {
@@ -318,13 +321,11 @@ var ProgramViewModel = function ViewModel() {
                 return new KeyframeInfo(itemS);
             });
             self.keyframes(kflist);
-
+            self.currentKeyframes(kflist);
             var sectionlist = $.map(item.sections, function (itemS) {
                 return new SectionInfo(itemS);
             });
             self.sections(sectionlist);
-
-            self.currentSection(self.sections()[0]);
 
 
             $.ChangeToCatalogTree();
@@ -344,18 +345,23 @@ var ProgramViewModel = function ViewModel() {
 
     self.changeToOtherLayer = function (param, data, event) {
         if (event) {
-            var layerDepth = param;
+            if (event.type == "click")
+                var layerDepth = param;
             if (layerDepth == 0) {
                 $("#DetailTabs a[href='#programsTab']").tab("show");
             }
             else if (layerDepth == 1) {
                 $("#DetailTabs a[href='#sectionsTab']").tab("show");
+                self.currentSection(data);
+                self.currentKeyframes(data.json.keyframes);
             }
             else if (layerDepth == 2) {
                 $('#DetailTabs a[href="#scenesTab"]').tab('show');
+                self.currentScene(data);
             }
             else if (layerDepth == 3) {
                 $('#DetailTabs a[href="#shotsTab"]').tab('show');
+                self.currentShot(data);
             }
         }
     }

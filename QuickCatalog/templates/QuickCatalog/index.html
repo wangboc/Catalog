@@ -421,80 +421,95 @@
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">广电分类</label></td>
-                                <td><input type="text" class="form-control" id="Class_name__Sec" placeholder="输入广电分类">
+                                <td><input data-bind="value: class_name" type="text" class="form-control"
+                                           id="Class_name__Sec" placeholder="输入广电分类">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">事件发生日期</label></td>
-                                <td><input type="text" class="form-control" id="Date_time__Sec" placeholder="输入事件发生日期">
+                                <td><input data-bind="value: date_time" type="text" class="form-control"
+                                           id="Date_time__Sec" placeholder="输入事件发生日期">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">获奖</label></td>
-                                <td><input type="text" class="form-control" id="Awards_list__Sec" placeholder="输入获奖">
+                                <td><input data-bind="value: awards" type="text" class="form-control"
+                                           id="Awards_list__Sec" placeholder="输入获奖">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">现场同期声</label></td>
-                                <td><input type="text" class="form-control" id="Actual_sound__Sec"
+                                <td><input data-bind="value: actual_sound" type="text" class="form-control"
+                                           id="Actual_sound__Sec"
                                            placeholder="输入现场同期声">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">创建者项</label></td>
-                                <td><input type="text" class="form-control" id="Creater_list__Sec" placeholder="输入创建者项">
+                                <td><input data-bind="value: creater" type="text" class="form-control"
+                                           id="Creater_list__Sec" placeholder="输入创建者项">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">其他责任者项</label></td>
-                                <td><input type="text" class="form-control" id="Duty_list__Sec" placeholder="输入其他责任者项">
+                                <td><input data-bind="value: section_duty" type="text" class="form-control"
+                                           id="Duty_list__Sec" placeholder="输入其他责任者项">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">节目形态</label></td>
-                                <td><input type="text" class="form-control" id="Program_form__Sec" placeholder="输入节目形态">
+                                <td><input data-bind="value: program_form" type="text" class="form-control"
+                                           id="Program_form__Sec" placeholder="输入节目形态">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">字幕</label></td>
-                                <td><input type="text" class="form-control" id="Subtitle__Sec" placeholder="输入字幕">
+                                <td><input data-bind="value: subtitle" type="text" class="form-control"
+                                           id="Subtitle__Sec" placeholder="输入字幕">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">实长</label></td>
-                                <td><input type="text" class="form-control" id="Time_end_Sec" placeholder="输入实长">
+                                <td><input data-bind="value: time_end" type="text" class="form-control"
+                                           id="Time_end_Sec" placeholder="输入实长">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">入点</label></td>
-                                <td><input type="text" class="form-control" id="Time_start_Sec" placeholder="输入入点">
+                                <td><input data-bind="value: time_start" type="text" class="form-control"
+                                           id="Time_start_Sec" placeholder="输入入点">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">时间范围</label></td>
-                                <td><input type="text" class="form-control" id="Years_covered__Sec"
+                                <td><input data-bind="value: years_covered" type="text" class="form-control"
+                                           id="Years_covered__Sec"
                                            placeholder="输入时间范围">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">空间范围</label></td>
-                                <td><input type="text" class="form-control" id="Spatial__Sec" placeholder="输入空间范围">
+                                <td><input data-bind="value: spatial" type="text" class="form-control" id="Spatial__Sec"
+                                           placeholder="输入空间范围">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">内容描述</label></td>
-                                <td><input type="text" class="form-control" id="Description__Sec" placeholder="输入内容描述">
+                                <td><input data-bind="value: description" type="text" class="form-control"
+                                           id="Description__Sec" placeholder="输入内容描述">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">资料获取方式</label></td>
-                                <td><input type="text" class="form-control" id="Data_source_way__Sec"
+                                <td><input data-bind="value: data_source_way" type="text" class="form-control"
+                                           id="Data_source_way__Sec"
                                            placeholder="输入资料获取方式">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">资料提供者</label></td>
-                                <td><input type="text" class="form-control" id="Data_source_man__Sec"
+                                <td><input data-bind="value: data_source_man" type="text" class="form-control"
+                                           id="Data_source_man__Sec"
                                            placeholder="输入资料提供者">
                                 </td>
                             </tr>
@@ -503,52 +518,61 @@
                 </div>
                 <div class="tab-pane pre-scrollable" id="scenesTab">
                     <form id="sceneForm" role="form">
-                        <table class="table table-striped table-bordered table-condensed">
+                        <table data-bind="with: currentScene" class="table table-striped table-bordered table-condensed">
                             <tr>
                                 <td><label class="form-control-static">场景名</label></td>
-                                <td><input type="text" class="form-control" id="Title__Sce" placeholder="输入场景名">
+                                <td><input data-bind="value: title" type="text" class="form-control" id="Title__Sce"
+                                           placeholder="输入场景名">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">主题词</label></td>
-                                <td><input type="text" class="form-control" id="Topic_words__Sce" placeholder="输入主题词">
+                                <td><input data-bind="value: topic_words" type="text" class="form-control"
+                                           id="Topic_words__Sce" placeholder="输入主题词">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">关键词</label></td>
-                                <td><input type="text" class="form-control" id="Key_words__Sce" placeholder="输入关键词">
+                                <td><input data-bind="value: key_words" type="text" class="form-control"
+                                           id="Key_words__Sce" placeholder="输入关键词">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">内容描述</label></td>
-                                <td><input type="text" class="form-control" id="Description__Sce" placeholder="输入内容描述">
+                                <td><input data-bind="value: description" type="text" class="form-control"
+                                           id="Description__Sce" placeholder="输入内容描述">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">事件发生日期</label></td>
-                                <td><input type="text" class="form-control" id="Date_of_event__Sce"
+                                <td><input data-bind="value: date_of_event" type="text" class="form-control"
+                                           id="Date_of_event__Sce"
                                            placeholder="输入事件发生日期">
                                 </td>
                             <tr>
                             <tr>
                                 <td><label class="form-control-static">现场同期声</label></td>
-                                <td><input type="text" class="form-control" id="Natural_sound__Sce"
+                                <td><input data-bind="value: natural_sound" type="text" class="form-control"
+                                           id="Natural_sound__Sce"
                                            placeholder="输入现场同期声">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">实长</label></td>
-                                <td><input type="text" class="form-control" id="Time_end__Sce" placeholder="输入实长">
+                                <td><input data-bind="value: time_end" type="text" class="form-control"
+                                           id="Time_end__Sce" placeholder="输入实长">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">入点</label></td>
-                                <td><input type="text" class="form-control" id="Time_start__Sce" placeholder="输入入点">
+                                <td><input data-bind="value: time_start" type="text" class="form-control"
+                                           id="Time_start__Sce" placeholder="输入入点">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">字幕形式</label></td>
-                                <td><input type="text" class="form-control" id="Subtitle__Sce" placeholder="输入字幕形式">
+                                <td><input data-bind="value: subtitle" type="text" class="form-control"
+                                           id="Subtitle__Sce" placeholder="输入字幕形式">
                                 </td>
                             </tr>
                         </table>
@@ -556,66 +580,78 @@
                 </div>
                 <div class="tab-pane pre-scrollable" id="shotsTab">
                     <form id="shotForm" role="form">
-                        <table class="table table-striped table-bordered table-condensed">
+                        <table data-bind="with: currentShot" class="table table-striped table-bordered table-condensed">
                             <tr>
                                 <td><label class="form-control-static">镜头名</label></td>
-                                <td><input type="text" class="form-control" id="Title__Shot" placeholder="输入镜头名">
+                                <td><input data-bind="value: title" type="text" class="form-control" id="Title__Shot"
+                                           placeholder="输入镜头名">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">主题词</label></td>
-                                <td><input type="text" class="form-control" id="Topic_words__Shot" placeholder="输入主题词">
+                                <td><input data-bind="value: topic_words" type="text" class="form-control"
+                                           id="Topic_words__Shot" placeholder="输入主题词">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">关键词</label></td>
-                                <td><input type="text" class="form-control" id="Key_words__Shot" placeholder="输入关键词">
+                                <td><input data-bind="value: key_words" type="text" class="form-control"
+                                           id="Key_words__Shot" placeholder="输入关键词">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">内容描述</label></td>
-                                <td><input type="text" class="form-control" id="Description__Shot" placeholder="输入内容描述">
+                                <td><input data-bind="value: description" type="text" class="form-control"
+                                           id="Description__Shot" placeholder="输入内容描述">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">拍摄地点</label></td>
-                                <td><input type="text" class="form-control" id="Location__Shot" placeholder="输入拍摄地点">
+                                <td><input data-bind="value: location" type="text" class="form-control"
+                                           id="Location__Shot" placeholder="输入拍摄地点">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">拍摄方式</label></td>
-                                <td><input type="text" class="form-control" id="Shootway__Shot" placeholder="输入拍摄方式">
+                                <td><input data-bind="value: shootway" type="text" class="form-control"
+                                           id="Shootway__Shot" placeholder="输入拍摄方式">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">景别</label></td>
-                                <td><input type="text" class="form-control" id="Sense_range__Shot" placeholder="输入景别">
+                                <td><input data-bind="value: sense_range" type="text" class="form-control"
+                                           id="Sense_range__Shot" placeholder="输入景别">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">拍摄角度</label></td>
-                                <td><input type="text" class="form-control" id="Angle__Shot" placeholder="输入拍摄角度">
+                                <td><input data-bind="value: angle" type="text" class="form-control" id="Angle__Shot"
+                                           placeholder="输入拍摄角度">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">现场同期声</label></td>
-                                <td><input type="text" class="form-control" id="Actual_sound__Shot"
+                                <td><input data-bind="value: actual_sound" type="text" class="form-control"
+                                           id="Actual_sound__Shot"
                                            placeholder="输入现场同期声">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">拍摄日期</label></td>
-                                <td><input type="text" class="form-control" id="Date_time__Shot" placeholder="输入拍摄日期">
+                                <td><input data-bind="value: date_time" type="text" class="form-control"
+                                           id="Date_time__Shot" placeholder="输入拍摄日期">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">入点</label></td>
-                                <td><input type="text" class="form-control" id="Time_start__Shot" placeholder="输入入点">
+                                <td><input data-bind="value: time_start" type="text" class="form-control"
+                                           id="Time_start__Shot" placeholder="输入入点">
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">实长</label></td>
-                                <td><input type="text" class="form-control" id="Time_end__Shot" placeholder="输入实长">
+                                <td><input data-bind="value: time_end" type="text" class="form-control"
+                                           id="Time_end__Shot" placeholder="输入实长">
                                 </td>
                             </tr>
                         </table>
@@ -623,30 +659,30 @@
                 </div>
             </div>
         </div>
-        {#        <div class="col-md-1">#}
-        {#            <ul class="nav nav-pills nav-stacked" role="tablist">#}
-        {#                <li class="active">#}
-        {#                    <a href="#programsTab" role="tab" data-toggle="tab">#}
-        {#                        节目#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#                <li>#}
-        {#                    <a href="#sectionsTab" role="tab" data-toggle="tab">#}
-        {#                        片段#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#                <li>#}
-        {#                    <a href="#scenesTab" role="tab" data-toggle="tab">#}
-        {#                        场景#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#                <li>#}
-        {#                    <a href="#shotsTab" role="tab" data-toggle="tab">#}
-        {#                        镜头#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#            </ul>#}
-        {#        </div>#}
+        <div class="col-md-1">
+            <ul id="DetailTabs" class="nav nav-pills nav-stacked" role="tablist">
+                <li class="active">
+                    <a href="#programsTab" role="tab" data-toggle="tab">
+                        节目
+                    </a>
+                </li>
+                <li>
+                    <a href="#sectionsTab" role="tab" data-toggle="tab">
+                        片段
+                    </a>
+                </li>
+                <li>
+                    <a href="#scenesTab" role="tab" data-toggle="tab">
+                        场景
+                    </a>
+                </li>
+                <li>
+                    <a href="#shotsTab" role="tab" data-toggle="tab">
+                        镜头
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="row">
         <div id="CatalogTab" role="tabpanel" class="col-md-5 table-responsive">
@@ -716,15 +752,18 @@
                                         class="glyphicon glyphicon-calendar"></i></span>
                                 <ul data-bind="foreach: sections">
                                     <li>
-                                        <span  data-bind="click: $root.changeToOtherLayer(1, $data, event)"   class="btn btn-info"><i data-bind="text: title"
+                                        <span data-bind="click: $root.changeToOtherLayer(1, $data, event)"
+                                              class="btn btn-info"><i data-bind="text: title"
                                                                       class="glyphicon glyphicon-minus"></i></span>
                                         <ul data-bind="foreach: scenes">
                                             <li>
-                                                <span  data-bind="click: $root.changeToOtherLayer(2, $data, event)" class="btn btn-info"><i data-bind="text: title"
+                                                <span data-bind="click: $root.changeToOtherLayer(2, $data, event)"
+                                                      class="btn btn-info"><i data-bind="text: title"
                                                                               class="glyphicon glyphicon-minus"></i></span>
                                                 <ul data-bind="foreach: shots">
                                                     <li>
-                                                        <span  data-bind="click: $root.changeToOtherLayer(3, $data, event)" class="btn btn-info">
+                                                        <span data-bind="click: $root.changeToOtherLayer(3, $data, event)"
+                                                              class="btn btn-info">
                                                             <i data-bind="text:title"
                                                                class="glyphicon glyphicon-minus"></i>
                                                         </span>
