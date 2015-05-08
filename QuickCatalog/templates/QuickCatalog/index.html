@@ -37,7 +37,9 @@
         <table class="col-md-12">
             <tr>
                 <td class="col-md-4 col-xs-12">
-
+                    <button type="button" class="btn btn-info">
+                        导入节目单
+                    </button>
                     <button type="button" class="btn btn-info">
                         保存
                     </button>
@@ -47,9 +49,7 @@
                     <button type="button" class="btn btn-info">
                         配置
                     </button>
-                    <button type="button" class="btn btn-info">
-                        帮助
-                    </button>
+
                     <button type="button" class="btn btn-info">
                         注销
                     </button>
@@ -518,7 +518,8 @@
                 </div>
                 <div class="tab-pane pre-scrollable" id="scenesTab">
                     <form id="sceneForm" role="form">
-                        <table data-bind="with: currentScene" class="table table-striped table-bordered table-condensed">
+                        <table data-bind="with: currentScene"
+                               class="table table-striped table-bordered table-condensed">
                             <tr>
                                 <td><label class="form-control-static">场景名</label></td>
                                 <td><input data-bind="value: title" type="text" class="form-control" id="Title__Sce"
@@ -802,7 +803,7 @@
                 </div>
                 <div class="tab-pane active pre-scrollable" id="KeyframeTab">
                     <!-- 关键帧预览 -->
-                    <div data-bind="foreach:keyframes" class="row text-center">
+                    <div data-bind="foreach:currentKeyframes" class="row text-center">
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
                                 <canvas data-bind="attr:{id: 'canvas' + id()}, event:{change: $root.drawImage($data, event)}"

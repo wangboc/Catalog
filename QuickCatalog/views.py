@@ -79,3 +79,10 @@ def getProgramInfo(request, id):
                 shot.keyframeList = [KeyFrame(keyframe) for keyframe in keyframeList]
     return HttpResponse(program.toJson(), content_type="application/json")
 
+
+def ParseFile():
+    file = "C:\Users\hoh\Projects\Catalog\QuickCatalog\static\QuickCatalog\FileForTest\桐乡新闻 2014-07-30.txt"
+    file.decode('utf8').encode('cp932')
+    input = open("C:\Users\hoh\Projects\Catalog\QuickCatalog\static\QuickCatalog\FileForTest\桐乡新闻 2014-07-30.txt".dencode('utf8').encode('cp936') , "r");
+    for line in input:
+         print line
