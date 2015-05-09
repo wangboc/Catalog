@@ -1,4 +1,6 @@
 # coding:utf-8
+import os
+
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -7,6 +9,7 @@ from models import SectionInfo
 from models import SceneInfo
 from models import ShotInfo
 from models import KeyFrame
+
 
 
 
@@ -80,9 +83,8 @@ def getProgramInfo(request, id):
     return HttpResponse(program.toJson(), content_type="application/json")
 
 
-def ParseFile():
-    file = "C:\Users\hoh\Projects\Catalog\QuickCatalog\static\QuickCatalog\FileForTest\桐乡新闻 2014-07-30.txt"
-    file.decode('utf8').encode('cp932')
-    input = open("C:\Users\hoh\Projects\Catalog\QuickCatalog\static\QuickCatalog\FileForTest\桐乡新闻 2014-07-30.txt".dencode('utf8').encode('cp936') , "r");
-    for line in input:
-         print line
+def getCatalogList(request):
+    jsonstr = json.dumps(os.listdir("C:\Users\ho\Desktop\串联单".decode('utf-8')), ensure_ascii=False,
+                         sort_keys=True,
+                         separators=(',', ':'))
+    return HttpResponse(jsonstr, content_type="application/json")
