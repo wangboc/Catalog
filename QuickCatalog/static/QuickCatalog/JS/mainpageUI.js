@@ -12,7 +12,7 @@ function KeyframeInfo(data) {
     self.section_id = self.json.section_id;
     self.scene_id = self.json.scene_id;
     self.shot_id = self.json.shot_id;
-}
+};
 function ShotInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
@@ -40,6 +40,11 @@ function ShotInfo(data) {
     self.reason3 = self.json.reason3;
     self.rating3 = self.json.rating3;
     self.ObjectID = self.json.ObjectID;
+    self.keyframes = ko.observableArray([]);
+    var kflist = $.map(self.json.keyframes, function (itemS) {
+        return new KeyframeInfo(itemS);
+    });
+    self.keyframes(kflist);
 }
 function SceneInfo(data) {
     var self = this;
@@ -67,6 +72,11 @@ function SceneInfo(data) {
     self.shots = ko.observableArray([]);
     for (var i = 0; i < self.json.shots.length; i++)
         self.shots.push(new ShotInfo(self.json.shots[i]));
+    self.keyframes = ko.observableArray([]);
+    var kflist = $.map(self.json.keyframes, function (itemS) {
+        return new KeyframeInfo(itemS);
+    });
+    self.keyframes(kflist);
 }
 function SectionInfo(data) {
     var self = this;
@@ -116,6 +126,14 @@ function SectionInfo(data) {
     self.scenes = ko.observableArray([]);
     for (var i = 0; i < self.json.scenes.length; i++)
         self.scenes.push(new SceneInfo(self.json.scenes[i]));
+
+    self.keyframes = ko.observableArray([]);
+    var kflist = $.map(self.json.keyframes, function (itemS) {
+        return new KeyframeInfo(itemS);
+    });
+    self.keyframes(kflist);
+
+
 }
 
 
@@ -218,7 +236,10 @@ var ProgramViewModel = function ViewModel() {
     self.test = ko.observable();
     self.shengdao = ko.observable();
     self.ObjectID = ko.observable();
+    //用于保存节目层自身的关键帧
     self.keyframes = ko.observableArray([]);
+    //用于暂存界面上展现的关键帧
+    self.currentKeyframes = ko.observableArray([]);
     self.sections = ko.observableArray([]);
     self.getprograminfo = function () {
         $.getJSON("/quickcatalog/23031/programinfo/", function (item) {
@@ -318,13 +339,11 @@ var ProgramViewModel = function ViewModel() {
                 return new KeyframeInfo(itemS);
             });
             self.keyframes(kflist);
-
+            self.currentKeyframes(kflist);
             var sectionlist = $.map(item.sections, function (itemS) {
                 return new SectionInfo(itemS);
             });
             self.sections(sectionlist);
-
-            self.currentSection(self.sections()[0]);
 
 
             $.ChangeToCatalogTree();
@@ -348,18 +367,23 @@ var ProgramViewModel = function ViewModel() {
                 var layerDepth = param;
             if (layerDepth == 0) {
                 $("#DetailTabs a[href='#programsTab']").tab("show");
+                self.currentKeyframes(data.keyframes());
             }
             else if (layerDepth == 1) {
                 $("#DetailTabs a[href='#sectionsTab']").tab("show");
                 self.currentSection(data);
+                self.currentKeyframes(data.keyframes());
+
             }
             else if (layerDepth == 2) {
                 $('#DetailTabs a[href="#scenesTab"]').tab('show');
                 self.currentScene(data);
+                self.currentKeyframes(data.keyframes());
             }
             else if (layerDepth == 3) {
                 $('#DetailTabs a[href="#shotsTab"]').tab('show');
                 self.currentShot(data);
+                self.currentKeyframes(data.keyframes());
             }
         }
     }

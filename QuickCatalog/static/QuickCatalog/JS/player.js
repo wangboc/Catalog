@@ -93,7 +93,7 @@ $(document).ready(function () {
 $.extend({
     ResetTree: function () {
         $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-        $('.tree li.parent_li > span').on('click', function (e) {
+        $('.tree li.parent_li > span').on('dblclick', function (e) {
             var children = $(this).parent('li.parent_li').find(' > ul > li');
             if (children.is(":visible")) {
                 children.hide('fast');
