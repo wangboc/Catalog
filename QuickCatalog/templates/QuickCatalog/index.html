@@ -82,7 +82,8 @@
         <div class="col-md-5">
 
             <video id="player" controls preload="auto" class="video-js vjs-default-skin" width="470" height="320">
-                <source src="http://10.1.70.88/1.mp4" type="video/mp4">
+                {#                <source src="http://10.1.70.88/1.mp4" type="video/mp4">#}
+                <source src="http://localhost/1.mp4" type="video/mp4">
                 {#                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">#}
             </video>
 
@@ -127,7 +128,7 @@
                 </div>
             </div>
         </div>
-        <div id="DetailTabs" role="tabpanel" class="col-md-6 table-responsive">
+        <div role="tabpanel" class="col-md-6 table-responsive">
             <div class="tab-content">
                 <div class="tab-pane pre-scrollable active" id="programsTab">
                     <form id="programForm" role="form">
@@ -142,7 +143,7 @@
                                 <td>
                                     <label class="form-control-static">题名说明</label>
                                 </td>
-                                <td><input data-bind="value: title_description" type=" text" class="form-control"
+                                <td><input data-bind="value: title_description" type="text" class="form-control"
                                            id="Title_description__Pro"
                                            placeholder="输入题名说明">
                                 </td>
@@ -623,30 +624,30 @@
                 </div>
             </div>
         </div>
-        {#        <div class="col-md-1">#}
-        {#            <ul class="nav nav-pills nav-stacked" role="tablist">#}
-        {#                <li class="active">#}
-        {#                    <a href="#programsTab" role="tab" data-toggle="tab">#}
-        {#                        节目#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#                <li>#}
-        {#                    <a href="#sectionsTab" role="tab" data-toggle="tab">#}
-        {#                        片段#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#                <li>#}
-        {#                    <a href="#scenesTab" role="tab" data-toggle="tab">#}
-        {#                        场景#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#                <li>#}
-        {#                    <a href="#shotsTab" role="tab" data-toggle="tab">#}
-        {#                        镜头#}
-        {#                    </a>#}
-        {#                </li>#}
-        {#            </ul>#}
-        {#        </div>#}
+        <div class="col-md-1">
+            <ul id="DetailTabs" class="nav nav-pills nav-stacked" role="tablist">
+                <li class="active">
+                    <a href="#programsTab" role="tab" data-toggle="tab">
+                        节目
+                    </a>
+                </li>
+                <li>
+                    <a href="#sectionsTab" role="tab" data-toggle="tab">
+                        片段
+                    </a>
+                </li>
+                <li>
+                    <a href="#scenesTab" role="tab" data-toggle="tab">
+                        场景
+                    </a>
+                </li>
+                <li>
+                    <a href="#shotsTab" role="tab" data-toggle="tab">
+                        镜头
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="row">
         <div id="CatalogTab" role="tabpanel" class="col-md-5 table-responsive">
@@ -716,15 +717,18 @@
                                         class="glyphicon glyphicon-calendar"></i></span>
                                 <ul data-bind="foreach: sections">
                                     <li>
-                                        <span  data-bind="click: $root.changeToOtherLayer(1, $data, event)"   class="btn btn-info"><i data-bind="text: title"
+                                        <span data-bind="click: $root.changeToOtherLayer(1, $data, event)"
+                                              class="btn btn-info"><i data-bind="text: title"
                                                                       class="glyphicon glyphicon-minus"></i></span>
                                         <ul data-bind="foreach: scenes">
                                             <li>
-                                                <span  data-bind="click: $root.changeToOtherLayer(2, $data, event)" class="btn btn-info"><i data-bind="text: title"
+                                                <span data-bind="click: $root.changeToOtherLayer(2, $data, event)"
+                                                      class="btn btn-info"><i data-bind="text: title"
                                                                               class="glyphicon glyphicon-minus"></i></span>
                                                 <ul data-bind="foreach: shots">
                                                     <li>
-                                                        <span  data-bind="click: $root.changeToOtherLayer(3, $data, event)" class="btn btn-info">
+                                                        <span data-bind="click: $root.changeToOtherLayer(3, $data, event)"
+                                                              class="btn btn-info">
                                                             <i data-bind="text:title"
                                                                class="glyphicon glyphicon-minus"></i>
                                                         </span>

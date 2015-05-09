@@ -12,7 +12,7 @@ function KeyframeInfo(data) {
     self.section_id = self.json.section_id;
     self.scene_id = self.json.scene_id;
     self.shot_id = self.json.shot_id;
-};
+}
 function ShotInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
@@ -344,18 +344,22 @@ var ProgramViewModel = function ViewModel() {
 
     self.changeToOtherLayer = function (param, data, event) {
         if (event) {
-            var layerDepth = param;
+            if (event.type == "click")
+                var layerDepth = param;
             if (layerDepth == 0) {
                 $("#DetailTabs a[href='#programsTab']").tab("show");
             }
             else if (layerDepth == 1) {
                 $("#DetailTabs a[href='#sectionsTab']").tab("show");
+                self.currentSection(data);
             }
             else if (layerDepth == 2) {
                 $('#DetailTabs a[href="#scenesTab"]').tab('show');
+                self.currentScene(data);
             }
             else if (layerDepth == 3) {
                 $('#DetailTabs a[href="#shotsTab"]').tab('show');
+                self.currentShot(data);
             }
         }
     }

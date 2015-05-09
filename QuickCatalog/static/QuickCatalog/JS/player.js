@@ -100,7 +100,7 @@ $.extend({
                 if ($(this).attr('title', 'Expand this branch').find(' > i').hasClass('glyphicon-minus'))
                     $(this).attr('title', 'Expand this branch').find(' > i').addClass('glyphicon glyphicon-plus').removeClass('glyphicon-minus');
             } else {
-                children.show('fast');
+                children.show('slow');
                 if ($(this).attr('title', 'Expand this branch').find(' > i').hasClass('glyphicon-plus'))
                     $(this).attr('title', 'Collapse this branch').find(' > i').addClass('glyphicon glyphicon-minus').removeClass('glyphicon-plus');
             }
