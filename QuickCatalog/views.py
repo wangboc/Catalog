@@ -1,5 +1,6 @@
 # coding:utf-8
 import os
+import re
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -9,6 +10,19 @@ from models import SectionInfo
 from models import SceneInfo
 from models import ShotInfo
 from models import KeyFrame
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,8 +97,49 @@ def getProgramInfo(request, id):
     return HttpResponse(program.toJson(), content_type="application/json")
 
 
-def getCatalogList(request):
-    jsonstr = json.dumps(os.listdir("C:\Users\ho\Desktop\串联单".decode('utf-8')), ensure_ascii=False,
+def getPreCatalogList(request):
+    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+    jsonstr = json.dumps(os.listdir(STATIC_ROOT + "\QuickCatalog\PlayList".decode('utf-8')), ensure_ascii=False,
+                         sort_keys=True,
+                         separators=(',', ':'))
+    return HttpResponse(jsonstr, content_type="application/json")
+
+
+def __ParseTimeSpan__(timeold, timenew):
+    RexDateString = re.compile(r'\d{2}:\d{2}:\d{2}:\d{2}')
+    timeo = RexDateString.findall(timeold)  # 00:00:00:00
+    timen = RexDateString.findall(timenew)  # 00:10:00:00
+    RexDateString = re.compile(r':')
+    timeoL = RexDateString.split(timeo[0])  # [00, 00, 00, 00]
+    timenL = RexDateString.split(timen[0])  # [00, 10, 00, 00]
+    timeoLength = ((int(timeoL[0]) * 60 + int(timeoL[1])) * 60 + int(timeoL[2])) * 25 + int(timeoL[3])  # 换算为帧数
+    timenLength = ((int(timenL[0]) * 60 + int(timenL[1])) * 60 + int(timenL[2])) * 25 + int(timenL[3])  # 换算为帧数
+    timeFrames = timenLength + timeoLength  # 出点帧数
+    Frame = timeFrames % 25
+    Second = (timeFrames - Frame) / 25 % 60
+    Minints = ((timeFrames - Frame) / 25 - Second) / 60 % 60
+    Hours = (((timeFrames - Frame) / 25 - Second) / 60 - Minints) / 60
+    time = str(Hours) + ":" + str(Minints) + ":" + str(Second) + ":" + str(Frame)
+    return [timeo, timen, time]  # 入点 时长 出点
+
+
+def getPreCatalogDetail(request):
+    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-07-30.txt"
+    file = file.decode('utf-8')
+    input = open(file, 'r')
+    NewParamCount = 0
+    Lines = []
+    timeold = "1900-01-01  00:00:00:00"
+    for line in input.readlines():
+        Lines.append(line)
+        print  line.decode('gbk')
+        RexDateString = re.compile(r'\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}:\d{2}:\d{2}')
+        position = RexDateString.search(line)
+        if (position):
+            timenew = RexDateString.findall(line)
+            __ParseTimeSpan__(timeold, timenew[0])  # 解析出入点 时长 出点
+    jsonstr = json.dumps(Lines, ensure_ascii=False,
                          sort_keys=True,
                          separators=(',', ':'))
     return HttpResponse(jsonstr, content_type="application/json")
