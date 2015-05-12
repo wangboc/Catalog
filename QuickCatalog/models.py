@@ -11,6 +11,7 @@ class ProgramInfo():
     sectionList = []
     __Json__ = ""
     keyframeList = []
+    programDic = {}
 
     def toJson(self):
         self.programDic.setdefault("sections", [])
@@ -19,11 +20,13 @@ class ProgramInfo():
             self.programDic.get("sections").append(section.toJson())
         for keyframe in self.keyframeList:
             self.programDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.programDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
-                                   separators=(',', ':'))
+        self.__Json__ = json.dumps(self.programDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
         return self.__Json__
 
     def __init__(self, programDic):
+        self.sectionList = []
+        self.__Json__ = ""
+        self.keyframeList = []
         self.programDic = programDic
         self.media_id = programDic["media_id"]
         self.title = programDic["title"]
@@ -122,6 +125,7 @@ class SectionInfo:
     sceneList = []
     __Json__ = ""
     keyframeList = []
+    sectionDic = {}
 
     def toJson(self):
         self.sectionDic.setdefault("scenes", [])
@@ -130,11 +134,14 @@ class SectionInfo:
             self.sectionDic.get("scenes").append(scene.toJson())
         for keyframe in self.keyframeList:
             self.sectionDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4
-                                   )
+        self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
         return self.__Json__
 
+
     def __init__(self, sectionDic):
+        self.sceneList = []
+        self.__Json__ = ""
+        self.keyframeList = []
         self.sectionDic = sectionDic
         self.id = sectionDic["id"]
         self.media_id = sectionDic["media_id"]
@@ -184,7 +191,7 @@ class SceneInfo:
     shotList = []
     __Json__ = ""
     keyframeList = []
-
+    sceneDic = {}
 
     def toJson(self):
         self.sceneDic.setdefault("shots", [])
@@ -193,11 +200,13 @@ class SceneInfo:
             self.sceneDic.get("shots").append(shot.toJson())
         for keyframe in self.keyframeList:
             self.sceneDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.sceneDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
-                                   separators=(',', ':'))
+        self.__Json__ = json.dumps(self.sceneDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
         return self.__Json__
 
     def __init__(self, sceneDic):
+        self.shotList = []
+        self.__Json__ = ""
+        self.keyframeList = []
         self.sceneDic = sceneDic
         self.id = sceneDic["id"]
         self.section_id = sceneDic["section_id"]
@@ -224,16 +233,18 @@ class SceneInfo:
 class ShotInfo:
     __Json__ = ""
     keyframeList = []
+    shotDic = {}
 
     def toJson(self):
         self.shotDic.setdefault("keyframes", [])
         for keyframe in self.keyframeList:
             self.shotDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.shotDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True, indent=4,
-                                   separators=(',', ':'))
+        self.__Json__ = json.dumps(self.shotDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
         return self.__Json__
 
     def __init__(self, shotDic):
+        self.__Json__ = ""
+        self.keyframeList = []
         self.shotDic = shotDic
         self.id = shotDic["id"]
         self.scene_id = shotDic["scene_id"]

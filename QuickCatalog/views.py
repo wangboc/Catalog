@@ -1,4 +1,5 @@
 # coding:utf-8
+
 import os
 import re
 
@@ -10,19 +11,6 @@ from models import SectionInfo
 from models import SceneInfo
 from models import ShotInfo
 from models import KeyFrame
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -116,11 +104,19 @@ def __ParseTimeSpan__(timeold, timenew):
     timenLength = ((int(timenL[0]) * 60 + int(timenL[1])) * 60 + int(timenL[2])) * 25 + int(timenL[3])  # 换算为帧数
     timeFrames = timenLength + timeoLength  # 出点帧数
     Frame = timeFrames % 25
+    FrameS = str(Frame)
     Second = (timeFrames - Frame) / 25 % 60
+    SecondS = str(Second)
     Minints = ((timeFrames - Frame) / 25 - Second) / 60 % 60
+    MinintsS = str(Minints)
     Hours = (((timeFrames - Frame) / 25 - Second) / 60 - Minints) / 60
-    time = str(Hours) + ":" + str(Minints) + ":" + str(Second) + ":" + str(Frame)
-    return [timeo, timen, time]  # 入点 时长 出点
+    HoursS = str(Hours)
+    if Frame < 10: FrameS = "0" + str(Frame)
+    if Second < 10: SecondS = "0" + str(Second)
+    if Minints < 10: MinintsS = "0" + str(Minints)
+    if Hours < 10: HoursS = "0" + str(Hours)
+    time = HoursS + ":" + MinintsS + ":" + SecondS + ":" + FrameS
+    return [timeo[0], timen[0], time]  # 入点 时长 出点
 
 
 def getPreCatalogDetail(request):
@@ -128,18 +124,225 @@ def getPreCatalogDetail(request):
     file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-07-30.txt"
     file = file.decode('utf-8')
     input = open(file, 'r')
-    NewParamCount = 0
-    Lines = []
+
     timeold = "1900-01-01  00:00:00:00"
+    descriptionTemp = ""
+    titleTemp = ""
+    time_start_temp = ""
+    time_end_temp = ""
+
+    program = {}
+    program["title"] = "桐乡新闻 2014-07-30"
+    program["media_id"] = ""
+    program["title2"] = ""
+    program["title_alter"] = ""
+    program["media_state"] = ""
+    program["cataloger"] = ""
+    program["approver"] = ""
+    program["id"] = ""
+    program["description"] = ""
+    program["class_name"] = ""
+    program["topic_words"] = ""
+    program["key_words"] = ""
+    program["subtitle"] = ""
+    program["media_duty"] = ""
+    program["publisher"] = ""
+    program["audience"] = ""
+    program["media_column"] = ""
+    program["source_id"] = ""
+    program["post_picture"] = ""
+    program["post_picture"] = ""
+    program["publish_date"] = ""
+    program["time_length"] = ""
+    program["carry_type"] = ""
+    program["media_format"] = ""
+    program["additional_logo"] = ""
+    program["media_series"] = ""
+    program["media_type"] = ""
+    program["location"] = ""
+    program["path"] = ""
+    program["rating"] = ""
+    program["reason"] = ""
+    program["zhishi"] = ""
+    program["aspect"] = ""
+    program["audio_format"] = ""
+    program["source_method"] = ""
+    program["source_provider"] = ""
+    program["time_start"] = "00:00:00:00"
+    program["color"] = ""
+    program["sound_language"] = ""
+    program["subtitle_language"] = ""
+    program["media_class"] = ""
+    program["xintai"] = ""
+    program["creater"] = ""
+    program["rating2"] = ""
+    program["approver2"] = ""
+    program["reason2"] = ""
+    program["subordinate_title"] = ""
+    program["title_description"] = ""
+    program["series_title"] = ""
+    program["episodes_totalnum"] = ""
+    program["episodes_num"] = ""
+    program["tv_class"] = ""
+    program["produced_date"] = ""
+    program["parallel_proper_title"] = ""
+    program["parallel_series_title"] = ""
+    program["character"] = ""
+    program["date_of_event"] = ""
+    program["version_des"] = ""
+    program["producer"] = ""
+    program["name_of_cpo"] = ""
+    program["cp_statement"] = ""
+    program["audio_quality"] = ""
+    program["video_quality"] = ""
+    program["video_bit_rate"] = ""
+    program["video_coding_format"] = ""
+    program["video_sam_type"] = ""
+    program["isrc"] = ""
+    program["relations_id"] = ""
+    program["years_covered"] = ""
+    program["spatial"] = ""
+    program["published_date"] = ""
+    program["cp_statement1"] = ""
+    program["yuzhong"] = ""
+    program["awards"] = ""
+    program["xilie_name"] = ""
+    program["class_num"] = ""
+    program["class_time"] = ""
+    program["reason3"] = ""
+    program["upload_time"] = ""
+    program["approve_time"] = ""
+    program["approve2_time"] = ""
+    program["catalog_times"] = ""
+    program["approve_times"] = ""
+    program["approve2_times"] = ""
+    program["approve3_time"] = ""
+    program["rating3"] = ""
+    program["level"] = ""
+    program["time_end"] = ""
+    program["test"] = ""
+    program["shengdao"] = ""
+    program["ObjectID"] = ""
+    Programinfo = ProgramInfo(program)
+
+    SectionCount = 0
+
     for line in input.readlines():
-        Lines.append(line)
-        print  line.decode('gbk')
+        if line == '\n':
+            continue
         RexDateString = re.compile(r'\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}:\d{2}:\d{2}')
         position = RexDateString.search(line)
         if (position):
-            timenew = RexDateString.findall(line)
-            __ParseTimeSpan__(timeold, timenew[0])  # 解析出入点 时长 出点
-    jsonstr = json.dumps(Lines, ensure_ascii=False,
-                         sort_keys=True,
-                         separators=(',', ':'))
-    return HttpResponse(jsonstr, content_type="application/json")
+            # 解析新片段层入点 时长 出点
+            timelist = __ParseTimeSpan__(timeold, RexDateString.findall(line)[0])
+            if SectionCount != 0:
+                # =========================保存上一片段层信息===================================================
+                section = {}
+                section["title"] = titleTemp
+                section["description"] = descriptionTemp
+                section["time_start"] = time_start_temp
+                section["time_end"] = time_end_temp
+                section["id"] = ""
+                section["media_id"] = ""
+                section["topic_words"] = ""
+                section["key_words"] = ""
+                section["post_picture"] = ""
+                section["section_duty"] = ""
+                section["subtitle"] = ""
+                section["rating"] = ""
+                section["reason"] = ""
+                section["title2"] = ""
+                section["class_name"] = ""
+                section["actual_sound"] = ""
+                section["program_form"] = ""
+                section["date_time"] = ""
+                section["section_series"] = ""
+                section["rating2"] = ""
+                section["reason2"] = ""
+                section["contributor"] = ""
+                section["audio_channel_num"] = ""
+                section["audio_channel_lan"] = ""
+                section["subtitle_num"] = ""
+                section["subtitle_lan"] = ""
+                section["years_covered"] = ""
+                section["spatial"] = ""
+                section["source"] = ""
+                section["data_source_way"] = ""
+                section["data_source_man"] = ""
+                section["yuzhong"] = ""
+                section["years"] = ""
+                section["awards"] = ""
+                section["upload_time"] = ""
+                section["reason3"] = ""
+                section["rating3"] = ""
+                section["creater"] = ""
+                section["pcreater"] = ""
+                section["create_method"] = ""
+                section["create_other_info"] = ""
+                section["ObjectID"] = ""
+                Sectioninfo = SectionInfo(section)
+                Programinfo.sectionList.append(Sectioninfo)
+                # ===========================================================================================
+
+            details = RexDateString.split(line)
+            descriptionTemp = details[1]
+            titleTemp = details[0]
+            time_start_temp = timelist[0]
+            time_end_temp = timelist[1]
+            timeold = timelist[2]  # 设定下一片段层开始时间
+            SectionCount += 1
+        else:
+            descriptionTemp += line
+
+    # =========================保存上一片段层信息===================================================
+    section = {}
+    section["title"] = titleTemp
+    section["description"] = descriptionTemp
+    section["time_start"] = time_start_temp
+    section["time_end"] = time_end_temp
+    section["id"] = ""
+    section["media_id"] = ""
+    section["topic_words"] = ""
+    section["key_words"] = ""
+    section["post_picture"] = ""
+    section["section_duty"] = ""
+    section["subtitle"] = ""
+    section["rating"] = ""
+    section["reason"] = ""
+    section["title2"] = ""
+    section["class_name"] = ""
+    section["actual_sound"] = ""
+    section["program_form"] = ""
+    section["date_time"] = ""
+    section["section_series"] = ""
+    section["rating2"] = ""
+    section["reason2"] = ""
+    section["contributor"] = ""
+    section["audio_channel_num"] = ""
+    section["audio_channel_lan"] = ""
+    section["subtitle_num"] = ""
+    section["subtitle_lan"] = ""
+    section["years_covered"] = ""
+    section["spatial"] = ""
+    section["source"] = ""
+    section["data_source_way"] = ""
+    section["data_source_man"] = ""
+    section["yuzhong"] = ""
+    section["years"] = ""
+    section["awards"] = ""
+    section["upload_time"] = ""
+    section["reason3"] = ""
+    section["rating3"] = ""
+    section["creater"] = ""
+    section["pcreater"] = ""
+    section["create_method"] = ""
+    section["create_other_info"] = ""
+    section["ObjectID"] = ""
+    Sectioninfo = SectionInfo(section)
+    Programinfo.sectionList.append(Sectioninfo)
+    # ===========================================================================================
+    # jsonstr = json.dumps(Programinfo.toJson(), ensure_ascii=False,
+    # sort_keys=True,
+    # separators=(',', ':'))
+    input.close()
+    return HttpResponse(Programinfo.toJson(), content_type="application/json")

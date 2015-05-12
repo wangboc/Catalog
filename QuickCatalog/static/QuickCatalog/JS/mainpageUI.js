@@ -242,7 +242,8 @@ var ProgramViewModel = function ViewModel() {
     self.currentKeyframes = ko.observableArray([]);
     self.sections = ko.observableArray([]);
     self.getprograminfo = function () {
-        $.getJSON("/quickcatalog/23031/programinfo/", function (item) {
+        //$.getJSON("/quickcatalog/23031/programinfo/", function (item) {
+        $.getJSON("/quickcatalog/getPreCatalogDetail/", function (item) {
             self.media_id(item.media_id);
             self.title(item.title);
             self.title2(item.title2);
