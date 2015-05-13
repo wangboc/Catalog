@@ -115,6 +115,15 @@ $.extend({
    }
 });
 
+$.extend({
+   ChangeToPreCatalogContentPage: function(data){
+       if(data == 0)
+            $('#contentPage a[href="#KeyframeTab"]').tab('show');
+       else if(data == 1)
+            $('#contentPage a[href="#OtherInfoTab"]').tab('show');
+   }
+});
+
 
 // initialize video.js
 var player = videojs("player");
