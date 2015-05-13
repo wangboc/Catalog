@@ -1,4 +1,4 @@
-# coding:utf-8
+# -*- coding: utf-8 -*-
 
 import os
 import re
@@ -11,6 +11,7 @@ from models import SectionInfo
 from models import SceneInfo
 from models import ShotInfo
 from models import KeyFrame
+
 
 
 
@@ -230,6 +231,7 @@ def getPreCatalogDetail(request):
     for line in input.readlines():
         if line == '\n':
             continue
+        line = line.decode('ascii').encode('utf8')
         RexDateString = re.compile(r'\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}:\d{2}:\d{2}')
         position = RexDateString.search(line)
         if (position):
