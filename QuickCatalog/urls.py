@@ -10,4 +10,6 @@ urlpatterns = patterns('',
                        url(r'^(?P<id>\d+)/programinfo/$', views.getProgramInfo, name='getProgramInfo'),
                        url(r'^getPreCatalogList/$', views.getPreCatalogList, name='getPreCatalogList'),
                        url(r'^getPreCatalogDetail/$', views.getPreCatalogDetail, name='getPreCatalogDetail'),
+                       url(r'^getPreCatalogFile/$', views.getPreCatalogFile, name='getPreCatalogFile'),
+
                        )

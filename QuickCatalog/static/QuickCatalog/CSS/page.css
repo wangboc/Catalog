@@ -27,7 +27,7 @@
 }
 
 .col-md-5{
-    padding-right: 0;
+    padding-right: 0;padding-left:  0;
 }
 
 .col-md-6{
@@ -41,6 +41,8 @@
     margin-top: auto;
     margin-bottom: auto;
 }
+
+
 
 .row {
 

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding:utf-8
 
 import os
 import re
@@ -17,10 +17,14 @@ from models import KeyFrame
 
 
 
-
 # Create your views here.
 import json
 from django.db import connection
+
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
 def index(request):
@@ -231,7 +235,8 @@ def getPreCatalogDetail(request):
     for line in input.readlines():
         if line == '\n':
             continue
-        line = line.decode('ascii').encode('utf8')
+
+        line = line.decode('gbk')
         RexDateString = re.compile(r'\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}:\d{2}:\d{2}')
         position = RexDateString.search(line)
         if (position):
@@ -348,3 +353,17 @@ def getPreCatalogDetail(request):
     # separators=(',', ':'))
     input.close()
     return HttpResponse(Programinfo.toJson(), content_type="application/json")
+
+
+def getPreCatalogFile(request):
+    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-07-30.txt"
+    file = file.decode('utf-8')
+    input = open(file, 'r')
+    text = ""
+    for line in input.readlines():
+        text += line.decode('gbk')
+    input.close()
+    fileDict = dict(content=text)
+    contentjson = json.dumps(fileDict)
+    return HttpResponse(contentjson, content_type="application/json")
