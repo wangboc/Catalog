@@ -26,23 +26,20 @@
     margin-left: 10px;
 }
 
-.col-md-5{
-    padding-right: 0;padding-left:  0;
+.col-md-5 {
+    padding-right: 0;
+    padding-left: 0;
 }
 
-.col-md-6{
+.col-md-6 {
     padding-left: 0;
     padding-bottom: 0;
 }
-
-
 
 .progress {
     margin-top: auto;
     margin-bottom: auto;
 }
-
-
 
 .row {
 
@@ -124,4 +121,88 @@
 
 .ulCustom {
     -webkit-padding-start: 0;
+}
+
+/*自定义textarea*/
+.b1 {
+    height: 20px;
+    border: 1px solid #7f9db9;
+    line-height: 20px;
+    padding: 0
+}
+
+input.btn {
+    height: auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000
+}
+
+#main {
+    color: #666
+}
+
+textarea {
+    border: 1px solid #7f9db9;
+    font-size: 14px;
+    width: 100%;
+    color: #000
+}
+
+input {
+    font-size: 14px;
+    color: #000
+}
+
+#main h3 {
+    color: #000
+}
+
+.grey {
+    color: #999
+}
+
+em {
+    font-style: normal;
+    color: #FF0000;
+    font-size: 12px;
+}
+
+#msg1, #msg2, #msg3, #msg4 {
+    display: none
+}
+
+#ol {
+    position: absolute;
+    z-index: 1;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    background: #ecf0f5;
+    width: 30px;
+    text-align: left;
+}
+
+#li {
+    background: #ecf0f5;
+    /*height: 160px;*/
+    overflow: hidden;
+    width: 30px;
+    border-right: 0;
+    line-height: 20px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 2px;
+    text-align: center
+}
+
+#c2 {
+    font-family: Arial, Helvetica, sans-serif;
+    /*height: 160px;*/
+    margin: 0px;
+    width: 100%;
+    padding-left: 40px;
+    /*overflow-x: hidden;*/
+    line-height: 20px;
+    overflow: scroll;
 }

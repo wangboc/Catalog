@@ -108,20 +108,32 @@ $.extend({
         });
     }
 });
-
 $.extend({
-   ChangeToCatalogTree: function(){
-       $('#CatalogTab a[href="#LayerTreeTab"]').tab('show');
-   }
+    //pos 格式：00:00:00:00，需要转换为秒
+    SetPlayPosition: function (pos) {
+        if (pos == "")return;
+        hourInt = parseInt(pos.substring(0, 2));
+        minitInt = parseInt(pos.substring(3, 5));
+        secondInt = parseInt(pos.substring(6, 8));
+        frameInt = parseInt(pos.substring(9, 11));
+        time = (hourInt * 60 + minitInt) * 60 + secondInt + frameInt / 25
+        var player = videojs("player");
+        player.currentTime(time);
+    }
+});
+$.extend({
+    ChangeToCatalogTree: function () {
+        $('#CatalogTab a[href="#LayerTreeTab"]').tab('show');
+    }
 });
 
 $.extend({
-   ChangeToPreCatalogContentPage: function(data){
-       if(data == 0)
+    ChangeToPreCatalogContentPage: function (data) {
+        if (data == 0)
             $('#contentPage a[href="#KeyframeTab"]').tab('show');
-       else if(data == 1)
+        else if (data == 1)
             $('#contentPage a[href="#OtherInfoTab"]').tab('show');
-   }
+    }
 });
 
 

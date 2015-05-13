@@ -58,7 +58,7 @@
                                     <span class="badge btn-info">串联单 :</span>
                                     <table class="table table-bordered  table-hover table-striped  table-condensed">
                                         <tr data-bind="event: { dblclick : function(data, event){getprograminfo(0, data, event)}}">
-                                            <td>新闻视野 20110-12-1</td>
+                                            <td>桐乡新闻 2014-07-30</td>
                                         </tr>
 
                                     </table>
@@ -173,7 +173,7 @@
                                 <td>
                                     <label class="form-control-static">内容描述</label>
                                 </td>
-                                <td><textarea rows="5" data-bind="value: description" type="text" class="form-control"
+                                <td><textarea rows="8" data-bind="value: description" type="text" class="form-control"
                                               id="Description__Pro" placeholder="输入内容描述"></textarea>
                                 </td>
                             </tr>
@@ -441,7 +441,7 @@
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">内容描述</label></td>
-                                <td><textarea rows="5" data-bind="value: description" type="text" class="form-control"
+                                <td><textarea rows="8" data-bind="value: description" type="text" class="form-control"
                                               id="Description__Sec" placeholder="输入内容描述"></textarea>
                                 </td>
                             </tr>
@@ -586,8 +586,8 @@
                             <tr>
                             <tr>
                                 <td><label class="form-control-static">现场同期声</label></td>
-                                <td><input data-bind="value: natural_sound" type="text" class="form-control"
-                                           id="Natural_sound__Sce"
+                            <td><input data-bind="value: natural_sound" type="text" class="form-control"
+                                       id="Natural_sound__Sce"
                                            placeholder="输入现场同期声">
                                 </td>
                             </tr>
@@ -734,44 +734,44 @@
 
 
                         <tr data-bind="event: { dblclick : function(data, event){getprograminfo(1, data, event)}}">
-                            <td>新闻视野 20110-12-1</td>
+                            <td>桐乡新闻 2011-04-01</td>
                             <td>2014-10-12</td>
                             <td>待编目</td>
                         </tr>
                         <tr>
-                            <td>新闻视野 20110-12-2</td>
+                            <td>桐乡新闻 2011-04-02</td>
                             <td>2014-10-12</td>
                             <td>一审未通过</td>
                         </tr>
 
                         <tr>
-                            <td>新闻视野 20110-12-3</td>
+                            <td>桐乡新闻 2011-04-03</td>
                             <td>2014-10-12</td>
                             <td>待编目</td>
                         </tr>
 
                         <tr>
-                            <td>新闻视野 20110-12-4</td>
+                            <td>桐乡新闻 2011-04-04</td>
                             <td>2014-10-12</td>
                             <td>待编目</td>
                         </tr>
                         <tr>
-                            <td>新闻视野 20110-12-5</td>
+                            <td>桐乡新闻 2011-04-05</td>
                             <td>2014-10-12</td>
                             <td>一审未通过</td>
                         </tr>
                         <tr>
-                            <td>新闻视野 20110-12-6</td>
+                            <td>桐乡新闻 2011-04-06</td>
                             <td>2014-10-12</td>
                             <td>一审未通过</td>
                         </tr>
                         <tr>
-                            <td>新闻视野 20110-12-12</td>
-                            <td>2014-10-12</td>
+                            <td>桐乡新闻 2011-04-07</td>
+                            <td>2011-04-01</td>
                             <td>一审未通过</td>
                         </tr>
                         <tr>
-                            <td>新闻视野 20110-12-12</td>
+                            <td>桐乡新闻 2011-04-08</td>
                             <td>2014-10-12</td>
                             <td>一审未通过</td>
                         </tr>
@@ -830,14 +830,16 @@
         </div>
         <div id="contentPage" role="tabpanel" class="col-md-6">
             <div class="tab-content">
-                <div class="tab-pane pre-scrollable" id="OtherInfoTab">
+                <div class="tab-pane " id="OtherInfoTab">
                     <!-- 其他信息 -->
-                    {#                    <textarea style="width: 100%" rows="14" data-bind="text: $root.playlist"></textarea>#}
-                    <div class="col-md-1" id="ol">
-                        <textarea cols="1" rows="15" id="li" disabled></textarea>
+                    <div id="ol">
+                        <textarea cols="2" rows="14" id="li" disabled></textarea>
                     </div>
-                    <div class="col-md-5">
-                        <textarea name="co" rows="14" wrap="off" id="c2" onkeyup="keyUp()" onscroll="G('li').scrollTop = this.scrollTop;" class="grey" disabled> </textarea></div>
+                    <div>
+                        <textarea data-bind="text: $root.playlist" name="co" rows="14" wrap="off" id="c2"
+                                  onkeyup="keyUp()" onfocus="keyUp()"
+                                  onscroll="G('li').scrollTop = this.scrollTop;" class="grey"> </textarea>
+                    </div>
                 </div>
                 <div class="tab-pane active pre-scrollable" id="KeyframeTab">
                     <!-- 关键帧预览 -->

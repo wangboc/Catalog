@@ -8,38 +8,38 @@ function KeyframeInfo(data) {
     self.title = ko.observable(self.json.title);
     self.keyframe = ko.observable(self.json.keyframe);
     self.position = ko.observable(self.json.position);
-    self.media_id = self.json.media_id;
-    self.section_id = self.json.section_id;
-    self.scene_id = self.json.scene_id;
-    self.shot_id = self.json.shot_id;
+    self.media_id = ko.observable(self.json.media_id);
+    self.section_id = ko.observable(self.json.section_id);
+    self.scene_id = ko.observable(self.json.scene_id);
+    self.shot_id = ko.observable(self.json.shot_id);
 };
 function ShotInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
-    self.id = self.json.id;
-    self.scene_id = self.json.scene_id;
-    self.title = self.json.title;
-    self.description = self.json.description;
-    self.topic_words = self.json.topic_words;
-    self.key_words = self.json.key_words;
-    self.post_picture = self.json.post_picture;
-    self.time_start = self.json.time_start;
-    self.time_end = self.json.time_end;
-    self.rating = self.json.rating;
-    self.reason = self.json.reason;
-    self.location = self.json.location;
-    self.date_time = self.json.date_time;
-    self.subtitle = self.json.subtitle;
-    self.shootway = self.json.shootway;
-    self.rating2 = self.json.rating2;
-    self.sense_range = self.json.sense_range;
-    self.angle = self.json.angle;
-    self.actual_sound = self.json.actual_sound;
-    self.reason2 = self.json.reason2;
-    self.upload_time = self.json.upload_time;
-    self.reason3 = self.json.reason3;
-    self.rating3 = self.json.rating3;
-    self.ObjectID = self.json.ObjectID;
+    self.id = ko.observable(self.json.id);
+    self.scene_id = ko.observable(self.json.scene_id);
+    self.title = ko.observable(self.json.title);
+    self.description = ko.observable(self.json.description);
+    self.topic_words = ko.observable(self.json.topic_words);
+    self.key_words = ko.observable(self.json.key_words);
+    self.post_picture = ko.observable(self.json.post_picture);
+    self.time_start = ko.observable(self.json.time_start);
+    self.time_end = ko.observable(self.json.time_end);
+    self.rating = ko.observable(self.json.rating);
+    self.reason = ko.observable(self.json.reason);
+    self.location = ko.observable(self.json.location);
+    self.date_time = ko.observable(self.json.date_time);
+    self.subtitle = ko.observable(self.json.subtitle);
+    self.shootway = ko.observable(self.json.shootway);
+    self.rating2 = ko.observable(self.json.rating2);
+    self.sense_range = ko.observable(self.json.sense_range);
+    self.angle = ko.observable(self.json.angle);
+    self.actual_sound = ko.observable(self.json.actual_sound);
+    self.reason2 = ko.observable(self.json.reason2);
+    self.upload_time = ko.observable(self.json.upload_time);
+    self.reason3 = ko.observable(self.json.reason3);
+    self.rating3 = ko.observable(self.json.rating3);
+    self.ObjectID = ko.observable(self.json.ObjectID);
     self.keyframes = ko.observableArray([]);
     var kflist = $.map(self.json.keyframes, function (itemS) {
         return new KeyframeInfo(itemS);
@@ -49,26 +49,26 @@ function ShotInfo(data) {
 function SceneInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
-    self.id = self.json.id;
-    self.section_id = self.json.section_id;
-    self.title = self.json.title;
-    self.description = self.json.description;
-    self.topic_words = self.json.topic_words;
-    self.key_words = self.json.key_words;
-    self.post_picture = self.json.post_picture;
-    self.time_start = self.json.time_start;
-    self.time_end = self.json.time_end;
-    self.rating = self.json.rating;
-    self.reason = self.json.reason;
-    self.subtitle = self.json.subtitle;
-    self.rating2 = self.json.rating2;
-    self.reason2 = self.json.reason2;
-    self.date_of_event = self.json.date_of_event;
-    self.natural_sound = self.json.natural_sound;
-    self.upload_time = self.json.upload_time;
-    self.reason3 = self.json.reason3;
-    self.rating3 = self.json.rating3;
-    self.ObjectID = self.json.ObjectID;
+    self.id = ko.observable(self.json.id);
+    self.section_id = ko.observable(self.json.section_id);
+    self.title = ko.observable(self.json.title);
+    self.description = ko.observable(self.json.description);
+    self.topic_words = ko.observable(self.json.topic_words);
+    self.key_words = ko.observable(self.json.key_words);
+    self.post_picture = ko.observable(self.json.post_picture);
+    self.time_start = ko.observable(self.json.time_start);
+    self.time_end = ko.observable(self.json.time_end);
+    self.rating = ko.observable(self.json.rating);
+    self.reason = ko.observable(self.json.reason);
+    self.subtitle = ko.observable(self.json.subtitle);
+    self.rating2 = ko.observable(self.json.rating2);
+    self.reason2 = ko.observable(self.json.reason2);
+    self.date_of_event = ko.observable(self.json.date_of_event);
+    self.natural_sound = ko.observable(self.json.natural_sound);
+    self.upload_time = ko.observable(self.json.upload_time);
+    self.reason3 = ko.observable(self.json.reason3);
+    self.rating3 = ko.observable(self.json.rating3);
+    self.ObjectID = ko.observable(self.json.ObjectID);
     self.shots = ko.observableArray([]);
     for (var i = 0; i < self.json.shots.length; i++)
         self.shots.push(new ShotInfo(self.json.shots[i]));
@@ -255,7 +255,7 @@ var ProgramViewModel = function ViewModel() {
                 });
                 $.ChangeToPreCatalogContentPage(1);
             }
-            else if (type == 1){
+            else if (type == 1) {
                 queryString = "/quickcatalog/23031/programinfo/";
                 $.ChangeToPreCatalogContentPage(0);
             }
@@ -366,6 +366,7 @@ var ProgramViewModel = function ViewModel() {
 
                 $.ChangeToCatalogTree();
                 $.ResetTree();
+                $.SetPlayPosition("00:00:00:00");
             });
 
         };
@@ -404,6 +405,9 @@ var ProgramViewModel = function ViewModel() {
                     self.currentShot(data);
                     self.currentKeyframes(data.keyframes());
                 }
+                timestr = data.time_start();
+                $.SetPlayPosition(timestr);
+
             }
         }
 
@@ -415,3 +419,98 @@ var ProgramViewModel = function ViewModel() {
 ko.applyBindings(new ProgramViewModel());
 
 
+//用于自定义textarea控件
+String.prototype.trim2 = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+function F(objid) {
+    return document.getElementById(objid).value;
+}
+function G(objid) {
+    return document.getElementById(objid);
+}
+
+
+var msgA = ["msg1", "msg2", "msg3", "msg4"];
+var c = ["c1", "c2", "c3", "c4"];
+var slen = [50, 20000, 20000, 60];//允许最大字数
+var num = "";
+var isfirst = [0, 0, 0, 0, 0, 0];
+function isEmpty(strVal) {
+    if (strVal == "")
+        return true;
+    else
+        return false;
+}
+function isBlank(testVal) {
+    var regVal = /^\s*$/;
+    return (regVal.test(testVal))
+}
+function chLen(strVal) {
+    strVal = strVal.trim2();
+    var cArr = strVal.match(/[^\x00-\xff]/ig);
+    return strVal.length + (cArr == null ? 0 : cArr.length);
+}
+function check(i) {
+    var iValue = F("c" + i);
+    var iObj = G("msg" + i);
+    var n = (chLen(iValue) > slen[i - 1]);
+    if ((isBlank(iValue) == true) || (isEmpty(iValue) == true) || n == true) {
+        iObj.style.display = "block";
+    } else {
+        iObj.style.display = "none";
+    }
+}
+function checkAll() {
+    for (var i = 0; i < msgA.length; i++) {
+        check(i + 1);
+        if (G(msgA[i]).style.display == "none") {
+            continue;
+        } else {
+            alert("填写错误,请查看红色提示信息！");
+            return;
+        }
+    }
+    G("form1").submit();
+}
+function clearValue(i) {
+    G(c[i - 1]).style.color = "#000";
+    keyUp();
+    if (isfirst[i] == 0) {
+        G(c[i - 1]).value = "";
+    }
+    isfirst[i] = 1;
+}
+function keyUp() {
+    var obj = G("c2");
+    var str = obj.value;
+    str = str.replace(/\r/gi, "");
+    str = str.split("\n");
+    n = str.length;
+    line(n);
+}
+function line(n) {
+    var lineobj = G("li");
+    for (var i = 1; i <= n; i++) {
+        if (document.all) {
+            num += i + "\r\n";
+        } else {
+            num += i + "\n";
+        }
+    }
+    lineobj.value = num;
+    num = "";
+}
+function autoScroll() {
+    var nV = 0;
+    if (!document.all) {
+        nV = G("c2").scrollTop;
+        G("li").scrollTop = nV;
+        setTimeout("autoScroll()", 20);
+    }
+}
+if (!document.all) {
+    window.addEventListener("load", autoScroll, false);
+}
+
+//自定义控件结束
