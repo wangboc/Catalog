@@ -116,7 +116,7 @@ $.extend({
         minitInt = parseInt(pos.substring(3, 5));
         secondInt = parseInt(pos.substring(6, 8));
         frameInt = parseInt(pos.substring(9, 11));
-        time = (hourInt * 60 + minitInt) * 60 + secondInt + frameInt / 25
+        time = (hourInt * 60 + minitInt) * 60 + secondInt + frameInt / 25;
         var player = videojs("player");
         player.currentTime(time);
     }
