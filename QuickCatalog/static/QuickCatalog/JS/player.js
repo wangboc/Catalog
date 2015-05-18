@@ -1,7 +1,3 @@
-var video = document.querySelector('video');
-var canvas;//= document.querySelector('canvas');
-var context; //= canvas.getContext('2d');
-
 //暂停播放
 function pausePlay() {
     var playIcon = document.getElementById('playIcon');
@@ -76,7 +72,7 @@ $(document).ready(function () {
         // Define the size of the rectangle that will be filled (basically the entire element)
         //context.fillRect(0, 0, 150, 150);
         // Grab the image from the video
-        context.drawImage(video, 0, 0, 150, 150);
+        //context.drawImage(video, 0, 0, 150, 150);
 
 
     });

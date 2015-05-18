@@ -12,7 +12,7 @@ function KeyframeInfo(data) {
     self.section_id = ko.observable(self.json.section_id);
     self.scene_id = ko.observable(self.json.scene_id);
     self.shot_id = ko.observable(self.json.shot_id);
-};
+}
 function ShotInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
@@ -245,12 +245,34 @@ var ProgramViewModel = function ViewModel() {
         //当导入串联单时，为界面中加载串联单原文件
         self.playlist = ko.observable();
 
+        self.catchKeyframePic = function (layer, data, event) {
+            if (layer == 0) {
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                var video = document.querySelector('video');
+                video.crossOrigin = 'Anonymous';
+                context.drawImage(video, 0, 0, 150, 150);
+                canvas.toDataURL();
+                var jsonS = "{id:0;title:'';keyframe:" + canvas.toDataURL() + ";position:0;media_id:0;section_id:0;scene_id:0;shot_id:0}";
+                var frame = new KeyframeInfo(jsonS);
+                //self.keyframes().append(frame);
+            }
+            else if (layer == 1) {
+
+            }
+            else if (layer == 2) {
+
+            }
+            else if (layer == 3) {
+
+            }
+        };
         self.getprograminfo = function (type, data, event) {
 
             if (type == 0) {
 
                 queryString = "/quickcatalog/getPreCatalogDetail/";
-                $.getJSON("/quickcatalog/getPreCatalogFile/", function (item) {
+                $.gzetJSON("/quickcatalog/getPreCatalogFile/", function (item) {
                     self.playlist(item.content);
                 });
                 $.ChangeToPreCatalogContentPage(1);
@@ -461,26 +483,7 @@ function check(i) {
         iObj.style.display = "none";
     }
 }
-function checkAll() {
-    for (var i = 0; i < msgA.length; i++) {
-        check(i + 1);
-        if (G(msgA[i]).style.display == "none") {
-            continue;
-        } else {
-            alert("填写错误,请查看红色提示信息！");
-            return;
-        }
-    }
-    G("form1").submit();
-}
-function clearValue(i) {
-    G(c[i - 1]).style.color = "#000";
-    keyUp();
-    if (isfirst[i] == 0) {
-        G(c[i - 1]).value = "";
-    }
-    isfirst[i] = 1;
-}
+
 function keyUp() {
     var obj = G("c2");
     var str = obj.value;

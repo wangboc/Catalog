@@ -118,7 +118,7 @@
 
             <video id="player" width="100%" controls preload="auto" class="video-js vjs-default-skin" height="350">
                 {#                <source src="http://10.1.70.88/1.mp4" type="video/mp4">#}
-                <source src="http://192.168.1.105/1.mp4" type="video/mp4">
+                <source src="{% static "QuickCatalog/video/1.mp4" %}" type="video/mp4">
                 {#                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">#}
             </video>
 
@@ -150,7 +150,8 @@
                         </button>
                     </div>
                     <div class="btn-group  btn-group-sm ">
-                        <button type="button" id="keyframeCtr" class="btn btn-primary"><span id="keyframeSpan"
+                        <button type="button" data-bind="click: function(data, event){catchKeyframePic(0, data, event)}"
+                                id="keyframeCtr" class="btn btn-primary"><span id="keyframeSpan"
                                                                                              class="glyphicon glyphicon-camera"></span>
                         </button>
                     </div>
