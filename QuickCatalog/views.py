@@ -17,8 +17,6 @@ from models import KeyFrame
 
 
 
-
-
 # Create your views here.
 import json
 from django.db import connection
@@ -124,6 +122,21 @@ def __ParseTimeSpan__(timeold, timenew):
     if Hours < 10: HoursS = "0" + str(Hours)
     time = HoursS + ":" + MinintsS + ":" + SecondS + ":" + FrameS
     return [timeo[0], timen[0], time]  # 入点 时长 出点
+
+
+def saveNewKeyframe(request, data):
+    keyframe = {}
+    keyframe["id"] = ""
+    keyframe["title"] = data.title
+    keyframe["keyframe"] = ""
+    keyframe["keyframeBase64"] = data.keyframeBase64
+    keyframe["position"] = data.position
+    keyframe["media_id"] = data.media_id
+    keyframe["section_id"] = data.section_id
+    keyframe["scene_id"] = data.scene_id
+    keyframe["shot_id"] = data.shot_id
+    NewKeyframe = KeyFrame(keyframe)
+    # todo
 
 
 def getPreCatalogDetail(request):
@@ -369,3 +382,4 @@ def getPreCatalogFile(request):
     fileDict = dict(content=text)
     contentjson = json.dumps(fileDict)
     return HttpResponse(contentjson, content_type="application/json")
+

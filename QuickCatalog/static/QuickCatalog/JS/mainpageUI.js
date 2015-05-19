@@ -247,15 +247,19 @@ var ProgramViewModel = function ViewModel() {
 
         self.catchKeyframePic = function (layer, data, event) {
             if (layer == 0) {
+                //todo
                 var canvas = document.createElement('canvas');
                 var context = canvas.getContext('2d');
                 var video = document.querySelector('video');
                 video.crossOrigin = 'Anonymous';
                 context.drawImage(video, 0, 0, 150, 150);
-                canvas.toDataURL();
-                var jsonS = "{id:0;title:'';keyframe:" + canvas.toDataURL() + ";position:0;media_id:0;section_id:0;scene_id:0;shot_id:0}";
-                var frame = new KeyframeInfo(jsonS);
-                //self.keyframes().append(frame);
+
+                var keyframe = new Array();
+                keyframe = '{"id":"","title":"","position":"","keyframe":"'+canvas.toDataURL()+'","media_id":"","section_id":"","scene_id":"","shot_id":""}'
+
+                frame = new KeyframeInfo(keyframe);
+                var list = self.currentKeyframes();
+                list.push(frame);
             }
             else if (layer == 1) {
 
@@ -272,7 +276,7 @@ var ProgramViewModel = function ViewModel() {
             if (type == 0) {
 
                 queryString = "/quickcatalog/getPreCatalogDetail/";
-                $.gzetJSON("/quickcatalog/getPreCatalogFile/", function (item) {
+                $.getJSON("/quickcatalog/getPreCatalogFile/", function (item) {
                     self.playlist(item.content);
                 });
                 $.ChangeToPreCatalogContentPage(1);
