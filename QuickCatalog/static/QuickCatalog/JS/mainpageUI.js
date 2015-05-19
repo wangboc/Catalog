@@ -259,7 +259,7 @@ var ProgramViewModel = function ViewModel() {
                 queryString = "/quickcatalog/23031/programinfo/";
                 $.ChangeToPreCatalogContentPage(0);
             }
-            //$.getJSON("/quickcatalog/23031/programinfo/", function (item) {
+
             $.getJSON(queryString, function (item) {
                 self.media_id(item.media_id);
                 self.title(item.title);
@@ -409,7 +409,17 @@ var ProgramViewModel = function ViewModel() {
                 $.SetPlayPosition(timestr);
 
             }
-        }
+        };
+
+        //// 截取关键帧
+        //self.saveKeyframe = function(param, data, event) {
+        //    // Define the size of the rectangle that will be filled (basically the entire element)
+        //    //context.fillRect(0, 0, 150, 150);
+        //    // Grab the image from the video
+        //    context.drawImage(video, 0, 0, 150, 150);
+        //
+        //
+        //});
 
 
     }
