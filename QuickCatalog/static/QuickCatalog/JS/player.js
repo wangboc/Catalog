@@ -1,7 +1,3 @@
-var video = document.querySelector('video');
-var canvas;//= document.querySelector('canvas');
-var context; //= canvas.getContext('2d');
-
 //暂停播放
 function pausePlay() {
     var playIcon = document.getElementById('playIcon');
@@ -71,7 +67,15 @@ $(document).ready(function () {
         video.playbackRate = video.playbackRate * 2;
     });
 
+    // 截取关键帧
+    $("#keyframeCtr").click(function () {
+        // Define the size of the rectangle that will be filled (basically the entire element)
+        //context.fillRect(0, 0, 150, 150);
+        // Grab the image from the video
+        //context.drawImage(video, 0, 0, 150, 150);
 
+
+    });
 
     //点击关键帧
     $("#keyframe").click(function () {
@@ -108,7 +112,7 @@ $.extend({
         minitInt = parseInt(pos.substring(3, 5));
         secondInt = parseInt(pos.substring(6, 8));
         frameInt = parseInt(pos.substring(9, 11));
-        time = (hourInt * 60 + minitInt) * 60 + secondInt + frameInt / 25
+        time = (hourInt * 60 + minitInt) * 60 + secondInt + frameInt / 25;
         var player = videojs("player");
         player.currentTime(time);
     }
