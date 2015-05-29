@@ -143,7 +143,7 @@ var ProgramViewModel = function ViewModel() {
         self.currentSection = ko.observable();
         self.currentScene = ko.observable();
         self.currentShot = ko.observable();
-        self.currentKeyframes = ko.observableArray([]);
+        //self.currentKeyframes = ko.observableArray([]);
 
         self.media_id = ko.observable();
         self.title = ko.observable();
@@ -251,15 +251,17 @@ var ProgramViewModel = function ViewModel() {
                 var canvas = document.createElement('canvas');
                 var context = canvas.getContext('2d');
                 var video = document.querySelector('video');
-                video.crossOrigin = 'Anonymous';
-                context.drawImage(video, 0, 0, 150, 150);
 
-                var keyframe = new Array();
-                keyframe = '{"id":"","title":"","position":"","keyframe":"'+canvas.toDataURL()+'","media_id":"","section_id":"","scene_id":"","shot_id":""}'
+                context.drawImage(video, 0, 0, 300, 150);
+
+
+                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":""}'
 
                 frame = new KeyframeInfo(keyframe);
-                var list = self.currentKeyframes();
-                list.push(frame);
+                //var list = self.currentKeyframes();
+                self.currentKeyframes.push(frame);
+
+                var keyframe = new Array();
             }
             else if (layer == 1) {
 
@@ -402,7 +404,7 @@ var ProgramViewModel = function ViewModel() {
             var context = canvas.getContext('2d');
 
             var image = new Image();
-            image.src = 'data:image/jpg;base64,' + param.json.keyframe;
+            image.src = 'data:image/jpeg;base64,' + param.json.keyframe;
             context.drawImage(image, 0, 0, 150, 150);
         };
 
