@@ -12,6 +12,7 @@ function KeyframeInfo(data) {
     self.section_id = ko.observable(self.json.section_id);
     self.scene_id = ko.observable(self.json.scene_id);
     self.shot_id = ko.observable(self.json.shot_id);
+    self.isNew = ko.observable(self.json.isNew);
 }
 function ShotInfo(data) {
     var self = this;
@@ -41,6 +42,8 @@ function ShotInfo(data) {
     self.rating3 = ko.observable(self.json.rating3);
     self.ObjectID = ko.observable(self.json.ObjectID);
     self.keyframes = ko.observableArray([]);
+    self.isNew = ko.observable(self.json.isNew);
+
     var kflist = $.map(self.json.keyframes, function (itemS) {
         return new KeyframeInfo(itemS);
     });
@@ -70,6 +73,8 @@ function SceneInfo(data) {
     self.rating3 = ko.observable(self.json.rating3);
     self.ObjectID = ko.observable(self.json.ObjectID);
     self.shots = ko.observableArray([]);
+    self.isNew = ko.observable(self.json.isNew);
+
     for (var i = 0; i < self.json.shots.length; i++)
         self.shots.push(new ShotInfo(self.json.shots[i]));
     self.keyframes = ko.observableArray([]);
@@ -124,6 +129,7 @@ function SectionInfo(data) {
     self.create_other_info = ko.observable(self.json.create_other_info);
     self.ObjectID = ko.observable(self.json.ObjectID);
     self.scenes = ko.observableArray([]);
+    self.isNew = ko.observable(self.json.isNew);
     for (var i = 0; i < self.json.scenes.length; i++)
         self.scenes.push(new SceneInfo(self.json.scenes[i]));
 
@@ -146,6 +152,9 @@ var ProgramViewModel = function ViewModel() {
         self.currentShot = ko.observable();
         self.currentKeyframes = ko.observableArray([]);
         self.currentLayer = ko.observable();
+
+        //每类中的isNew属性用于区别是否新建关键帧或四层信息
+        self.isNew = ko.observable();
 
         self.media_id = ko.observable();
         self.title = ko.observable();
@@ -244,29 +253,49 @@ var ProgramViewModel = function ViewModel() {
         //当导入串联单时，为界面中加载串联单原文件
         self.playlist = ko.observable();
 
-        //截取关键帧图像信息，编码方式为jpeg，并保存在相应的层中。
-        self.catchKeyframePic = function (data, event) {
-            var canvas = document.createElement('canvas');
-            var context = canvas.getContext('2d');
-            var video = document.querySelector('video');
-
-            context.drawImage(video, 0, 0, 300, 150);
-
-            if (self.currentLayer == 0) {
-                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"' + self.id() + '","section_id":"","scene_id":"","shot_id":""}'
-            }
+        //切层
+        self.addbrotherLayer = function (data, event) {
+            if (self.currentLayer == 0)
+                return;
             else if (self.currentLayer == 1) {
-                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"' + self.currentSection().id() + '","scene_id":"","shot_id":""}'
+                var newSection = NewSection(self.id());
+                self.currentSection(newSection);
+                self.currentKeyframes(null);
+                self.sections.push(newSection);
+                self.currentLayer = 1;
             }
             else if (self.currentLayer == 2) {
-                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"' + self.currentScene().id() + '","shot_id":""}'
+                var newScene = NewScene();
+                self.currentScene(newScene);
+                self.currentKeyframes(null);
+                self.currentSection.scenes.push(newScene);
+                self.currentLayer = 2;
             }
             else if (self.currentLayer == 3) {
-                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":"' + self.currentShot().id() + '"}'
-
+                var newShot = NewShot();
+                self.currentKeyframes(null);
+                self.currentShot(newShot);
+                self.currentScene.shots.push(newShot);
+                self.currentLayer = 3;
             }
-            frame = new KeyframeInfo(keyframe);
-            self.currentKeyframes.push(frame);
+        };
+
+        //截取关键帧图像信息，编码方式为jpeg，并保存在相应的层中。
+        self.catchKeyframePic = function (data, event) {
+            var id = 0;
+            if (self.currentLayer == 0) {
+                id = self.id();
+            }
+            else if (self.currentLayer == 1) {
+                id = self.currentSection().id();
+            }
+            else if (self.currentLayer == 2) {
+                id = self.currentScene().id();
+            }
+            else if (self.currentLayer == 3) {
+                id = self.currentShot().id();
+            }
+            self.currentKeyframes.push(NewKeyframe(self.currentLayer, id));
         };
 
         //获取节目层编目信息。type==0时，代表串联单解析，type==1时，代表从数据库中读取。
@@ -288,6 +317,7 @@ var ProgramViewModel = function ViewModel() {
             }
 
             $.getJSON(queryString, function (item) {
+                self.isNew(item.isNew);
                 self.media_id(item.media_id);
                 self.title(item.title);
                 self.title2(item.title2);
@@ -441,20 +471,93 @@ var ProgramViewModel = function ViewModel() {
             }
         };
 
-        //// 截取关键帧
-        //self.saveKeyframe = function(param, data, event) {
-        //    // Define the size of the rectangle that will be filled (basically the entire element)
-        //    //context.fillRect(0, 0, 150, 150);
-        //    // Grab the image from the video
-        //    context.drawImage(video, 0, 0, 150, 150);
-        //
-        //
-        //});
-
 
     }
     ;
 
+//新建关键帧
+function NewKeyframe(layer, id) {
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var video = document.querySelector('video');
+    context.drawImage(video, 0, 0, 300, 150);
+    if (layer == 0) {
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"' + id + '","section_id":"","scene_id":"","shot_id":"","isNew":"True"}'
+    }
+    else if (layer == 1) {
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"' + id + '","scene_id":"","shot_id":"","isNew":"True"}'
+    }
+    else if (layer == 2) {
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"' + id + '","shot_id":"","isNew":"True"}'
+    }
+    else if (layer == 3) {
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":"' + id + '","isNew":"True"}'
+    }
+    frame = new KeyframeInfo(keyframe);
+    return frame;
+}
+//新建片段层
+function NewSection(id) {
+    var video = document.querySelector('video');
+    var time_start = video.duration;
+    section = '{"id":"' + Math.random() + '", ' +
+    '"media_id":"' + id + '", ' +
+    '"title":"", ' +
+    '"description":"", ' +
+    '"topic_words":"", ' +
+    '"key_words":"", ' +
+    '"post_picture":"", ' +
+    '"section_duty":"", ' +
+    '"time_start":"' + time_start + '", ' +
+    '"time_end":"", ' +
+    '"subtitle":"", ' +
+    '"rating":"", ' +
+    '"reason":"", ' +
+    '"title2":"", ' +
+    '"class_name":"", ' +
+    '"actual_sound":"", ' +
+    '"program_form":"", ' +
+    '"date_time":"", ' +
+    '"section_series":"", ' +
+    '"rating2":"", ' +
+    '"reason2":"", ' +
+    '"contributor":"", ' +
+    '"audio_channel_num":"", ' +
+    '"audio_channel_lan":"", ' +
+    '"subtitle_num":"", ' +
+    '"subtitle_lan":"", ' +
+    '"years_covered":"", ' +
+    '"spatial":"", ' +
+    '"source":"", ' +
+    '"data_source_way":"", ' +
+    '"data_source_man":"", ' +
+    '"yuzhong":"", ' +
+    '"years":"", ' +
+    '"awards":"", ' +
+    '"upload_time":"", ' +
+    '"reason3":"", ' +
+    '"rating3":"", ' +
+    '"creater":"", ' +
+    '"pcreater":"", ' +
+    '"create_method":"", ' +
+    '"create_other_info":"", ' +
+    '"ObjectID":"", ' +
+    '"scenes":"", ' +
+    '"keyframes":"", ' +
+    '"isNew":"True"}';
+
+    return new SectionInfo(section);
+}
+
+//新建场景层
+function NewScene() {
+//todo
+}
+
+//新建镜头层
+function NewShot() {
+//todo
+}
 
 ko.applyBindings(new ProgramViewModel());
 
@@ -533,5 +636,4 @@ function autoScroll() {
 if (!document.all) {
     window.addEventListener("load", autoScroll, false);
 }
-
 //自定义控件结束

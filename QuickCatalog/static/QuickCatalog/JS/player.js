@@ -123,6 +123,7 @@ $.extend({
     }
 });
 
+
 $.extend({
     ChangeToPreCatalogContentPage: function (data) {
         if (data == 0)

@@ -119,7 +119,7 @@ class ProgramInfo():
         self.test = programDic["test"]
         self.shengdao = programDic["shengdao"]
         self.ObjectID = programDic["ObjectID"]
-
+        self.programDic["isNew"] = "False"
 
 class SectionInfo:
     sceneList = []
@@ -185,7 +185,7 @@ class SectionInfo:
         self.create_method = sectionDic["create_method"]
         self.create_other_info = sectionDic["create_other_info"]
         self.ObjectID = sectionDic["ObjectID"]
-
+        self.sectionDic["isNew"] = "False"
 
 class SceneInfo:
     shotList = []
@@ -228,7 +228,7 @@ class SceneInfo:
         self.reason3 = sceneDic["reason3"]
         self.rating3 = sceneDic["rating3"]
         self.ObjectID = sceneDic["ObjectID"]
-
+        self.sceneDic["isNew"] = "False"
 
 class ShotInfo:
     __Json__ = ""
@@ -270,6 +270,7 @@ class ShotInfo:
         self.reason3 = shotDic["reason3"]
         self.rating3 = shotDic["rating3"]
         self.ObjectID = shotDic["ObjectID"]
+        self.shotDic["isNew"] = "False"
 
 
 class KeyFrame:
@@ -294,6 +295,7 @@ class KeyFrame:
         self.section_id = keyframeDic["section_id"]
         self.scene_id = keyframeDic["scene_id"]
         self.shot_id = keyframeDic["shot_id"]
+        self.keyframeDic["isNew"] = "False"
 
 
 # 由于从数据库中读出的Datatime类型数据无法序列化，为json.dumps函数添加编码方法

@@ -116,10 +116,13 @@
     <div class="row">
         <div class="col-md-5">
 
-            <video id="player" width="100%" controls preload="auto" class="video-js vjs-default-skin" height="350">
-{#                                <source src="http://10.1.70.88/1.mp4" type="video/mp4">#}
-{#                <source src="{% static "QuickCatalog/video/1.mp4" %}" type="video/mp4">#}
-                                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">
+            <video crossorigin="anonymous" id="player" width="100%" controls preload="auto"
+                   class="video-js vjs-default-skin" height="350">
+                {#                                <source src="http://10.1.70.88/1.mp4" type="video/mp4">#}
+                {#                <source src="{% static "QuickCatalog/video/1.mp4" %}" type="video/mp4">#}
+                <source src="http://localhost/1.mp4" type="video/mp4">
+
+                {#                                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">#}
             </video>
 
 
@@ -142,7 +145,9 @@
                                 class="glyphicon glyphicon-fast-forward"></span></button>
                     </div>
                     <div class="btn-group  btn-group-sm ">
-                        <button type="button" id="cutlayerCtr" class="btn btn-primary"><span
+                        <button type="button" data-toggle="button"
+                                data-bind="click: function(data, event){addbrotherLayer(data, event)}" id="cutlayerCtr"
+                                class="btn btn-success"><span
                                 class="glyphicon glyphicon-plus-sign"> 切层</span>
                         </button>
                         <button type="button" id="sublayerCtr" class="btn btn-primary"><span
@@ -150,9 +155,9 @@
                         </button>
                     </div>
                     <div class="btn-group  btn-group-sm ">
-                        <button type="button" data-bind="click: function(data, event){catchKeyframePic(0, data, event)}"
+                        <button type="button" data-bind="click: function(data, event){catchKeyframePic(data, event)}"
                                 id="keyframeCtr" class="btn btn-primary"><span id="keyframeSpan"
-                                                                                             class="glyphicon glyphicon-camera"></span>
+                                                                               class="glyphicon glyphicon-camera"></span>
                         </button>
                     </div>
                     <div class="btn-group  btn-group-sm ">
