@@ -138,12 +138,14 @@ function SectionInfo(data) {
 
 
 var ProgramViewModel = function ViewModel() {
-        // Data
         var self = this;
+
+        //用于暂存界面上展现的片段层、场景层和镜头层，以及关键帧信息
         self.currentSection = ko.observable();
         self.currentScene = ko.observable();
         self.currentShot = ko.observable();
-        //self.currentKeyframes = ko.observableArray([]);
+        self.currentKeyframes = ko.observableArray([]);
+        self.currentLayer = ko.observable();
 
         self.media_id = ko.observable();
         self.title = ko.observable();
@@ -236,55 +238,52 @@ var ProgramViewModel = function ViewModel() {
         self.test = ko.observable();
         self.shengdao = ko.observable();
         self.ObjectID = ko.observable();
-        //用于保存节目层自身的关键帧
         self.keyframes = ko.observableArray([]);
-        //用于暂存界面上展现的关键帧
-        self.currentKeyframes = ko.observableArray([]);
         self.sections = ko.observableArray([]);
 
         //当导入串联单时，为界面中加载串联单原文件
         self.playlist = ko.observable();
 
-        self.catchKeyframePic = function (layer, data, event) {
-            if (layer == 0) {
-                //todo
-                var canvas = document.createElement('canvas');
-                var context = canvas.getContext('2d');
-                var video = document.querySelector('video');
+        //截取关键帧图像信息，编码方式为jpeg，并保存在相应的层中。
+        self.catchKeyframePic = function (data, event) {
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.querySelector('video');
 
-                context.drawImage(video, 0, 0, 300, 150);
+            context.drawImage(video, 0, 0, 300, 150);
 
-
-                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":""}'
-
-                frame = new KeyframeInfo(keyframe);
-                //var list = self.currentKeyframes();
-                self.currentKeyframes.push(frame);
-
-                var keyframe = new Array();
+            if (self.currentLayer == 0) {
+                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"' + self.id() + '","section_id":"","scene_id":"","shot_id":""}'
             }
-            else if (layer == 1) {
-
+            else if (self.currentLayer == 1) {
+                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"' + self.currentSection().id() + '","scene_id":"","shot_id":""}'
             }
-            else if (layer == 2) {
+            else if (self.currentLayer == 2) {
+                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"' + self.currentScene().id() + '","shot_id":""}'
+            }
+            else if (self.currentLayer == 3) {
+                keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":"' + self.currentShot().id() + '"}'
 
             }
-            else if (layer == 3) {
-
-            }
+            frame = new KeyframeInfo(keyframe);
+            self.currentKeyframes.push(frame);
         };
-        self.getprograminfo = function (type, data, event) {
 
+        //获取节目层编目信息。type==0时，代表串联单解析，type==1时，代表从数据库中读取。
+        self.getprograminfo = function (type, data, event) {
+            self.currentLayer = 0;
             if (type == 0) {
 
                 queryString = "/quickcatalog/getPreCatalogDetail/";
                 $.getJSON("/quickcatalog/getPreCatalogFile/", function (item) {
                     self.playlist(item.content);
                 });
+                //切换到串联单页面
                 $.ChangeToPreCatalogContentPage(1);
             }
             else if (type == 1) {
                 queryString = "/quickcatalog/23031/programinfo/";
+                //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
 
@@ -415,23 +414,26 @@ var ProgramViewModel = function ViewModel() {
                 if (layerDepth == 0) {
                     $("#DetailTabs a[href='#programsTab']").tab("show");
                     self.currentKeyframes(data.keyframes());
+                    self.currentLayer = 0;
                 }
                 else if (layerDepth == 1) {
                     $("#DetailTabs a[href='#sectionsTab']").tab("show");
                     self.currentSection(data);
                     self.currentKeyframes(data.keyframes());
                     content = data.title();
-
+                    self.currentLayer = 1;
                 }
                 else if (layerDepth == 2) {
                     $('#DetailTabs a[href="#scenesTab"]').tab('show');
                     self.currentScene(data);
                     self.currentKeyframes(data.keyframes());
+                    self.currentLayer = 2;
                 }
                 else if (layerDepth == 3) {
                     $('#DetailTabs a[href="#shotsTab"]').tab('show');
                     self.currentShot(data);
                     self.currentKeyframes(data.keyframes());
+                    self.currentLayer = 3;
                 }
                 timestr = data.time_start();
                 $.SetPlayPosition(timestr);
