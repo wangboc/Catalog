@@ -23,6 +23,13 @@
     <![endif]-->
     <link href="{% static "QuickCatalog/player/video-js/video-js.css" %}" rel="stylesheet">
     <link href="{% static "QuickCatalog/player/dist/videojs.markers.css" %}" rel="stylesheet">
+
+    {#    用于定义bootstrap-switch插件#}
+    <link href="{% static "QuickCatalog/bootstrap-switch/docs/css/highlight.css" %}" rel="stylesheet">
+    <link href="{% static "QuickCatalog/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" %}" rel="stylesheet">
+    {#    <link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">#}
+    <link href="{% static "QuickCatalog/bootstrap-switch/docs/css/main.css" %}" rel="stylesheet">
+    {#    定义结束#}
 </head>
 <body>
 <div class="container">
@@ -145,11 +152,16 @@
                                 class="glyphicon glyphicon-fast-forward"></span></button>
                     </div>
                     <div class="btn-group  btn-group-sm ">
-                        <button type="button" data-toggle="button"
-                                data-bind="click: function(data, event){addbrotherLayer(data, event)}" id="cutlayerCtr"
-                                class="btn btn-success"><span
-                                class="glyphicon glyphicon-plus-sign"> 切层</span>
-                        </button>
+                        {#                        <button type="button" data-toggle="button"#}
+                        {#                                data-bind="click: function(data, event){addbrotherLayer(data, event)}" id="cutlayerCtr"#}
+                        {#                                class="btn btn-success"><span#}
+                        {#                                class="glyphicon glyphicon-plus-sign"> 切层</span>#}
+                        {#                        </button>#}
+                        <input data-handle-width="52"
+                               data-bind="bootstrapSwitchOn: function(data, event){ addbrotherLayer(data, event)}"
+                               data-label-text="切层" data-on-text="开始" data-off-text="结束" type="checkbox"
+                               id="addbrotherLayerBtn" data-on-color="success" data-off-color="warning" checked/>
+
                         <button type="button" id="sublayerCtr" class="btn btn-primary"><span
                                 class="glyphicon glyphicon-plus-sign"> 子层</span>
                         </button>
@@ -927,13 +939,19 @@
 </script>
 <!-- video.js 结束 -->
 <!-- 自定义JS -->
+<!-- bootstrap-switch脚本 -->
+<script type="text/javascript" src="{% static "QuickCatalog/bootstrap-switch/docs/js/highlight.js" %}"></script>
+<script type="text/javascript" src="{% static "QuickCatalog/bootstrap-switch/dist/js/bootstrap-switch.js" %}"></script>
+<script type="text/javascript" src="{% static "QuickCatalog/bootstrap-switch/docs/js/main.js" %}"></script>
+
+
 <!-- 播放器脚本 -->
 <script type="text/javascript" src="{% static "QuickCatalog/JS/player.js" %}"></script>
 <!-- Knockout框架 -->
 <script type="text/javascript" src="{% static "QuickCatalog/knockoutJS/knockout-3.3.0.js" %}"></script>
+
 <!-- 界面交互脚本 -->
 <script type="text/javascript" src="{% static "QuickCatalog/JS/mainpageUI.js" %}"></script>
-
 <!-- 自定义结束 -->
 
 </body>

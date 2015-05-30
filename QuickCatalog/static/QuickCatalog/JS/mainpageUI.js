@@ -1,6 +1,25 @@
 /**
  * Created by ho on 2015/5/2.
  */
+ko.bindingHandlers.bootstrapSwitchOn = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        var $elem;
+        $elem = $(element);
+        $(element).bootstrapSwitch();
+        $(element).bootstrapSwitch("state", ko.utils.unwrapObservable(valueAccessor()));
+        $elem.on("switchChange.bootstrapSwitch", function (e, data) {
+            valueAccessor()(data);
+        });
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        var vStatus, vmStatus;
+        vStatus = $(element).bootstrapSwitch("state");
+        vmStatus = ko.utils.unwrapObservable(valueAccessor());
+        if (vStatus !== vmStatus) {
+            $(element).bootstrapSwitch("state", vmStatus);
+        }
+    }
+};
 function KeyframeInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
@@ -252,6 +271,7 @@ var ProgramViewModel = function ViewModel() {
 
         //当导入串联单时，为界面中加载串联单原文件
         self.playlist = ko.observable();
+
 
         //切层
         self.addbrotherLayer = function (data, event) {
@@ -637,3 +657,4 @@ if (!document.all) {
     window.addEventListener("load", autoScroll, false);
 }
 //自定义控件结束
+
