@@ -109,12 +109,12 @@
 
 .bootstrap-switch .bootstrap-switch-label {
     text-align: center;
-    /*margin-top: -1px;*/
-    /*margin-bottom: -1px;*/
+    margin-top: -1px;
+    margin-bottom: -1px;
     height: 29px;
     z-index: 100;
     color: #333333;
-    background: #ffffff;
+    background: #F0F0F0;
 }
 
 .bootstrap-switch .bootstrap-switch-handle-on {

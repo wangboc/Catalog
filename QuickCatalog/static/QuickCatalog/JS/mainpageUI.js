@@ -26,7 +26,7 @@ function KeyframeInfo(data) {
     self.id = ko.observable(self.json.id);
     self.title = ko.observable(self.json.title);
     self.keyframe = ko.observable(self.json.keyframe);
-    self.position = ko.observable(self.json.position);
+    self.position = ko.observable(ParseSecondtoTime(self.json.position / 10000000.0));
     self.media_id = ko.observable(self.json.media_id);
     self.section_id = ko.observable(self.json.section_id);
     self.scene_id = ko.observable(self.json.scene_id);
@@ -277,7 +277,14 @@ var ProgramViewModel = function ViewModel() {
         self.addbrotherLayer = function (data, event) {
             if (self.currentLayer == 0)
                 return;
+
+
             else if (self.currentLayer == 1) {
+                var status = $('input[name="addbrotherLayerBtn"]').bootstrapSwitch("state");
+                if (status == true) {
+                    self.currentSection().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentSection().time_start())));
+                    return;
+                }
                 var newSection = NewSection(self.id());
                 self.currentSection(newSection);
                 self.currentKeyframes(null);
@@ -502,16 +509,16 @@ function NewKeyframe(layer, id) {
     var video = document.querySelector('video');
     context.drawImage(video, 0, 0, 300, 150);
     if (layer == 0) {
-        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"' + id + '","section_id":"","scene_id":"","shot_id":"","isNew":"True"}'
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.currentTime * 10000000 + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"' + id + '","section_id":"","scene_id":"","shot_id":"","isNew":"True"}'
     }
     else if (layer == 1) {
-        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"' + id + '","scene_id":"","shot_id":"","isNew":"True"}'
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.currentTime * 10000000 + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"' + id + '","scene_id":"","shot_id":"","isNew":"True"}'
     }
     else if (layer == 2) {
-        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"' + id + '","shot_id":"","isNew":"True"}'
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.currentTime * 10000000 + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"' + id + '","shot_id":"","isNew":"True"}'
     }
     else if (layer == 3) {
-        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.duration + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":"' + id + '","isNew":"True"}'
+        keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.currentTime * 10000000 + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":"' + id + '","isNew":"True"}'
     }
     frame = new KeyframeInfo(keyframe);
     return frame;
@@ -519,7 +526,7 @@ function NewKeyframe(layer, id) {
 //新建片段层
 function NewSection(id) {
     var video = document.querySelector('video');
-    var time_start = video.duration;
+    var time_start = ParseSecondtoTime(video.currentTime);
     section = '{"id":"' + Math.random() + '", ' +
     '"media_id":"' + id + '", ' +
     '"title":"", ' +
@@ -658,3 +665,33 @@ if (!document.all) {
 }
 //自定义控件结束
 
+
+//解析播放器中的时间，由秒转换为00:00:00:00格式，其中，最后一位为帧数。
+function ParseSecondtoTime(seconds) {
+    var time_start = new Date();
+    time_start.setHours(0);
+    time_start.setMinutes(0);
+    time_start.setSeconds(seconds);
+    second = time_start.getSeconds();
+    if (second < 10) second = "0" + second;
+    var frame = Math.floor((seconds - Math.floor(seconds)) * 25);
+    if (frame < 10) frame = "0" + frame;
+    minute = time_start.getMinutes();
+    if (minute < 10) minute = "0" + minute;
+    hours = time_start.getHours();
+    if (hours < 10) hours = "0" + hours;
+    return time_start = hours + ":" + minute + ":" + second + ":" + frame;
+
+}
+
+//解析播放器中的时间，由00:00:00:00格式转化为秒，其中，最后一位为帧数。
+function ParseTimetoSecond(timeStr) {
+    strs = timeStr.split(":");
+    hours = strs[0];
+    minutes = strs[1];
+    seconds = strs[2];
+    frames = strs[3];
+    Second = parseInt(seconds) + (parseInt(hours) * 60 + parseInt(minutes)) * 60 + parseInt(frames) * 40 / 1000.0;
+    return Second;
+
+}

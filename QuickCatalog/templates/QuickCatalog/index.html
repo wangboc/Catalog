@@ -150,34 +150,29 @@
                         <button type="button" id="normalCtr" class="btn btn-primary"> x 1</button>
                         <button type="button" id="fastCtr" class="btn btn-primary"><span
                                 class="glyphicon glyphicon-fast-forward"></span></button>
-                    </div>
-                    <div class="btn-group  btn-group-sm ">
-                        {#                        <button type="button" data-toggle="button"#}
-                        {#                                data-bind="click: function(data, event){addbrotherLayer(data, event)}" id="cutlayerCtr"#}
-                        {#                                class="btn btn-success"><span#}
-                        {#                                class="glyphicon glyphicon-plus-sign"> 切层</span>#}
-                        {#                        </button>#}
+
+
                         <input data-handle-width="52"
                                data-bind="bootstrapSwitchOn: function(data, event){ addbrotherLayer(data, event)}"
                                data-label-text="切层" data-on-text="开始" data-off-text="结束" type="checkbox"
+                               name="addbrotherLayerBtn" data-on-color="success" data-off-color="warning" checked/>
+
+                        <input data-handle-width="52"
+                               data-bind="bootstrapSwitchOn: function(data, event){ addbrotherLayer(data, event)}"
+                               data-label-text="子层" data-on-text="开始" data-off-text="结束" type="checkbox"
                                id="addbrotherLayerBtn" data-on-color="success" data-off-color="warning" checked/>
 
-                        <button type="button" id="sublayerCtr" class="btn btn-primary"><span
-                                class="glyphicon glyphicon-plus-sign"> 子层</span>
-                        </button>
-                    </div>
-                    <div class="btn-group  btn-group-sm ">
+
                         <button type="button" data-bind="click: function(data, event){catchKeyframePic(data, event)}"
                                 id="keyframeCtr" class="btn btn-primary"><span id="keyframeSpan"
                                                                                class="glyphicon glyphicon-camera"></span>
                         </button>
-                    </div>
-                    <div class="btn-group  btn-group-sm ">
-                        <button type="button" id="minuslayerCtr" class="btn btn-primary"><span
-                                class="glyphicon glyphicon-minus-sign"> 删除</span>
-                        </button>
-                    </div>
 
+                        <button type="button" id="minuslayerCtr" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-minus-sign"></span>
+                        </button>
+
+                    </div>
                 </div>
             </div>
         </div>
