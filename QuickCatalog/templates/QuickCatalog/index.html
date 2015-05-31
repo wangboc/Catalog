@@ -158,9 +158,9 @@
                                name="addbrotherLayerBtn" data-on-color="success" data-off-color="warning" checked/>
 
                         <input data-handle-width="52"
-                               data-bind="bootstrapSwitchOn: function(data, event){ addbrotherLayer(data, event)}"
+                               data-bind="bootstrapSwitchOn: function(data, event){ addsubLayer(data, event)}"
                                data-label-text="子层" data-on-text="开始" data-off-text="结束" type="checkbox"
-                               id="addbrotherLayerBtn" data-on-color="success" data-off-color="warning" checked/>
+                               name="addsubLayerBtn" data-on-color="success" data-off-color="warning" checked/>
 
 
                         <button type="button" data-bind="click: function(data, event){catchKeyframePic(data, event)}"
@@ -803,7 +803,7 @@
                     <div class="tree">
                         <ul class="ulCustom">
                             <li>
-                                <span data-bind="click: changeToOtherLayer(0, $data, event)" class="btn btn-info"><i
+                                <span data-bind="click: changeToOtherLayer(0, $data, event)" class="btn btn-danger"><i
                                         data-bind="text: title"
                                         class="glyphicon glyphicon-calendar"></i></span>
                                 <ul data-bind="foreach: sections">
@@ -814,12 +814,12 @@
                                         <ul data-bind="foreach: scenes">
                                             <li>
                                                 <span data-bind="click: $root.changeToOtherLayer(2, $data, event)"
-                                                      class="btn btn-info"><i data-bind="text: title"
+                                                      class="btn btn-warning"><i data-bind="text: title"
                                                                               class="glyphicon glyphicon-minus"></i></span>
                                                 <ul data-bind="foreach: shots">
                                                     <li>
                                                         <span data-bind="click: $root.changeToOtherLayer(3, $data, event)"
-                                                              class="btn btn-info">
+                                                              class="btn btn-success">
                                                             <i data-bind="text:title"
                                                                class="glyphicon glyphicon-minus"></i>
                                                         </span>

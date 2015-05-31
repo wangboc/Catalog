@@ -33,7 +33,7 @@ function KeyframeInfo(data) {
     self.shot_id = ko.observable(self.json.shot_id);
     self.isNew = ko.observable(self.json.isNew);
 }
-function ShotInfo(data) {
+function ShotInfo(scene, data) {
     var self = this;
     self.json = $.parseJSON(data);
     self.id = ko.observable(self.json.id);
@@ -62,13 +62,13 @@ function ShotInfo(data) {
     self.ObjectID = ko.observable(self.json.ObjectID);
     self.keyframes = ko.observableArray([]);
     self.isNew = ko.observable(self.json.isNew);
-
+    self.scene = ko.observable(scene);
     var kflist = $.map(self.json.keyframes, function (itemS) {
         return new KeyframeInfo(itemS);
     });
     self.keyframes(kflist);
 }
-function SceneInfo(data) {
+function SceneInfo(section, data) {
     var self = this;
     self.json = $.parseJSON(data);
     self.id = ko.observable(self.json.id);
@@ -93,9 +93,9 @@ function SceneInfo(data) {
     self.ObjectID = ko.observable(self.json.ObjectID);
     self.shots = ko.observableArray([]);
     self.isNew = ko.observable(self.json.isNew);
-
+    self.section = ko.observable(section);
     for (var i = 0; i < self.json.shots.length; i++)
-        self.shots.push(new ShotInfo(self.json.shots[i]));
+        self.shots.push(new ShotInfo(self, self.json.shots[i]));
     self.keyframes = ko.observableArray([]);
     var kflist = $.map(self.json.keyframes, function (itemS) {
         return new KeyframeInfo(itemS);
@@ -150,7 +150,7 @@ function SectionInfo(data) {
     self.scenes = ko.observableArray([]);
     self.isNew = ko.observable(self.json.isNew);
     for (var i = 0; i < self.json.scenes.length; i++)
-        self.scenes.push(new SceneInfo(self.json.scenes[i]));
+        self.scenes.push(new SceneInfo(self, self.json.scenes[i]));
 
     self.keyframes = ko.observableArray([]);
     var kflist = $.map(self.json.keyframes, function (itemS) {
@@ -292,19 +292,72 @@ var ProgramViewModel = function ViewModel() {
                 self.currentLayer = 1;
             }
             else if (self.currentLayer == 2) {
-                var newScene = NewScene();
+                var status = $('input[name="addbrotherLayerBtn"]').bootstrapSwitch("state");
+                if (status == true) {
+                    self.currentScene().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentScene().time_start())));
+                    return;
+                }
+                var newScene = NewScene(self.currentScene().section(), self.currentScene().section_id());
                 self.currentScene(newScene);
                 self.currentKeyframes(null);
-                self.currentSection.scenes.push(newScene);
+                self.currentScene().section().scenes.push(newScene);
                 self.currentLayer = 2;
             }
             else if (self.currentLayer == 3) {
-                var newShot = NewShot();
+                var status = $('input[name="addbrotherLayerBtn"]').bootstrapSwitch("state");
+                if (status == true) {
+                    self.currentShot().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentShot().time_start())));
+                    return;
+                }
+                var newShot = NewShot(self.currentShot().scene(), self.currentShot().scene_id());
                 self.currentKeyframes(null);
                 self.currentShot(newShot);
-                self.currentScene.shots.push(newShot);
+                self.currentShot().scene().shots.push(newShot);
                 self.currentLayer = 3;
             }
+        };
+
+        //子层
+        self.addsubLayer = function (data, event) {
+            if (self.currentLayer == 3) {
+                var status = $('input[name="addsubLayerBtn"]').bootstrapSwitch("state");
+                if (status == true) {
+                    self.currentShot().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentShot().time_start())));
+                    return;
+                }
+            }
+            else if (self.currentLayer == 0) {
+                var newSection = NewSection(self.id());
+                self.currentSection(newSection);
+                self.currentKeyframes(null);
+                self.sections.push(newSection);
+
+            }
+            else if (self.currentLayer == 1) {
+                var status = $('input[name="addsubLayerBtn"]').bootstrapSwitch("state");
+                if (status == true) {
+                    self.currentSection().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentSection().time_start())));
+                    return;
+                }
+                var newScene = NewScene(self.currentSection(), self.currentSection().id());
+                self.currentScene(newScene);
+                self.currentKeyframes(null);
+                self.currentSection().scenes.push(newScene);
+                self.currentLayer = 2;
+            }
+            else if (self.currentLayer == 2) {
+                var status = $('input[name="addsubLayerBtn"]').bootstrapSwitch("state");
+                if (status == true) {
+                    self.currentScene().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentScene().time_start())));
+                    return;
+                }
+                var newShot = NewShot(self.currentScene(), self.currentScene().id());
+                self.currentKeyframes(null);
+                self.currentShot(newShot);
+                self.currentScene().shots.push(newShot);
+                self.currentLayer = 3;
+            }
+
         };
 
         //截取关键帧图像信息，编码方式为jpeg，并保存在相应的层中。
@@ -577,13 +630,66 @@ function NewSection(id) {
 }
 
 //新建场景层
-function NewScene() {
-//todo
+function NewScene(section, section_id) {
+    var video = document.querySelector('video');
+    var time_start = ParseSecondtoTime(video.currentTime);
+    scene = '{"id":"' + Math.random() + '", ' +
+    '"section_id":"' + section_id + '", ' +
+    '"title":"", ' +
+    '"description":"", ' +
+    '"topic_words":"", ' +
+    '"key_words":"", ' +
+    '"post_picture":"", ' +
+    '"time_start":"' + time_start + '", ' +
+    '"time_end":"", ' +
+    '"rating":"", ' +
+    '"reason":"", ' +
+    '"subtitle":"", ' +
+    '"rating2":"", ' +
+    '"reason2":"", ' +
+    '"date_of_event":"", ' +
+    '"natural_sound":"", ' +
+    '"upload_time":"", ' +
+    '"reason3":"", ' +
+    '"rating3":"", ' +
+    '"ObjectID":"", ' +
+    '"shots":"", ' +
+    '"keyframes":"", ' +
+    '"isNew":"True"}';
+    return new SceneInfo(section, scene);
 }
 
 //新建镜头层
-function NewShot() {
-//todo
+function NewShot(scene, scene_id) {
+    var video = document.querySelector('video');
+    var time_start = ParseSecondtoTime(video.currentTime);
+    shot = '{"id":"' + Math.random() + '", ' +
+    '"scene_id":"' + scene_id + '", ' +
+    '"title":"", ' +
+    '"description":"", ' +
+    '"topic_words":"", ' +
+    '"key_words":"", ' +
+    '"post_picture":"", ' +
+    '"time_start":"' + time_start + '", ' +
+    '"time_end":"", ' +
+    '"rating":"", ' +
+    '"reason":"", ' +
+    '"location":"", ' +
+    '"date_time":"", ' +
+    '"subtitle":"", ' +
+    '"shootway":"", ' +
+    '"rating2":"", ' +
+    '"sense_range":"", ' +
+    '"angle":"", ' +
+    '"actual_sound":"", ' +
+    '"reason2":"", ' +
+    '"upload_time":"", ' +
+    '"reason3":"", ' +
+    '"rating3":"", ' +
+    '"ObjectID":"", ' +
+    '"keyframes":"", ' +
+    '"isNew":"True"}';
+    return new ShotInfo(scene, shot);
 }
 
 ko.applyBindings(new ProgramViewModel());
