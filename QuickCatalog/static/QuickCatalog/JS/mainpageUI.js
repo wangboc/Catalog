@@ -247,7 +247,7 @@ var ProgramViewModel = function ViewModel() {
 
         self.catchKeyframePic = function (layer, data, event) {
             if (layer == 0) {
-                //todo
+                ////todo
                 var canvas = document.createElement('canvas');
                 var context = canvas.getContext('2d');
                 var video = document.querySelector('video');
@@ -259,7 +259,7 @@ var ProgramViewModel = function ViewModel() {
 
                 frame = new KeyframeInfo(keyframe);
                 var list = self.currentKeyframes();
-                list.push(frame);
+                //list.push(frame);
             }
             else if (layer == 1) {
 
