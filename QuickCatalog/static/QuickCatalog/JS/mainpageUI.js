@@ -32,6 +32,18 @@ function KeyframeInfo(data) {
     self.scene_id = ko.observable(self.json.scene_id);
     self.shot_id = ko.observable(self.json.shot_id);
     self.isNew = ko.observable(self.json.isNew);
+    self.getjson = function () {
+        self.json['id'] = self.id();
+        self.json['title'] = self.title();
+        self.json['keyframe'] = self.keyframe();
+        self.json['position'] = self.position();
+        self.json['media_id'] = self.media_id();
+        self.json['section_id'] = self.section_id();
+        self.json['scene_id'] = self.scene_id();
+        self.json['shot_id'] = self.shot_id();
+        self.json['isNew'] = self.isNew();
+        return self.json;
+    };
 }
 function ShotInfo(scene, data) {
     var self = this;
@@ -67,6 +79,49 @@ function ShotInfo(scene, data) {
         return new KeyframeInfo(itemS);
     });
     self.keyframes(kflist);
+    self.toShotInfoJson = function () {
+        var jsonString = JSON.stringify(self.getjson());
+
+        jsonString = jsonString.substring(0, jsonString.length - 1);
+        var keyframesjsonString = ', "keyframes":[';
+        for (var i = 0; i < self.keyframes().length; i++) {
+            keyframesjsonString += JSON.stringify(self.keyframes()[i].getjson());
+            if (i == self.keyframes().length - 1) keyframesjsonString += "";
+            else keyframesjsonString += ",";
+        }
+        keyframesjsonString += ']}';
+        jsonString = jsonString + keyframesjsonString;
+        var json = $.parseJSON(jsonString);
+        return json;
+    };
+    self.getjson = function () {
+        self.json['id'] = self.id();
+        self.json['scene_id'] = self.scene_id();
+        self.json['title'] = self.title();
+        self.json['description'] = self.description();
+        self.json['topic_words'] = self.topic_words();
+        self.json['key_words'] = self.key_words();
+        self.json['post_picture'] = self.post_picture();
+        self.json['time_start'] = self.time_start();
+        self.json['time_end'] = self.time_end();
+        self.json['rating'] = self.rating();
+        self.json['reason'] = self.reason();
+        self.json['location'] = self.location();
+        self.json['date_time'] = self.date_time();
+        self.json['subtitle'] = self.subtitle();
+        self.json['shootway'] = self.shootway();
+        self.json['rating2'] = self.rating2();
+        self.json['sense_range'] = self.sense_range();
+        self.json['angle'] = self.angle()
+        self.json['actual_sound'] = self.actual_sound();
+        self.json['reason2'] = self.reason2();
+        self.json['upload_time'] = self.upload_time();
+        self.json['reason3'] = self.reason3();
+        self.json['rating3'] = self.rating3();
+        self.json['ObjectID'] = self.ObjectID();
+        self.json['isNew'] = self.isNew();
+        return self.json;
+    };
 }
 function SceneInfo(section, data) {
     var self = this;
@@ -101,6 +156,54 @@ function SceneInfo(section, data) {
         return new KeyframeInfo(itemS);
     });
     self.keyframes(kflist);
+    self.getjson = function () {
+        self.json['id'] = self.id();
+        self.json['section_id'] = self.section_id();
+        self.json['title'] = self.title();
+        self.json['description'] = self.description();
+        self.json['topic_words'] = self.topic_words();
+        self.json['key_words'] = self.key_words();
+        self.json['post_picture'] = self.post_picture();
+        self.json['time_start'] = self.time_start();
+        self.json['time_end'] = self.time_end();
+        self.json['rating'] = self.rating();
+        self.json['reason'] = self.reason();
+        self.json['subtitle'] = self.subtitle();
+        self.json['rating2'] = self.rating2();
+        self.json['reason2'] = self.reason2();
+        self.json['date_of_event'] = self.date_of_event();
+        self.json['natural_sound'] = self.natural_sound();
+        self.json['upload_time'] = self.upload_time();
+        self.json['reason3'] = self.reason3();
+        self.json['rating3'] = self.rating3();
+        self.json['ObjectID'] = self.ObjectID();
+        self.json['isNew'] = self.isNew();
+        return self.json;
+    };
+    self.toSceneInfoJson = function () {
+        var jsonString = JSON.stringify(self.getjson());
+
+        jsonString = jsonString.substring(0, jsonString.length - 1);
+        var keyframesjsonString = ', "keyframes":[';
+        for (var i = 0; i < self.keyframes().length; i++) {
+            keyframesjsonString += JSON.stringify(self.keyframes()[i].getjson());
+            if (i == self.keyframes().length - 1) keyframesjsonString += "";
+            else keyframesjsonString += ",";
+        }
+        keyframesjsonString += ']';
+        jsonString = jsonString + keyframesjsonString;
+        var shotsjsonString = ', "shots":[';
+        for (var i = 0; i < self.shots().length; i++) {
+            shotsjsonString += JSON.stringify((self.shots()[i].toShotInfoJson()));
+            if (i == self.shots().length - 1) shotsjsonString += "";
+            else shotsjsonString += ",";
+        }
+        shotsjsonString += ']}';
+        jsonString = jsonString + shotsjsonString;
+        var json = $.parseJSON(jsonString);
+        return json;
+    };
+
 }
 function SectionInfo(data) {
     var self = this;
@@ -157,8 +260,76 @@ function SectionInfo(data) {
         return new KeyframeInfo(itemS);
     });
     self.keyframes(kflist);
+    self.getjson = function () {
+        self.json['id'] = self.id();
+        self.json['media_id'] = self.media_id();
+        self.json['title'] = self.title();
+        self.json['description'] = self.description();
+        self.json['topic_words'] = self.topic_words();
+        self.json['key_words'] = self.key_words();
+        self.json['post_picture'] = self.post_picture();
+        self.json['section_duty'] = self.section_duty();
+        self.json['time_start'] = self.time_start();
+        self.json['time_end'] = self.time_end();
+        self.json['subtitle'] = self.subtitle();
+        self.json['rating'] = self.rating();
+        self.json['reason'] = self.reason();
+        self.json['title2'] = self.title2();
+        self.json['class_name'] = self.class_name();
+        self.json['actual_sound'] = self.actual_sound();
+        self.json['program_form'] = self.program_form();
+        self.json['date_time'] = self.date_time();
+        self.json['section_series'] = self.section_series();
+        self.json['rating2'] = self.rating2();
+        self.json['reason2'] = self.reason2();
+        self.json['contributor'] = self.contributor();
+        self.json['audio_channel_num'] = self.audio_channel_num();
+        self.json['audio_channel_lan'] = self.audio_channel_lan();
+        self.json['subtitle_num'] = self.subtitle_num();
+        self.json['subtitle_lan'] = self.subtitle_lan();
+        self.json['years_covered'] = self.years_covered();
+        self.json['spatial'] = self.spatial();
+        self.json['source'] = self.source();
+        self.json['data_source_way'] = self.data_source_way();
+        self.json['data_source_man'] = self.data_source_man();
+        self.json['yuzhong'] = self.yuzhong();
+        self.json['years'] = self.years();
+        self.json['awards'] = self.awards();
+        self.json['upload_time'] = self.upload_time();
+        self.json['reason3'] = self.reason3();
+        self.json['rating3'] = self.rating3();
+        self.json['creater'] = self.creater();
+        self.json['pcreater'] = self.pcreater();
+        self.json['create_method'] = self.create_method();
+        self.json['create_other_info'] = self.create_other_info();
+        self.json['ObjectID'] = self.ObjectID();
+        self.json['isNew'] = self.isNew();
+        return self.json;
+    };
+    self.toSectionInfoJson = function () {
+        var jsonString = JSON.stringify(self.getjson());
 
+        jsonString = jsonString.substring(0, jsonString.length - 1);
+        var keyframesjsonString = ', "keyframes":[';
+        for (var i = 0; i < self.keyframes().length; i++) {
+            keyframesjsonString += JSON.stringify(self.keyframes()[i].getjson());
+            if (i == self.keyframes().length - 1) keyframesjsonString += "";
+            else keyframesjsonString += ",";
+        }
+        keyframesjsonString += ']';
+        jsonString = jsonString + keyframesjsonString;
 
+        var scenesjsonString = ', "scenes":[';
+        for (var i = 0; i < self.scenes().length; i++) {
+            scenesjsonString += JSON.stringify((self.scenes()[i].toSceneInfoJson()));
+            if (i == self.scenes().length - 1) scenesjsonString += "";
+            else scenesjsonString += ",";
+        }
+        scenesjsonString += ']}';
+        jsonString = jsonString + scenesjsonString;
+        var json = $.parseJSON(jsonString);
+        return json;
+    };
 }
 
 
@@ -194,7 +365,7 @@ var ProgramViewModel = function ViewModel() {
         self.media_column = ko.observable();
         self.source_id = ko.observable();
         self.post_picture = ko.observable();
-        self.post_picture = ko.observable();
+
         self.publish_date = ko.observable();
         self.time_length = ko.observable();
         self.carry_type = ko.observable();
@@ -360,7 +531,131 @@ var ProgramViewModel = function ViewModel() {
 
         };
 
-        //截取关键帧图像信息，编码方式为jpeg，并保存在相应的层中。
+        //点击提交按钮
+        self.submit = function (data, event) {
+            //todo ajax
+            var json = self.ToProgramJson();
+
+        };
+
+        //将节目层JSON序列化
+        self.ToProgramJson = function () {
+            var jsonString = '{"media_id":"' + self.media_id() + '", ' +
+                '"title":"' + self.title() + '", ' +
+                '"title2":"' + self.title2() + '", ' +
+                '"title_alter":"' + self.title_alter() + '", ' +
+                '"media_state":"' + self.media_state() + '", ' +
+                '"cataloger":"' + self.cataloger() + '", ' +
+                '"approver":"' + self.approver() + '", ' +
+                '"id":"' + self.id() + '", ' +
+                '"description":"' + self.description().replace(/[\r\n]/g, "\\r\\n") + '", ' +
+                '"class_name":"' + self.class_name() + '", ' +
+                '"topic_words":"' + self.topic_words() + '", ' +
+                '"key_words":"' + self.key_words() + '", ' +
+                '"subtitle":"' + self.subtitle() + '", ' +
+                '"media_duty":"' + self.media_duty() + '", ' +
+                '"publisher":"' + self.publisher() + '", ' +
+                '"audience":"' + self.audience() + '", ' +
+                '"media_column":"' + self.media_column() + '", ' +
+                '"source_id":"' + self.source_id() + '", ' +
+                '"post_picture":"' + self.post_picture() + '", ' +
+
+                '"publish_date":"' + self.publish_date() + '", ' +
+                '"time_length":"' + self.time_length() + '", ' +
+                '"carry_type":"' + self.carry_type() + '", ' +
+                '"media_format":"' + self.media_format() + '", ' +
+                '"additional_logo":"' + self.additional_logo() + '", ' +
+                '"media_series":"' + self.media_series() + '", ' +
+                '"media_type":"' + self.media_type() + '", ' +
+                '"location":"' + self.location() + '", ' +
+                '"path":"' + self.path() + '", ' +
+                '"rating":"' + self.rating() + '", ' +
+                '"reason":"' + self.reason() + '", ' +
+                '"zhishi":"' + self.zhishi() + '", ' +
+                '"aspect":"' + self.aspect() + '", ' +
+                '"audio_format":"' + self.audio_format() + '", ' +
+                '"source_method":"' + self.source_method() + '", ' +
+                '"source_provider":"' + self.source_provider() + '", ' +
+                '"time_start":"' + self.time_start() + '", ' +
+                '"color":"' + self.color() + '", ' +
+                '"sound_language":"' + self.sound_language() + '", ' +
+                '"subtitle_language":"' + self.subtitle_language() + '", ' +
+                '"media_class":"' + self.media_class() + '", ' +
+                '"xintai":"' + self.xintai() + '", ' +
+                '"creater":"' + self.creater() + '", ' +
+                '"rating2":"' + self.rating2() + '", ' +
+                '"approver2":"' + self.approver2() + '", ' +
+                '"reason2":"' + self.reason2() + '", ' +
+                '"subordinate_title":"' + self.subordinate_title() + '", ' +
+                '"title_description":"' + self.title_description() + '", ' +
+                '"series_title":"' + self.series_title() + '", ' +
+                '"episodes_totalnum":"' + self.episodes_totalnum() + '", ' +
+                '"episodes_num":"' + self.episodes_num() + '", ' +
+                '"tv_class":"' + self.tv_class() + '", ' +
+                '"produced_date":"' + self.produced_date() + '", ' +
+                '"parallel_proper_title":"' + self.parallel_proper_title() + '", ' +
+                '"parallel_series_title":"' + self.parallel_series_title() + '", ' +
+                '"character":"' + self.character() + '", ' +
+                '"date_of_event":"' + self.date_of_event() + '", ' +
+                '"version_des":"' + self.version_des() + '", ' +
+                '"producer":"' + self.producer() + '", ' +
+                '"name_of_cpo":"' + self.name_of_cpo() + '", ' +
+                '"cp_statement":"' + self.cp_statement() + '", ' +
+                '"audio_quality":"' + self.audio_quality() + '", ' +
+                '"video_quality":"' + self.video_quality() + '", ' +
+                '"video_bit_rate":"' + self.video_bit_rate() + '", ' +
+                '"video_coding_format":"' + self.video_coding_format() + '", ' +
+                '"video_sam_type":"' + self.video_sam_type() + '", ' +
+                '"isrc":"' + self.isrc() + '", ' +
+                '"relations_id":"' + self.relations_id() + '", ' +
+                '"years_covered":"' + self.years_covered() + '", ' +
+                '"spatial":"' + self.spatial() + '", ' +
+                '"published_date":"' + self.published_date() + '", ' +
+                '"cp_statement1":"' + self.cp_statement1() + '", ' +
+                '"yuzhong":"' + self.yuzhong() + '", ' +
+                '"awards":"' + self.awards() + '", ' +
+                '"xilie_name":"' + self.xilie_name() + '", ' +
+                '"class_num":"' + self.class_num() + '", ' +
+                '"class_time":"' + self.class_time() + '", ' +
+                '"reason3":"' + self.reason3() + '", ' +
+                '"upload_time":"' + self.upload_time() + '", ' +
+                '"approve_time":"' + self.approve_time() + '", ' +
+                '"approve2_time":"' + self.approve2_time() + '", ' +
+                '"catalog_times":"' + self.catalog_times() + '", ' +
+                '"approve_times":"' + self.approve_times() + '", ' +
+                '"approve2_times":"' + self.approve2_times() + '", ' +
+                '"approve3_time":"' + self.approve3_time() + '", ' +
+                '"rating3":"' + self.rating3() + '", ' +
+                '"level":"' + self.level() + '", ' +
+                '"time_end":"' + self.time_end() + '", ' +
+                '"test":"' + self.test() + '", ' +
+                '"shengdao":"' + self.shengdao() + '", ' +
+
+                '"ObjectID":"' + self.ObjectID() + '"';
+
+            var keyframesjsonString = ', "keyframes":[';
+            for (var i = 0; i < self.keyframes().length; i++) {
+                keyframesjsonString += JSON.stringify(self.keyframes()[i].getjson());
+                if (i == self.keyframes().length - 1) keyframesjsonString += "";
+                else keyframesjsonString += ",";
+            }
+            keyframesjsonString += ']';
+            jsonString = jsonString + keyframesjsonString;
+
+            var sectionjsonString = ', "sections":[';
+            for (var i = 0; i < self.sections().length; i++) {
+                sectionjsonString += JSON.stringify((self.sections()[i].toSectionInfoJson()));
+                if (i == self.sections().length - 1) sectionjsonString += "";
+                else sectionjsonString += ",";
+            }
+            sectionjsonString += ']}';
+            jsonString = jsonString + sectionjsonString;
+            var json = $.parseJSON(jsonString);
+            return json;
+
+        };
+
+//截取关键帧图像信息，编码方式为jpeg，并保存在相应的层中。
         self.catchKeyframePic = function (data, event) {
             var id = 0;
             if (self.currentLayer == 0) {
@@ -378,7 +673,7 @@ var ProgramViewModel = function ViewModel() {
             self.currentKeyframes.push(NewKeyframe(self.currentLayer, id));
         };
 
-        //获取节目层编目信息。type==0时，代表串联单解析，type==1时，代表从数据库中读取。
+//获取节目层编目信息。type==0时，代表串联单解析，type==1时，代表从数据库中读取。
         self.getprograminfo = function (type, data, event) {
             self.currentLayer = 0;
             if (type == 0) {
@@ -573,6 +868,7 @@ function NewKeyframe(layer, id) {
     else if (layer == 3) {
         keyframe = '{"id":"' + Math.random() + '","title":"","position":"' + video.currentTime * 10000000 + '","keyframe":"' + canvas.toDataURL("image/jpeg").replace("data:image/jpeg;base64,", "") + '","media_id":"","section_id":"","scene_id":"","shot_id":"' + id + '","isNew":"True"}'
     }
+
     frame = new KeyframeInfo(keyframe);
     return frame;
 }

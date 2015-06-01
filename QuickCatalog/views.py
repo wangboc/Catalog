@@ -17,6 +17,14 @@ from models import KeyFrame
 
 
 
+
+
+
+
+
+
+
+
 # Create your views here.
 import json
 from django.db import connection
@@ -146,6 +154,9 @@ def getPreCatalogDetail(request):
     input = open(file, 'r')
 
     timeold = "1900-01-01  00:00:00:00"
+    # 用于去除存在口播【创建人】的段落
+    isNouseParagraph = False
+    # 用于去除存在口播【创建人】的段落 结束
     descriptionTemp = ""
     titleTemp = ""
     time_start_temp = ""
@@ -257,62 +268,78 @@ def getPreCatalogDetail(request):
         if (position):
             # 解析新片段层入点 时长 出点
             timelist = __ParseTimeSpan__(timeold, RexDateString.findall(line)[0])
+
             if SectionCount != 0:
                 # =========================保存上一片段层信息===================================================
-                section = {}
-                section["title"] = titleTemp
-                section["description"] = descriptionTemp
-                section["time_start"] = time_start_temp
-                section["time_end"] = time_end_temp
-                section["id"] = ""
-                section["media_id"] = ""
-                section["topic_words"] = ""
-                section["key_words"] = ""
-                section["post_picture"] = ""
-                section["section_duty"] = ""
-                section["subtitle"] = ""
-                section["rating"] = ""
-                section["reason"] = ""
-                section["title2"] = ""
-                section["class_name"] = ""
-                section["actual_sound"] = ""
-                section["program_form"] = ""
-                section["date_time"] = ""
-                section["section_series"] = ""
-                section["rating2"] = ""
-                section["reason2"] = ""
-                section["contributor"] = ""
-                section["audio_channel_num"] = ""
-                section["audio_channel_lan"] = ""
-                section["subtitle_num"] = ""
-                section["subtitle_lan"] = ""
-                section["years_covered"] = ""
-                section["spatial"] = ""
-                section["source"] = ""
-                section["data_source_way"] = ""
-                section["data_source_man"] = ""
-                section["yuzhong"] = ""
-                section["years"] = ""
-                section["awards"] = ""
-                section["upload_time"] = ""
-                section["reason3"] = ""
-                section["rating3"] = ""
-                section["creater"] = ""
-                section["pcreater"] = ""
-                section["create_method"] = ""
-                section["create_other_info"] = ""
-                section["ObjectID"] = ""
-                Sectioninfo = SectionInfo(section)
-                Programinfo.sectionList.append(Sectioninfo)
-                # ===========================================================================================
-
+                if isNouseParagraph is False:
+                    section = {}
+                    section["title"] = titleTemp
+                    section["description"] = descriptionTemp
+                    section["time_start"] = time_start_temp
+                    section["time_end"] = time_end_temp
+                    section["id"] = ""
+                    section["media_id"] = ""
+                    section["topic_words"] = ""
+                    section["key_words"] = ""
+                    section["post_picture"] = ""
+                    section["section_duty"] = ""
+                    section["subtitle"] = ""
+                    section["rating"] = ""
+                    section["reason"] = ""
+                    section["title2"] = ""
+                    section["class_name"] = ""
+                    section["actual_sound"] = ""
+                    section["program_form"] = ""
+                    section["date_time"] = ""
+                    section["section_series"] = ""
+                    section["rating2"] = ""
+                    section["reason2"] = ""
+                    section["contributor"] = ""
+                    section["audio_channel_num"] = ""
+                    section["audio_channel_lan"] = ""
+                    section["subtitle_num"] = ""
+                    section["subtitle_lan"] = ""
+                    section["years_covered"] = ""
+                    section["spatial"] = ""
+                    section["source"] = ""
+                    section["data_source_way"] = ""
+                    section["data_source_man"] = ""
+                    section["yuzhong"] = ""
+                    section["years"] = ""
+                    section["awards"] = ""
+                    section["upload_time"] = ""
+                    section["reason3"] = ""
+                    section["rating3"] = ""
+                    section["creater"] = ""
+                    section["pcreater"] = ""
+                    section["create_method"] = ""
+                    section["create_other_info"] = ""
+                    section["ObjectID"] = ""
+                    Sectioninfo = SectionInfo(section)
+                    Programinfo.sectionList.append(Sectioninfo)
+                    # ===========================================================================================
+                elif isNouseParagraph:
+                    isNouseParagraph = False
             details = RexDateString.split(line)
+
             descriptionTemp = details[1]
+
             titleTemp = details[0]
             time_start_temp = timelist[0]
             time_end_temp = timelist[1]
             timeold = timelist[2]  # 设定下一片段层开始时间
             SectionCount += 1
+
+            # 用于去除存在口播【创建人】的段落
+            nouserKeyword = "创建人"
+            nouserKeyword = nouserKeyword.decode('utf8')
+            RexkeywordString = re.compile(u"创建人")
+            p = RexkeywordString.search(line)
+            if (p):
+                isNouseParagraph = True
+                # 用于去除存在口播【创建人】的段落 结束
+
+
         else:
             descriptionTemp += line
 
