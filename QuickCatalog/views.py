@@ -254,6 +254,7 @@ def getPreCatalogDetail(request):
     program["test"] = ""
     program["shengdao"] = ""
     program["ObjectID"] = ""
+    program["isNew"] = "True"
     Programinfo = ProgramInfo(program)
 
     SectionCount = 0
@@ -315,6 +316,7 @@ def getPreCatalogDetail(request):
                     section["create_method"] = ""
                     section["create_other_info"] = ""
                     section["ObjectID"] = ""
+                    section["isNew"] = "True"
                     Sectioninfo = SectionInfo(section)
                     Programinfo.sectionList.append(Sectioninfo)
                     # ===========================================================================================
@@ -387,6 +389,7 @@ def getPreCatalogDetail(request):
     section["create_method"] = ""
     section["create_other_info"] = ""
     section["ObjectID"] = ""
+    section["isNew"] = "True"
     Sectioninfo = SectionInfo(section)
     Programinfo.sectionList.append(Sectioninfo)
     # ===========================================================================================

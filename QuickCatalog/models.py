@@ -119,7 +119,7 @@ class ProgramInfo():
         self.test = programDic["test"]
         self.shengdao = programDic["shengdao"]
         self.ObjectID = programDic["ObjectID"]
-        self.programDic["isNew"] = "False"
+        self.programDic["isNew"] = programDic["isNew"]
 
 class SectionInfo:
     sceneList = []
@@ -185,7 +185,7 @@ class SectionInfo:
         self.create_method = sectionDic["create_method"]
         self.create_other_info = sectionDic["create_other_info"]
         self.ObjectID = sectionDic["ObjectID"]
-        self.sectionDic["isNew"] = "False"
+        self.sectionDic["isNew"] = sectionDic["isNew"]
 
 class SceneInfo:
     shotList = []

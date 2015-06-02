@@ -439,7 +439,7 @@ var ProgramViewModel = function ViewModel() {
         self.ObjectID = ko.observable();
         self.keyframes = ko.observableArray([]);
         self.sections = ko.observableArray([]);
-
+        self.isNew = ko.observable();
         //当导入串联单时，为界面中加载串联单原文件
         self.playlist = ko.observable();
 
