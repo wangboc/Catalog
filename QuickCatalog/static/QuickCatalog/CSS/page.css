@@ -206,3 +206,53 @@ em {
     line-height: 20px;
     overflow: scroll;
 }
+
+
+/*刘翌翊添加 2015.06.02*/
+.tab-pane{
+    border-style: solid; border-width: 1px;border-color: lightsteelblue;
+}
+
+body{
+    background-color: #e6e6e6;
+}
+
+#topHead{
+    background-image: url('../images/header_01.png');
+    background-repeat:no-repeat;
+}
+
+#nav{
+    background-image: url('../images/header_02.png');
+    background-repeat:no-repeat;
+}
+
+.page-header {
+    height:53px;
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+
+h2{
+    font-size: 55px;
+    opacity:0.0;
+}
+
+
+.table > thead > tr > td.success,
+.table > tbody > tr > td.success,
+.table > tfoot > tr > td.success,
+.table > thead > tr > th.success,
+.table > tbody > tr > th.success,
+.table > tfoot > tr > th.success,
+.table > thead > tr.success > td,
+.table > tbody > tr.success > td,
+.table > tfoot > tr.success > td,
+.table > thead > tr.success > th,
+.table > tbody > tr.success > th,
+.table > tfoot > tr.success > th {
+    background-color: #b2b2b2;
+}
+
+/*刘翌翊添加 2015.06.02*/
