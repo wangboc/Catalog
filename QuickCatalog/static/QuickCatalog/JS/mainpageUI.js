@@ -537,11 +537,11 @@ var ProgramViewModel = function ViewModel() {
             var json = self.ToProgramJson();
             $.ajax({
                 type: "post",
-                url: "/quickcatalog/saveProgramINfo/",
-                dataType: "json",
+                url: "/quickcatalog/saveProgramInfo/",
+                dataType: "text",
                 data: json,
                 success: function (data) {
-                    $("input#showTime").val(data[0].demoData);
+                    alert(data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert(errorThrown);
@@ -662,7 +662,7 @@ var ProgramViewModel = function ViewModel() {
             sectionjsonString += ']}';
             jsonString = jsonString + sectionjsonString;
             var json = $.parseJSON(jsonString);
-            return json;
+            return jsonString;
 
         };
 
@@ -700,6 +700,7 @@ var ProgramViewModel = function ViewModel() {
             }
             else if (type == 1) {
                 queryString = "/quickcatalog/23031/programinfo/";
+                //queryString = "/quickcatalog/31445/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
@@ -1020,19 +1021,22 @@ function G(objid) {
 }
 
 /********检索串联单并选中内容 刘翌翊添加textarea检索功能 2015.06.02********/
-function selectText(searchStr) {              //传入需要检索的内容存入searchStr
-    var textBox = document.getElementById("c2");
-    var textStr = textBox.value;
-    var lines = textStr.split("\n");
-    var i = 0;
-    while (lines[i].indexOf(searchStr) == '-1') {
-        i++;
+function selectText(searchStr) {
+    //传入需要检索的内容存入searchStr
+    if (searchStr != "") {
+        var textBox = document.getElementById("c2");
+        var textStr = textBox.value;
+        var lines = textStr.split("\n");
+        var i = 0;
+        while (lines[i].indexOf(searchStr) == '-1') {
+            i++;
+        }
+        textBox.focus();//可根据需要启用
+        G('c2').scrollTop = (i - 5) * 20;//此处选取CSS行高计算值为20px
+        var start = textStr.indexOf(lines[i]);
+        var end = start + lines[i].length;
+        textBox.setSelectionRange(start, end);
     }
-    textBox.focus();//可根据需要启用
-    G('c2').scrollTop = (i - 5) * 20;//此处选取CSS行高计算值为20px
-    var start = textStr.indexOf(lines[i]);
-    var end = start + lines[i].length;
-    textBox.setSelectionRange(start, end);
 }
 
 

@@ -2,6 +2,7 @@
 
 import os
 import re
+import base64
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -11,6 +12,30 @@ from models import SectionInfo
 from models import SceneInfo
 from models import ShotInfo
 from models import KeyFrame
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -95,6 +120,7 @@ def getProgramInfo(request, id):
                 DESC = cursor.description
                 keyframeList = [dict(zip([col[0] for col in DESC], ROW)) for ROW in cursor.fetchall()]
                 shot.keyframeList = [KeyFrame(keyframe) for keyframe in keyframeList]
+    cursor.close()
     return HttpResponse(program.toJson(), content_type="application/json")
 
 
@@ -106,12 +132,256 @@ def getPreCatalogList(request):
     return HttpResponse(jsonstr, content_type="application/json")
 
 
-def saveProgramINfo(request):
-    type = request.method
-    type = request.method
-    for key in request.POST:
-        sdf = key
-        sdf = key
+def saveProgramInfo(request):
+    # try:
+    if request.method == 'POST':
+        reqArray = json.loads(request.body)
+        if reqArray["isNew"] == "True":
+            SaveNewProgramInfo(reqArray)
+        else:
+            UpdateProgramInfo(reqArray)
+        return HttpResponse('保存完成', content_type="application/text")
+        # except:
+        # return HttpResponse('提交出现问题', content_type="application/text")
+
+
+def SaveNewProgramInfo(reqArray):
+    sqlCommand = "INSERT INTO MediaInfo  ( \
+                 media_id,\
+                title,\
+                title2,\
+                title_alter,\
+                media_state,\
+                cataloger,\
+                approver,\
+                description,\
+                class_name,\
+                topic_words,\
+                key_words,\
+                subtitle,\
+                media_duty,\
+                publisher,\
+                audience,\
+                media_column,\
+                source_id,\
+                post_picture,\
+                publish_date,\
+                time_length,\
+                carry_type,\
+                media_format,\
+                additional_logo,\
+                media_series,\
+                media_type,\
+                location,\
+                path,\
+                rating,\
+                reason,\
+                zhishi,\
+                aspect,\
+                audio_format,\
+                source_method,\
+                source_provider,\
+                time_start,\
+                color,\
+                sound_language,\
+                subtitle_language,\
+                media_class,\
+                xintai,\
+                creater,\
+                rating2,\
+                approver2,\
+                reason2,\
+                subordinate_title,\
+                title_description,\
+                series_title,\
+                episodes_totalnum,\
+                episodes_num,\
+                tv_class,\
+                produced_date,\
+                parallel_proper_title,\
+                parallel_series_title,\
+                character,\
+                date_of_event,\
+                version_des,\
+                producer,\
+                name_of_cpo,\
+                cp_statement,\
+                audio_quality,\
+                video_quality,\
+                video_bit_rate,\
+                video_coding_format,\
+                video_sam_type,\
+                isrc,\
+                relations_id,\
+                years_covered,\
+                spatial,\
+                published_date,\
+                cp_statement1,\
+                yuzhong,\
+                awards,\
+                xilie_name,\
+                class_num,\
+                class_time,\
+                reason3,\
+                upload_time,\
+                approve_time,\
+                approve2_time,\
+                catalog_times,\
+                approve_times,\
+                approve2_times,\
+                approve3_time,\
+                rating3,\
+                level,\
+                time_end,\
+                test,\
+                shengdao,\
+                ObjectID,\
+                isNew)\
+                VALUES (\
+                \'" + reqArray["media_id"] + "\', \
+                \'" + reqArray["title"] + "\', \
+                \'" + reqArray["title2"] + "\', \
+                \'" + reqArray["title_alter"] + "\', \
+                \'" + reqArray["media_state"] + "\', \
+                \'" + reqArray["cataloger"] + "\', \
+                \'" + reqArray["approver"] + "\', \
+                \'" + reqArray["description"] + "\', \
+                \'" + reqArray["class_name"] + "\', \
+                \'" + reqArray["topic_words"] + "\', \
+                \'" + reqArray["key_words"] + "\', \
+                \'" + reqArray["subtitle"] + "\', \
+                \'" + reqArray["media_duty"] + "\', \
+                \'" + reqArray["publisher"] + "\', \
+                \'" + reqArray["audience"] + "\', \
+                \'" + reqArray["media_column"] + "\', \
+                \'" + reqArray["source_id"] + "\', \
+                \'" + reqArray["post_picture"] + "\', \
+                \'" + reqArray["publish_date"] + "\', \
+                \'" + reqArray["time_length"] + "\', \
+                \'" + reqArray["carry_type"] + "\', \
+                \'" + reqArray["media_format"] + "\', \
+                \'" + reqArray["additional_logo"] + "\', \
+                \'" + reqArray["media_series"] + "\', \
+                \'" + reqArray["media_type"] + "\', \
+                \'" + reqArray["location"] + "\', \
+                \'" + reqArray["path"] + "\', \
+                \'" + reqArray["rating"] + "\', \
+                \'" + reqArray["reason"] + "\', \
+                \'" + reqArray["zhishi"] + "\', \
+                \'" + reqArray["aspect"] + "\', \
+                \'" + reqArray["audio_format"] + "\', \
+                \'" + reqArray["source_method"] + "\', \
+                \'" + reqArray["source_provider"] + "\', \
+                \'" + reqArray["time_start"] + "\', \
+                \'" + reqArray["color"] + "\', \
+                \'" + reqArray["sound_language"] + "\', \
+                \'" + reqArray["subtitle_language"] + "\', \
+                \'" + reqArray["media_class"] + "\', \
+                \'" + reqArray["xintai"] + "\', \
+                \'" + reqArray["creater"] + "\', \
+                \'" + reqArray["rating2"] + "\', \
+                \'" + reqArray["approver2"] + "\', \
+                \'" + reqArray["reason2"] + "\', \
+                \'" + reqArray["subordinate_title"] + "\', \
+                \'" + reqArray["title_description"] + "\', \
+                \'" + reqArray["series_title"] + "\', \
+                \'" + reqArray["episodes_totalnum"] + "\', \
+                \'" + reqArray["episodes_num"] + "\', \
+                \'" + reqArray["tv_class"] + "\', \
+                \'" + reqArray["produced_date"] + "\', \
+                \'" + reqArray["parallel_proper_title"] + "\', \
+                \'" + reqArray["parallel_series_title"] + "\', \
+                \'" + reqArray["character"] + "\', \
+                \'" + reqArray["date_of_event"] + "\', \
+                \'" + reqArray["version_des"] + "\', \
+                \'" + reqArray["producer"] + "\', \
+                \'" + reqArray["name_of_cpo"] + "\', \
+                \'" + reqArray["cp_statement"] + "\', \
+                \'" + reqArray["audio_quality"] + "\', \
+                \'" + reqArray["video_quality"] + "\', \
+                \'" + reqArray["video_bit_rate"] + "\', \
+                \'" + reqArray["video_coding_format"] + "\', \
+                \'" + reqArray["video_sam_type"] + "\', \
+                \'" + reqArray["isrc"] + "\', \
+                \'" + reqArray["relations_id"] + "\', \
+                \'" + reqArray["years_covered"] + "\', \
+                \'" + reqArray["spatial"] + "\', \
+                \'" + reqArray["published_date"] + "\', \
+                \'" + reqArray["cp_statement1"] + "\', \
+                \'" + reqArray["yuzhong"] + "\', \
+                \'" + reqArray["awards"] + "\', \
+                \'" + reqArray["xilie_name"] + "\', \
+                \'" + reqArray["class_num"] + "\', \
+                \'" + reqArray["class_time"] + "\', \
+                \'" + reqArray["reason3"] + "\', \
+                \'" + reqArray["upload_time"] + "\', \
+                \'" + reqArray["approve_time"] + "\', \
+                \'" + reqArray["approve2_time"] + "\', \
+                \'" + reqArray["catalog_times"] + "\', \
+                \'" + reqArray["approve_times"] + "\', \
+                \'" + reqArray["approve2_times"] + "\', \
+                \'" + reqArray["approve3_time"] + "\', \
+                \'" + reqArray["rating3"] + "\', \
+                \'" + reqArray["level"] + "\', \
+                \'" + reqArray["time_end"] + "\', \
+                \'" + reqArray["test"] + "\', \
+                \'" + reqArray["shengdao"] + "\', \
+                \'" + reqArray["ObjectID"] + "\', \
+                \'" + reqArray["isNew"] + "\')"
+
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.execute("SELECT @@IDENTITY FROM Mediainfo")
+    id = cursor.fetchone()[0]
+    cursor.close()
+    for keyframe in reqArray["keyframes"]:
+        SaveNewKeyframe(keyframe, 0, str(id))
+
+
+def SaveNewKeyframe(keyframe, layer, layerid):
+    if layer == 0:
+        keyframe["media_id"] = layerid
+    elif layer == 1:
+        keyframe["section_id"] = layerid
+    elif layer == 2:
+        keyframe["scene_id"] = layerid
+    elif layer == 3:
+        keyframe["shot_id"] = layerid
+    keyframeresult = base64.b64decode(keyframe["keyframe"])
+    keyframeresult = buffer(keyframeresult)
+    strs = keyframe["position"].split(":")
+    hours = strs[0]
+    minutes = strs[1]
+    seconds = strs[2]
+    frames = strs[3]
+    Second = int(seconds) + (int(hours) * 60 + int(minutes)) * 60 + int(frames) * 40 / 1000.0
+    position = Second * 10000000
+
+    sqlCommand = "INSERT INTO Keyframe  ( \
+                 title,\
+                position,\
+                media_id,\
+                section_id,\
+                scene_id,\
+                shot_id,\
+                keyframe)\
+                VALUES (\
+                \'" + keyframe["title"] + "\', \
+                \'" + str(position) + "\', \
+                \'" + keyframe["media_id"] + "\', \
+                \'" + keyframe["section_id"] + "\', \
+                \'" + keyframe["scene_id"] + "\', \
+                \'" + keyframe["shot_id"] + "\',%s)"
+
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand, [keyframeresult])
+    cursor.execute("SELECT @@IDENTITY FROM Keyframe")
+    id = cursor.fetchone()[0]
+    pass
+
+
+def UpdateProgramInfo(reqArray):
+    return
 
 
 def __ParseTimeSpan__(timeold, timenew):
@@ -140,19 +410,19 @@ def __ParseTimeSpan__(timeold, timenew):
     return [timeo[0], timen[0], time]  # 入点 时长 出点
 
 
-def saveNewKeyframe(request, data):
-    keyframe = {}
-    keyframe["id"] = ""
-    keyframe["title"] = data.title
-    keyframe["keyframe"] = ""
-    keyframe["keyframeBase64"] = data.keyframeBase64
-    keyframe["position"] = data.position
-    keyframe["media_id"] = data.media_id
-    keyframe["section_id"] = data.section_id
-    keyframe["scene_id"] = data.scene_id
-    keyframe["shot_id"] = data.shot_id
-    NewKeyframe = KeyFrame(keyframe)
-    # todo
+# def saveNewKeyframe(request, data):
+# keyframe = {}
+# keyframe["id"] = ""
+# keyframe["title"] = data.title
+# keyframe["keyframe"] = ""
+# keyframe["keyframeBase64"] = data.keyframeBase64
+# keyframe["position"] = data.position
+# keyframe["media_id"] = data.media_id
+# keyframe["section_id"] = data.section_id
+# keyframe["scene_id"] = data.scene_id
+# keyframe["shot_id"] = data.shot_id
+# NewKeyframe = KeyFrame(keyframe)
+# # todo
 
 
 def getPreCatalogDetail(request):
@@ -190,7 +460,7 @@ def getPreCatalogDetail(request):
     program["media_column"] = ""
     program["source_id"] = ""
     program["post_picture"] = ""
-    program["post_picture"] = ""
+
     program["publish_date"] = ""
     program["time_length"] = ""
     program["carry_type"] = ""
