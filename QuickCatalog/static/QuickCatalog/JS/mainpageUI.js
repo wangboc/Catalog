@@ -535,7 +535,18 @@ var ProgramViewModel = function ViewModel() {
         self.submit = function (data, event) {
             //todo ajax
             var json = self.ToProgramJson();
-
+            $.ajax({
+                type: "post",
+                url: "/quickcatalog/saveProgramINfo/",
+                dataType: "json",
+                data: json,
+                success: function (data) {
+                    $("input#showTime").val(data[0].demoData);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
         };
 
         //将节目层JSON序列化

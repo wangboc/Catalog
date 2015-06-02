@@ -106,6 +106,14 @@ def getPreCatalogList(request):
     return HttpResponse(jsonstr, content_type="application/json")
 
 
+def saveProgramINfo(request):
+    type = request.method
+    type = request.method
+    for key in request.POST:
+        sdf = key
+        sdf = key
+
+
 def __ParseTimeSpan__(timeold, timenew):
     RexDateString = re.compile(r'\d{2}:\d{2}:\d{2}:\d{2}')
     timeo = RexDateString.findall(timeold)  # 00:00:00:00
@@ -254,7 +262,7 @@ def getPreCatalogDetail(request):
     program["test"] = ""
     program["shengdao"] = ""
     program["ObjectID"] = ""
-    program["isNew"] = "True"
+    program["isNew"] = "NewInfo"
     Programinfo = ProgramInfo(program)
 
     SectionCount = 0
@@ -316,7 +324,7 @@ def getPreCatalogDetail(request):
                     section["create_method"] = ""
                     section["create_other_info"] = ""
                     section["ObjectID"] = ""
-                    section["isNew"] = "True"
+                    section["isNew"] = "NewInfo"
                     Sectioninfo = SectionInfo(section)
                     Programinfo.sectionList.append(Sectioninfo)
                     # ===========================================================================================
@@ -389,7 +397,7 @@ def getPreCatalogDetail(request):
     section["create_method"] = ""
     section["create_other_info"] = ""
     section["ObjectID"] = ""
-    section["isNew"] = "True"
+    section["isNew"] = "NewInfo"
     Sectioninfo = SectionInfo(section)
     Programinfo.sectionList.append(Sectioninfo)
     # ===========================================================================================

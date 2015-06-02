@@ -120,8 +120,12 @@ class ProgramInfo():
         self.shengdao = programDic["shengdao"]
         self.ObjectID = programDic["ObjectID"]
         self.programDic["isNew"] = programDic["isNew"]
-        if(programDic["isNew"] != "True"):
+        # NewInfo代表是从串联单解析出来的编目信息
+        if programDic["isNew"] != "NewInfo":
             self.programDic["isNew"] = "False"
+        elif programDic["isNew"] == "NewInfo":
+            self.programDic["isNew"] = "True"
+
 
 class SectionInfo:
     sceneList = []
@@ -188,8 +192,12 @@ class SectionInfo:
         self.create_other_info = sectionDic["create_other_info"]
         self.ObjectID = sectionDic["ObjectID"]
         self.sectionDic["isNew"] = sectionDic["isNew"]
-        if(sectionDic["isNew"] != "True"):
+        # NewInfo代表是从串联单解析出来的编目信息
+        if (sectionDic["isNew"] != "NewInfo"):
             self.sectionDic["isNew"] = "False"
+        elif sectionDic["isNew"] == "NewInfo":
+            self.sectionDic["isNew"] = "True"
+
 
 class SceneInfo:
     shotList = []
@@ -233,8 +241,12 @@ class SceneInfo:
         self.rating3 = sceneDic["rating3"]
         self.ObjectID = sceneDic["ObjectID"]
         self.sceneDic["isNew"] = sceneDic["isNew"]
-        if sceneDic["isNew"] != "True":
+        # NewInfo代表是从串联单解析出来的编目信息
+        if sceneDic["isNew"] != "NewInfo":
             self.sceneDic["isNew"] = "False"
+        elif sceneDic["isNew"] == "NewInfo":
+            self.sceneDic["isNew"] == "True"
+
 
 class ShotInfo:
     __Json__ = ""
@@ -277,8 +289,12 @@ class ShotInfo:
         self.rating3 = shotDic["rating3"]
         self.ObjectID = shotDic["ObjectID"]
         self.shotDic["isNew"] = shotDic["isNew"]
-        if shotDic["isNew"] != "True" :
+        # NewInfo代表是从串联单解析出来的编目信息
+        if shotDic["isNew"] != "NewInfo":
             self.shotDic["isNew"] = "False"
+        elif shotDic["isNew"] == "NewInfo":
+            self.shotDic["isNew"] = "True"
+
 
 class KeyFrame:
     __Json__ = ""

@@ -11,5 +11,6 @@ urlpatterns = patterns('',
                        url(r'^getPreCatalogList/$', views.getPreCatalogList, name='getPreCatalogList'),
                        url(r'^getPreCatalogDetail/$', views.getPreCatalogDetail, name='getPreCatalogDetail'),
                        url(r'^getPreCatalogFile/$', views.getPreCatalogFile, name='getPreCatalogFile'),
+                       url(r'^saveProgramINfo/$', views.saveProgramINfo, name='saveProgramINfo'),
 
                        )
