@@ -122,14 +122,14 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-
-            <video crossorigin="anonymous" id="player" width="100%" controls preload="auto"
+{# crossorigin="anonymous" #}
+            <video id="player" width="100%" controls preload="auto"
                    class="video-js vjs-default-skin" height="350">
-                {#                                <source src="http://10.1.70.88/1.mp4" type="video/mp4">#}
+                                <source src="http://10.1.70.88/1.mp4" type="video/mp4">
                 {#                <source src="{% static "QuickCatalog/video/1.mp4" %}" type="video/mp4">#}
-                <source src="http://localhost/1.mp4" type="video/mp4">
+{#                                <source src="http://localhost/1.mp4" type="video/mp4">#}
 
-                {#                                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">#}
+{#                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">#}
             </video>
 
 
@@ -604,8 +604,8 @@
                             <tr>
                             <tr>
                                 <td><label class="form-control-static">现场同期声</label></td>
-                            <td><input data-bind="value: natural_sound" type="text" class="form-control"
-                                       id="Natural_sound__Sce"
+                                <td><input data-bind="value: natural_sound" type="text" class="form-control"
+                                           id="Natural_sound__Sce"
                                            placeholder="输入现场同期声">
                                 </td>
                             </tr>
@@ -815,7 +815,7 @@
                                             <li>
                                                 <span data-bind="click: $root.changeToOtherLayer(2, $data, event)"
                                                       class="btn btn-warning"><i data-bind="text: title"
-                                                                              class="glyphicon glyphicon-minus"></i></span>
+                                                                                 class="glyphicon glyphicon-minus"></i></span>
                                                 <ul data-bind="foreach: shots">
                                                     <li>
                                                         <span data-bind="click: $root.changeToOtherLayer(3, $data, event)"
