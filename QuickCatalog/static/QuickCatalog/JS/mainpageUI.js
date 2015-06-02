@@ -630,7 +630,7 @@ var ProgramViewModel = function ViewModel() {
                 '"time_end":"' + self.time_end() + '", ' +
                 '"test":"' + self.test() + '", ' +
                 '"shengdao":"' + self.shengdao() + '", ' +
-
+                '"isNew":"' + self.isNew() + '", ' +
                 '"ObjectID":"' + self.ObjectID() + '"';
 
             var keyframesjsonString = ', "keyframes":[';
@@ -676,6 +676,8 @@ var ProgramViewModel = function ViewModel() {
 //获取节目层编目信息。type==0时，代表串联单解析，type==1时，代表从数据库中读取。
         self.getprograminfo = function (type, data, event) {
             self.currentLayer = 0;
+            var video = document.querySelector('video');
+            var videolength = ParseSecondtoTime(video.duration);
             if (type == 0) {
 
                 queryString = "/quickcatalog/getPreCatalogDetail/";
@@ -780,7 +782,7 @@ var ProgramViewModel = function ViewModel() {
                 self.approve3_time(item.approve3_time);
                 self.rating3(item.rating3);
                 self.level(item.level);
-                self.time_end(item.time_end);
+                self.time_end(videolength);
                 self.test(item.test);
                 self.shengdao(item.shengdao);
                 self.ObjectID(item.ObjectID);

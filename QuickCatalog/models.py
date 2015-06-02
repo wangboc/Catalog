@@ -120,6 +120,8 @@ class ProgramInfo():
         self.shengdao = programDic["shengdao"]
         self.ObjectID = programDic["ObjectID"]
         self.programDic["isNew"] = programDic["isNew"]
+        if(programDic["isNew"] != "True"):
+            self.programDic["isNew"] = "False"
 
 class SectionInfo:
     sceneList = []
@@ -186,6 +188,8 @@ class SectionInfo:
         self.create_other_info = sectionDic["create_other_info"]
         self.ObjectID = sectionDic["ObjectID"]
         self.sectionDic["isNew"] = sectionDic["isNew"]
+        if(sectionDic["isNew"] != "True"):
+            self.sectionDic["isNew"] = "False"
 
 class SceneInfo:
     shotList = []
@@ -228,7 +232,9 @@ class SceneInfo:
         self.reason3 = sceneDic["reason3"]
         self.rating3 = sceneDic["rating3"]
         self.ObjectID = sceneDic["ObjectID"]
-        self.sceneDic["isNew"] = "False"
+        self.sceneDic["isNew"] = sceneDic["isNew"]
+        if sceneDic["isNew"] != "True":
+            self.sceneDic["isNew"] = "False"
 
 class ShotInfo:
     __Json__ = ""
@@ -270,8 +276,9 @@ class ShotInfo:
         self.reason3 = shotDic["reason3"]
         self.rating3 = shotDic["rating3"]
         self.ObjectID = shotDic["ObjectID"]
-        self.shotDic["isNew"] = "False"
-
+        self.shotDic["isNew"] = shotDic["isNew"]
+        if shotDic["isNew"] != "True" :
+            self.shotDic["isNew"] = "False"
 
 class KeyFrame:
     __Json__ = ""
