@@ -41,7 +41,8 @@ $(document).ready(function () {
     });
 
     $("#normalCtr").click(function () {
-        video.playbackRate = 1.0;
+        var video = document.querySelector('video');
+        video.playbackRate = 1;
     });
 
     $("#nextFrameCtr").click(function () {
@@ -49,39 +50,32 @@ $(document).ready(function () {
         var time = player.currentTime();
         player.currentTime(time + 0.04);
         pausePlay();
-        var label = document.getElementById("label");
-        label.value = time;
+
     });
 
     $("#frontFrameCtr").click(function () {
         var player = videojs("player");
         var time = player.currentTime();
         player.currentTime(time - 0.04);
+
         pausePlay();
-        var label = document.getElementById("label");
-        label.value = time;
+
     });
 
     //快进，0.5， 1.0， 1.5， 2.0
     $("#fastCtr").click(function () {
+        var video = document.querySelector('video');
         video.playbackRate = video.playbackRate * 2;
-    });
-
-    // 截取关键帧
-    $("#keyframeCtr").click(function () {
-        // Define the size of the rectangle that will be filled (basically the entire element)
-        //context.fillRect(0, 0, 150, 150);
-        // Grab the image from the video
-        //context.drawImage(video, 0, 0, 150, 150);
-
 
     });
+
 
     //点击关键帧
     $("#keyframe").click(function () {
-        var player = videojs("player");
-        player.currentTime(90.88);
-        video.pause();
+        //var video = document.querySelector('video');
+        //var player = videojs("player");
+        //player.currentTime(90.88);
+        //video.pause();
     });
 });
 
