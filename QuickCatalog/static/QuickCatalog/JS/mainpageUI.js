@@ -822,6 +822,7 @@ var ProgramViewModel = function ViewModel() {
                     $("#DetailTabs a[href='#programsTab']").tab("show");
                     self.currentKeyframes(data.keyframes());
                     self.currentLayer = 0;
+                    selectText(self.title());
                 }
                 else if (layerDepth == 1) {
                     $("#DetailTabs a[href='#sectionsTab']").tab("show");
@@ -829,18 +830,21 @@ var ProgramViewModel = function ViewModel() {
                     self.currentKeyframes(data.keyframes());
                     content = data.title();
                     self.currentLayer = 1;
+                    selectText(self.currentSection().title());
                 }
                 else if (layerDepth == 2) {
                     $('#DetailTabs a[href="#scenesTab"]').tab('show');
                     self.currentScene(data);
                     self.currentKeyframes(data.keyframes());
                     self.currentLayer = 2;
+                    selectText(self.currentScene().title());
                 }
                 else if (layerDepth == 3) {
                     $('#DetailTabs a[href="#shotsTab"]').tab('show');
                     self.currentShot(data);
                     self.currentKeyframes(data.keyframes());
                     self.currentLayer = 3;
+                    selectText(self.currentShot().title());
                 }
                 timestr = data.time_start();
                 $.SetPlayPosition(timestr);
@@ -1002,6 +1006,22 @@ function F(objid) {
 }
 function G(objid) {
     return document.getElementById(objid);
+}
+
+/********检索串联单并选中内容 刘翌翊添加textarea检索功能 2015.06.02********/
+function selectText(searchStr) {              //传入需要检索的内容存入searchStr
+    var textBox = document.getElementById("c2");
+    var textStr = textBox.value;
+    var lines = textStr.split("\n");
+    var i = 0;
+    while (lines[i].indexOf(searchStr) == '-1') {
+        i++;
+    }
+    textBox.focus();//可根据需要启用
+    G('c2').scrollTop = (i - 5) * 20;//此处选取CSS行高计算值为20px
+    var start = textStr.indexOf(lines[i]);
+    var end = start + lines[i].length;
+    textBox.setSelectionRange(start, end);
 }
 
 
