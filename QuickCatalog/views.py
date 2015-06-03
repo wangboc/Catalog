@@ -138,8 +138,8 @@ def saveProgramInfo(request):
         reqArray = json.loads(request.body)
         if reqArray["isNew"] == "True":
             SaveNewProgramInfo(reqArray)
-        # else:
-            # UpdateProgramInfo(reqArray)
+        else:
+            UpdateProgramInfo(reqArray)
         return HttpResponse('保存完成', content_type="application/text")
         # except:
         # return HttpResponse('提交出现问题', content_type="application/text")
@@ -336,8 +336,8 @@ def SaveNewProgramInfo(reqArray):
     cursor.close()
     for keyframe in reqArray["keyframes"]:
         SaveNewKeyframe(keyframe, 0, str(id))
-    for section in reqArray["sections"]:
-        SaveNewSection(section, str(id))
+    # for section in reqArray["sections"]:
+    #     SaveNewSection(section, str(id))
 
 
 def SaveNewSection(section, media_id):
@@ -679,11 +679,11 @@ def UpdateProgramInfo(reqArray):
     for keyframe in reqArray["keyframes"]:
         if keyframe["isNew"] == "True":
             SaveNewKeyframe(keyframe, 0, reqArray["id"])
-    for section in reqArray["sections"]:
-        if section["isNew"] == "True":
-            SaveNewSection(section, reqArray["id"])
-        else:
-            UpdateSectionInfo(section)
+    # for section in reqArray["sections"]:
+    #     if section["isNew"] == "True":
+    #         SaveNewSection(section, reqArray["id"])
+    #     else:
+    #         UpdateSectionInfo(section)
     return
 
 

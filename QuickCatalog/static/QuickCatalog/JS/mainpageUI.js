@@ -559,7 +559,7 @@ var ProgramViewModel = function ViewModel() {
                 '"cataloger":"' + self.cataloger() + '", ' +
                 '"approver":"' + self.approver() + '", ' +
                 '"id":"' + self.id() + '", ' +
-                '"description":"' + self.description().replace(/[\r\n]/g, "\\r\\n") + '", ' +
+                '"description":"' + self.description().replace(/[\r\n]/g, "\r") + '", ' +
                 '"class_name":"' + self.class_name() + '", ' +
                 '"topic_words":"' + self.topic_words() + '", ' +
                 '"key_words":"' + self.key_words() + '", ' +
@@ -570,7 +570,6 @@ var ProgramViewModel = function ViewModel() {
                 '"media_column":"' + self.media_column() + '", ' +
                 '"source_id":"' + self.source_id() + '", ' +
                 '"post_picture":"' + self.post_picture() + '", ' +
-
                 '"publish_date":"' + self.publish_date() + '", ' +
                 '"time_length":"' + self.time_length() + '", ' +
                 '"carry_type":"' + self.carry_type() + '", ' +
@@ -699,8 +698,9 @@ var ProgramViewModel = function ViewModel() {
                 $.ChangeToPreCatalogContentPage(1);
             }
             else if (type == 1) {
-                queryString = "/quickcatalog/30485/programinfo/";
-                //queryString = "/quickcatalog/31426/programinfo/";
+                //queryString = "/quickcatalog/30485/programinfo/"; 串联单
+
+                queryString = "/quickcatalog/30478/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
