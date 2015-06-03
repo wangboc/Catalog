@@ -3,7 +3,7 @@
 import os
 import re
 import base64
-
+import types
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -598,6 +598,138 @@ def SaveNewKeyframe(keyframe, layer, layerid):
 
 
 def UpdateProgramInfo(reqArray):
+    sqlCommand = "Update mediainfo set \
+            media_id=\'" + reqArray["media_id"] + "\',\
+            title=\'" + reqArray["title"] + "\',\
+            title2=\'" + reqArray["title2"] + "\',\
+            title_alter=\'" + reqArray["title_alter"] + "\',\
+            media_state=\'" + reqArray["media_state"] + "\',\
+            description=\'" + reqArray["description"] + "\',\
+            class_name=\'" + reqArray["class_name"] + "\',\
+            topic_words=\'" + reqArray["topic_words"] + "\',\
+            key_words=\'" + reqArray["key_words"] + "\',\
+            subtitle=\'" + reqArray["subtitle"] + "\',\
+            media_duty=\'" + reqArray["media_duty"] + "\',\
+            publisher=\'" + reqArray["publisher"] + "\',\
+            audience=\'" + reqArray["audience"] + "\',\
+            media_column=\'" + reqArray["media_column"] + "\',\
+            source_id=\'" + reqArray["source_id"] + "\',\
+            post_picture=\'" + reqArray["post_picture"] + "\',\
+            time_length=\'" + reqArray["time_length"] + "\',\
+            carry_type=\'" + reqArray["carry_type"] + "\',\
+            media_format=\'" + reqArray["media_format"] + "\',\
+            additional_logo=\'" + reqArray["additional_logo"] + "\',\
+            media_series=\'" + reqArray["media_series"] + "\',\
+            media_type=\'" + reqArray["media_type"] + "\',\
+            location=\'" + reqArray["location"] + "\',\
+            path=\'" + reqArray["path"] + "\',\
+            reason=\'" + reqArray["reason"] + "\',\
+            zhishi=\'" + reqArray["zhishi"] + "\',\
+            aspect=\'" + reqArray["aspect"] + "\',\
+            audio_format=\'" + reqArray["audio_format"] + "\',\
+            source_method=\'" + reqArray["source_method"] + "\',\
+            source_provider=\'" + reqArray["source_provider"] + "\',\
+            time_start=\'" + reqArray["time_start"] + "\',\
+            color=\'" + reqArray["color"] + "\',\
+            sound_language=\'" + reqArray["sound_language"] + "\',\
+            subtitle_language=\'" + reqArray["subtitle_language"] + "\',\
+            media_class=\'" + reqArray["media_class"] + "\',\
+            xintai=\'" + reqArray["xintai"] + "\',\
+            creater=\'" + reqArray["creater"] + "\',\
+            reason2=\'" + reqArray["reason2"] + "\',\
+            subordinate_title=\'" + reqArray["subordinate_title"] + "\',\
+            title_description=\'" + reqArray["title_description"] + "\',\
+            series_title=\'" + reqArray["series_title"] + "\',\
+            episodes_totalnum=\'" + reqArray["episodes_totalnum"] + "\',\
+            episodes_num=\'" + reqArray["episodes_num"] + "\',\
+            tv_class=\'" + reqArray["tv_class"] + "\',\
+            parallel_proper_title=\'" + reqArray["parallel_proper_title"] + "\',\
+            parallel_series_title=\'" + reqArray["parallel_series_title"] + "\',\
+            character=\'" + reqArray["character"] + "\',\
+            version_des=\'" + reqArray["version_des"] + "\',\
+            producer=\'" + reqArray["producer"] + "\',\
+            name_of_cpo=\'" + reqArray["name_of_cpo"] + "\',\
+            cp_statement=\'" + reqArray["cp_statement"] + "\',\
+            audio_quality=\'" + reqArray["audio_quality"] + "\',\
+            video_quality=\'" + reqArray["video_quality"] + "\',\
+            video_bit_rate=\'" + reqArray["video_bit_rate"] + "\',\
+            video_coding_format=\'" + reqArray["video_coding_format"] + "\',\
+            video_sam_type=\'" + reqArray["video_sam_type"] + "\',\
+            isrc=\'" + reqArray["isrc"] + "\',\
+            years_covered=\'" + reqArray["years_covered"] + "\',\
+            spatial=\'" + reqArray["spatial"] + "\',\
+            cp_statement1=\'" + reqArray["cp_statement1"] + "\',\
+            yuzhong=\'" + reqArray["yuzhong"] + "\',\
+            awards=\'" + reqArray["awards"] + "\',\
+            xilie_name=\'" + reqArray["xilie_name"] + "\',\
+            class_num=\'" + reqArray["class_num"] + "\',\
+            class_time=\'" + reqArray["class_time"] + "\',\
+            reason3=\'" + reqArray["reason3"] + "\',\
+            rating3=\'" + reqArray["rating3"] + "\',\
+            time_end=\'" + reqArray["time_end"] + "\',\
+            test=\'" + reqArray["test"] + "\',\
+            shengdao=\'" + reqArray["shengdao"] + "\',\
+            ObjectID=\'" + reqArray["ObjectID"] + "\',\
+            isNew=\'" + reqArray["isNew"] + "\'\
+            where id = \'" + reqArray["id"] + "\'"
+
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.close()
+    for keyframe in reqArray["keyframes"]:
+        if keyframe["isNew"] == "True":
+            SaveNewKeyframe(keyframe, 0, reqArray["id"])
+    for section in reqArray["sections"]:
+        if section["isNew"] == "True":
+            SaveNewSection(section, reqArray["id"])
+        else:
+            UpdateSectionInfo(section)
+    return
+
+
+def UpdateSectionInfo(section):
+
+    sqlCommand = "Update mediainfo set \
+                media_id=\'" + str(section["media_id"]) + "\',\
+               title=\'" + section["title"] + "\',\
+            description=\'" + section["description"] + "\',\
+            topic_words=\'" + section["topic_words"] + "\',\
+            key_words=\'" + section["key_words"] + "\',\
+            section_duty=\'" + section["section_duty"] + "\',\
+            time_start=\'" + section["time_start"] + "\',\
+            time_end=\'" + section["time_end"] + "\',\
+            subtitle=\'" + section["subtitle"] + "\',\
+            reason=\'" + section["reason"] + "\',\
+            title2=\'" + section["title2"] + "\',\
+            class_name=\'" + section["class_name"] + "\',\
+            actual_sound=\'" + section["actual_sound"] + "\',\
+            program_form=\'" + section["program_form"] + "\',\
+            section_series=\'" + section["section_series"] + "\',\
+            reason2=\'" + section["reason2"] + "\',\
+            contributor=\'" + str(section["contributor"]) + "\',\
+            audio_channel_num=\'" + str(section["audio_channel_num"]) + "\',\
+            audio_channel_lan=\'" + str(section["audio_channel_lan"]) + "\',\
+            subtitle_num=\'" + int(section["subtitle_num"]) + "\',\
+            subtitle_lan=\'" + str(section["subtitle_lan"]) + "\',\
+            years_covered=\'" + str(section["years_covered"]) + "\',\
+            spatial=\'" + str(section["spatial"]) + "\',\
+            source=\'" + str(section["source"]) + "\',\
+            data_source_way=\'" + section["data_source_way"] + "\',\
+            data_source_man=\'" + section["data_source_man"] + "\',\
+            yuzhong=\'" + str(section["yuzhong"]) + "\',\
+            years=\'" + str(section["years"]) + "\',\
+            awards=\'" + section["awards"] + "\',\
+            reason3=\'" + str(section["reason3"]) + "\',\
+            creater=\'" + section["creater"] + "\',\
+            pcreater=\'" + section["pcreater"] + "\',\
+            create_method=\'" + section["create_method"] + "\',\
+            create_other_info=\'" + section["create_other_info"] + "\',\
+            ObjectID=\'" + section["ObjectID"] + "\',\
+            isNew=\'" + section["isNew"] + "\' \
+            where id = \'" + str(section["id"]) + "\'"
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.close()
     return
 
 
