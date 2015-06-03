@@ -336,6 +336,222 @@ def SaveNewProgramInfo(reqArray):
     cursor.close()
     for keyframe in reqArray["keyframes"]:
         SaveNewKeyframe(keyframe, 0, str(id))
+    for section in reqArray["sections"]:
+        SaveNewSection(section, str(id))
+
+
+def SaveNewSection(section, media_id):
+    sqlCommand = "INSERT INTO SectionInfo  ( \
+                    media_id,\
+                    title,\
+                    description,\
+                    topic_words,\
+                    key_words,\
+                    post_picture,\
+                    section_duty,\
+                    time_start,\
+                    time_end,\
+                    subtitle,\
+                    rating,\
+                    reason,\
+                    title2,\
+                    class_name,\
+                    actual_sound,\
+                    program_form,\
+                    date_time,\
+                    section_series,\
+                    rating2,\
+                    reason2,\
+                    contributor,\
+                    audio_channel_num,\
+                    audio_channel_lan,\
+                    subtitle_num,\
+                    subtitle_lan,\
+                    years_covered,\
+                    spatial,\
+                    source,\
+                    data_source_way,\
+                    data_source_man,\
+                    yuzhong,\
+                    years,\
+                    awards,\
+                    upload_time,\
+                    reason3,\
+                    rating3,\
+                    creater,\
+                    pcreater,\
+                    create_method,\
+                    create_other_info,\
+                    ObjectID,\
+                    isNew)\
+                    VALUES (\
+                    \'" + str(media_id) + "\',\
+                    \'" + section["title"] + "\', \
+                    \'" + section["description"] + "\',\
+                    \'" + section["topic_words"] + "\', \
+                    \'" + section["key_words"] + "\', \
+                    \'" + section["post_picture"] + "\',\
+                    \'" + section["section_duty"] + "\',\
+                    \'" + section["time_start"] + "\',\
+                    \'" + section["time_end"] + "\',\
+                    \'" + section["subtitle"] + "\',\
+                    \'" + section["rating"] + "\',\
+                    \'" + section["reason"] + "\',\
+                    \'" + section["title2"] + "\',\
+                    \'" + section["class_name"] + "\',\
+                    \'" + section["actual_sound"] + "\',\
+                    \'" + section["program_form"] + "\',\
+                    \'" + section["date_time"] + "\',\
+                    \'" + section["section_series"] + "\',\
+                    \'" + section["rating2"] + "\',\
+                    \'" + section["reason2"] + "\',\
+                    \'" + section["contributor"] + "\',\
+                    \'" + section["audio_channel_num"] + "\',\
+                    \'" + section["audio_channel_lan"] + "\',\
+                    \'" + section["subtitle_num"] + "\',\
+                    \'" + section["subtitle_lan"] + "\',\
+                    \'" + section["years_covered"] + "\',\
+                    \'" + section["spatial"] + "\',\
+                    \'" + section["source"] + "\',\
+                    \'" + section["data_source_way"] + "\',\
+                    \'" + section["data_source_man"] + "\',\
+                    \'" + section["yuzhong"] + "\',\
+                    \'" + section["years"] + "\',\
+                    \'" + section["awards"] + "\',\
+                    \'" + section["upload_time"] + "\',\
+                    \'" + section["reason3"] + "\',\
+                    \'" + section["rating3"] + "\',\
+                    \'" + section["creater"] + "\',\
+                    \'" + section["pcreater"] + "\',\
+                    \'" + section["create_method"] + "\',\
+                    \'" + section["create_other_info"] + "\',\
+                    \'" + section["ObjectID"] + "\',\
+                    \'" + section["isNew"] + "\')"
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.execute("SELECT @@IDENTITY FROM SectionInfo")
+    section_id = cursor.fetchone()[0]
+    cursor.close()
+    for KeyFrame in section["keyframes"]:
+        SaveNewKeyframe(KeyFrame, 1, section_id)
+    for scene in section["scenes"]:
+        SaveNewSceneInfo(scene, section_id)
+    return
+
+
+def SaveNewSceneInfo(scene, section_id):
+    sqlCommand = "INSERT INTO SceneInfo  ( \
+                    section_id,\
+                    title,\
+                    description,\
+                    topic_words,\
+                    key_words,\
+                    post_picture,\
+                    time_start,\
+                    time_end,\
+                    rating,\
+                    reason,\
+                    subtitle,\
+                    rating2,\
+                    reason2,\
+                    date_of_event,\
+                    natural_sound,\
+                    upload_time,\
+                    reason3,\
+                    rating3,\
+                    ObjectID,\
+                    isNew)\
+                    VALUES (\
+                    \'" + str(section_id) + "\',\
+                    \'" + scene["title"] + "\',\
+                    \'" + scene["description"] + "\',\
+                    \'" + scene["topic_words"] + "\',\
+                    \'" + scene["key_words"] + "\',\
+                    \'" + scene["post_picture"] + "\',\
+                    \'" + scene["time_start"] + "\',\
+                    \'" + scene["time_end"] + "\',\
+                    \'" + scene["rating"] + "\',\
+                    \'" + scene["reason"] + "\',\
+                    \'" + scene["subtitle"] + "\',\
+                    \'" + scene["rating2"] + "\',\
+                    \'" + scene["reason2"] + "\',\
+                    \'" + scene["date_of_event"] + "\',\
+                    \'" + scene["natural_sound"] + "\',\
+                    \'" + scene["upload_time"] + "\',\
+                    \'" + scene["reason3"] + "\',\
+                    \'" + scene["rating3"] + "\',\
+                    \'" + scene["ObjectID"] + "\',\
+                    \'" + scene["isNew"] + "\')"
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.execute("SELECT @@IDENTITY FROM SceneInfo")
+    scene_id = cursor.fetchone()[0]
+    cursor.close()
+    for keyframe in scene["keyframes"]:
+        SaveNewKeyframe(keyframe, 2, scene_id)
+    for shot in scene["shots"]:
+        SaveNewShotInfo(shot, scene_id)
+    return
+
+
+def SaveNewShotInfo(shot, scene_id):
+    sqlCommand = "INSERT INTO ShotInfo  ( \
+                    scene_id,\
+                    title,\
+                    description,\
+                    topic_words,\
+                    key_words,\
+                    post_picture,\
+                    time_start,\
+                    time_end,\
+                    rating,\
+                    reason,\
+                    location,\
+                    date_time,\
+                    subtitle,\
+                    shootway,\
+                    rating2,\
+                    sense_range,\
+                    angle,\
+                    actual_sound,\
+                    reason2,\
+                    upload_time,\
+                    reason3,\
+                    rating3,\
+                    ObjectID,\
+                    isNew)\
+                    VALUES (\
+                    \'" + str(scene_id) + "\',\
+                    \'" + shot["title"] + "\',\
+                    \'" + shot["description"] + "\',\
+                    \'" + shot["topic_words"] + "\',\
+                    \'" + shot["key_words"] + "\',\
+                    \'" + shot["post_picture"] + "\',\
+                    \'" + shot["time_start"] + "\',\
+                    \'" + shot["time_end"] + "\',\
+                    \'" + shot["rating"] + "\',\
+                    \'" + shot["reason"] + "\',\
+                    \'" + shot["location"] + "\',\
+                    \'" + shot["date_time"] + "\',\
+                    \'" + shot["subtitle"] + "\',\
+                    \'" + shot["shootway"] + "\',\
+                    \'" + shot["rating2"] + "\',\
+                    \'" + shot["sense_range"] + "\',\
+                    \'" + shot["angle"] + "\',\
+                    \'" + shot["actual_sound"] + "\',\
+                    \'" + shot["reason2"] + "\',\
+                    \'" + shot["upload_time"] + "\',\
+                    \'" + shot["reason3"] + "\',\
+                    \'" + shot["rating3"] + "\',\
+                    \'" + shot["ObjectID"] + "\',\
+                    \'" + shot["isNew"] + "\')"
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.execute("SELECT @@IDENTITY FROM ShotInfo")
+    shot_id = cursor.fetchone()[0]
+    cursor.close()
+    for keyframe in shot["keyframes"]:
+        SaveNewKeyframe(keyframe, 3, shot_id)
 
 
 def SaveNewKeyframe(keyframe, layer, layerid):
@@ -368,16 +584,17 @@ def SaveNewKeyframe(keyframe, layer, layerid):
                 VALUES (\
                 \'" + keyframe["title"] + "\', \
                 \'" + str(position) + "\', \
-                \'" + keyframe["media_id"] + "\', \
-                \'" + keyframe["section_id"] + "\', \
-                \'" + keyframe["scene_id"] + "\', \
-                \'" + keyframe["shot_id"] + "\',%s)"
+                \'" + str(keyframe["media_id"]) + "\', \
+                \'" + str(keyframe["section_id"]) + "\', \
+                \'" + str(keyframe["scene_id"]) + "\', \
+                \'" + str(keyframe["shot_id"]) + "\',%s)"
 
     cursor = connection.cursor()
     cursor.execute(sqlCommand, [keyframeresult])
     cursor.execute("SELECT @@IDENTITY FROM Keyframe")
     id = cursor.fetchone()[0]
-    pass
+    cursor.close()
+    return
 
 
 def UpdateProgramInfo(reqArray):

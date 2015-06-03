@@ -20,7 +20,7 @@ class ProgramInfo():
             self.programDic.get("sections").append(section.toJson())
         for keyframe in self.keyframeList:
             self.programDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.programDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
+        self.__Json__ = json.dumps(self.programDic, ensure_ascii=False, cls=DateTimeEncoder)
         return self.__Json__
 
     def __init__(self, programDic):
@@ -140,7 +140,7 @@ class SectionInfo:
             self.sectionDic.get("scenes").append(scene.toJson())
         for keyframe in self.keyframeList:
             self.sectionDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
+        self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder)
         return self.__Json__
 
 
@@ -212,7 +212,7 @@ class SceneInfo:
             self.sceneDic.get("shots").append(shot.toJson())
         for keyframe in self.keyframeList:
             self.sceneDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.sceneDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
+        self.__Json__ = json.dumps(self.sceneDic, ensure_ascii=False, cls=DateTimeEncoder)
         return self.__Json__
 
     def __init__(self, sceneDic):
@@ -257,7 +257,7 @@ class ShotInfo:
         self.shotDic.setdefault("keyframes", [])
         for keyframe in self.keyframeList:
             self.shotDic.get("keyframes").append(keyframe.toJson())
-        self.__Json__ = json.dumps(self.shotDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
+        self.__Json__ = json.dumps(self.shotDic, ensure_ascii=False, cls=DateTimeEncoder)
         return self.__Json__
 
     def __init__(self, shotDic):
@@ -300,7 +300,7 @@ class KeyFrame:
     __Json__ = ""
 
     def toJson(self):
-        self.__Json__ = json.dumps(self.keyframeDic, ensure_ascii=False, cls=DateTimeEncoder, sort_keys=True)
+        self.__Json__ = json.dumps(self.keyframeDic, ensure_ascii=False, cls=DateTimeEncoder)
 
         return self.__Json__
 
@@ -324,11 +324,14 @@ class KeyFrame:
 # 由于从数据库中读出的Datatime类型数据无法序列化，为json.dumps函数添加编码方法
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, obj):
+
         if hasattr(obj, 'isoformat'):
             return obj.isoformat()
         elif isinstance(obj, decimal.Decimal):
             return float(obj)
         elif isinstance(obj, ModelState):
+            return None
+        elif isinstance(obj, buffer):
             return None
         else:
             return json.JSONEncoder.default(self, obj)

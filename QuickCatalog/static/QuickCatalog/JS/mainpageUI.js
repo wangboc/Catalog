@@ -246,7 +246,7 @@ function SectionInfo(data) {
     self.reason3 = ko.observable(self.json.reason3);
     self.rating3 = ko.observable(self.json.rating3);
     self.creater = ko.observable(self.json.creater);
-    self.pcreater = ko.observable(self.json.pccreater);
+    self.pcreater = ko.observable(self.json.pcreater);
     self.create_method = ko.observable(self.json.create_method);
     self.create_other_info = ko.observable(self.json.create_other_info);
     self.ObjectID = ko.observable(self.json.ObjectID);
@@ -700,7 +700,7 @@ var ProgramViewModel = function ViewModel() {
             }
             else if (type == 1) {
                 queryString = "/quickcatalog/23031/programinfo/";
-                //queryString = "/quickcatalog/31445/programinfo/";
+                //queryString = "/quickcatalog/31426/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
