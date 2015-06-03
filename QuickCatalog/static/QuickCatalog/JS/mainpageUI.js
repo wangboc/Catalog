@@ -699,7 +699,7 @@ var ProgramViewModel = function ViewModel() {
                 $.ChangeToPreCatalogContentPage(1);
             }
             else if (type == 1) {
-                queryString = "/quickcatalog/23031/programinfo/";
+                queryString = "/quickcatalog/30485/programinfo/";
                 //queryString = "/quickcatalog/31426/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);

@@ -138,8 +138,8 @@ def saveProgramInfo(request):
         reqArray = json.loads(request.body)
         if reqArray["isNew"] == "True":
             SaveNewProgramInfo(reqArray)
-        else:
-            UpdateProgramInfo(reqArray)
+        # else:
+            # UpdateProgramInfo(reqArray)
         return HttpResponse('保存完成', content_type="application/text")
         # except:
         # return HttpResponse('提交出现问题', content_type="application/text")
