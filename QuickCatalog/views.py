@@ -336,8 +336,8 @@ def SaveNewProgramInfo(reqArray):
     cursor.close()
     for keyframe in reqArray["keyframes"]:
         SaveNewKeyframe(keyframe, 0, str(id))
-    # for section in reqArray["sections"]:
-    #     SaveNewSection(section, str(id))
+    for section in reqArray["sections"]:
+        SaveNewSection(section, str(id))
 
 
 def SaveNewSection(section, media_id):
@@ -491,6 +491,7 @@ def SaveNewSceneInfo(scene, section_id):
         SaveNewKeyframe(keyframe, 2, scene_id)
     for shot in scene["shots"]:
         SaveNewShotInfo(shot, scene_id)
+
     return
 
 
@@ -679,17 +680,17 @@ def UpdateProgramInfo(reqArray):
     for keyframe in reqArray["keyframes"]:
         if keyframe["isNew"] == "True":
             SaveNewKeyframe(keyframe, 0, reqArray["id"])
-    # for section in reqArray["sections"]:
-    #     if section["isNew"] == "True":
-    #         SaveNewSection(section, reqArray["id"])
-    #     else:
-    #         UpdateSectionInfo(section)
+    for section in reqArray["sections"]:
+        if section["isNew"] == "True":
+            SaveNewSection(section, reqArray["id"])
+        else:
+            UpdateSectionInfo(section)
+
     return
 
 
 def UpdateSectionInfo(section):
-
-    sqlCommand = "Update mediainfo set \
+    sqlCommand = "Update sectioninfo set \
                 media_id=\'" + str(section["media_id"]) + "\',\
                title=\'" + section["title"] + "\',\
             description=\'" + section["description"] + "\',\
@@ -709,7 +710,7 @@ def UpdateSectionInfo(section):
             contributor=\'" + str(section["contributor"]) + "\',\
             audio_channel_num=\'" + str(section["audio_channel_num"]) + "\',\
             audio_channel_lan=\'" + str(section["audio_channel_lan"]) + "\',\
-            subtitle_num=\'" + int(section["subtitle_num"]) + "\',\
+            subtitle_num=\'" + str(section["subtitle_num"]) + "\',\
             subtitle_lan=\'" + str(section["subtitle_lan"]) + "\',\
             years_covered=\'" + str(section["years_covered"]) + "\',\
             spatial=\'" + str(section["spatial"]) + "\',\
@@ -730,6 +731,69 @@ def UpdateSectionInfo(section):
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
     cursor.close()
+    for KeyFrame in section["keyframes"]:
+        if KeyFrame["isNew"] == "True":
+            SaveNewKeyframe(KeyFrame, 1, str(section["id"]))
+    for Scene in section["scenes"]:
+        if Scene["isNew"] == "True":
+            SaveNewSceneInfo(Scene, section["id"])
+        else:
+            UpdateSceneInfo(Scene)
+    return
+
+
+def UpdateSceneInfo(Scene):
+    sqlCommand = "Update sceneinfo set \
+                section_id=\'" + str(Scene["section_id"]) + "\',\
+                title=\'" + Scene["title"] + "\', \
+                description=\'" + Scene["description"] + "\', \
+                topic_words=\'" + Scene["topic_words"] + "\', \
+                key_words=\'" + Scene["key_words"] + "\', \
+                time_start=\'" + Scene["time_start"] + "\', \
+                time_end=\'" + Scene["time_end"] + "\', \
+                subtitle=\'" + Scene["subtitle"] + "\', \
+                natural_sound=\'" + Scene["natural_sound"] + "\', \
+                ObjectID=\'" + Scene["ObjectID"] + "\', \
+                isNew =\'" + Scene["isNew"] + "\' \
+            where id = \'" + str(Scene["id"]) + "\'"
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.close()
+    for Keyframe in Scene["keyframes"]:
+        if Keyframe["isNew"] == "True":
+            SaveNewKeyframe(Keyframe, 2, str(Scene["scene_id"]))
+    for Shot in Scene["shots"]:
+        if Shot["isNew"] == "True":
+            SaveNewShotInfo(Shot, Scene["id"])
+        else:
+            UpdateShotInfo(Shot)
+    return
+
+
+def UpdateShotInfo(Shot):
+    sqlCommand = "Update shotinfo set \
+                scene_id=\'" + str(Shot["scene_id"]) + "\',\
+                title=\'" + Shot["title"] + "\', \
+                description=\'" + Shot["description"] + "\', \
+                topic_words=\'" + Shot["topic_words"] + "\', \
+                key_words=\'" + Shot["key_words"] + "\', \
+                time_start=\'" + Shot["time_start"] + "\', \
+                time_end=\'" + Shot["time_end"] + "\', \
+                location=\'" + Shot["location"] + "\', \
+                subtitle=\'" + Shot["subtitle"] + "\', \
+                shootway=\'" + Shot["shootway"] + "\', \
+                sense_range=\'" + Shot["sense_range"] + "\', \
+                angle=\'" + Shot["angle"] + "\', \
+                actual_sound=\'" + Shot["actual_sound"] + "\', \
+                ObjectID=\'" + Shot["ObjectID"] + "\', \
+                isNew =\'" + Shot["isNew"] + "\' \
+            where id = \'" + str(Shot["id"]) + "\'"
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.close()
+    for Keyframe in Shot["keyframes"]:
+        if Keyframe["isNew"] == "True":
+            SaveNewKeyframe(Keyframe, 3, str(Shot["shot_id"]))
     return
 
 

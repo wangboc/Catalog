@@ -304,6 +304,10 @@ function SectionInfo(data) {
         self.json['create_other_info'] = self.create_other_info();
         self.json['ObjectID'] = self.ObjectID();
         self.json['isNew'] = self.isNew();
+        for(i in self.json){
+            if(self.json[i] == null)
+                self.json[i] = "";
+        }
         return self.json;
     };
     self.toSectionInfoJson = function () {
@@ -559,7 +563,7 @@ var ProgramViewModel = function ViewModel() {
                 '"cataloger":"' + self.cataloger() + '", ' +
                 '"approver":"' + self.approver() + '", ' +
                 '"id":"' + self.id() + '", ' +
-                '"description":"' + self.description().replace(/[\r\n]/g, "\r") + '", ' +
+                '"description":"' + self.description().replace(/[\r]/g, "\\r").replace(/[\n]/g, "\\n") + '", ' +
                 '"class_name":"' + self.class_name() + '", ' +
                 '"topic_words":"' + self.topic_words() + '", ' +
                 '"key_words":"' + self.key_words() + '", ' +
@@ -700,7 +704,7 @@ var ProgramViewModel = function ViewModel() {
             else if (type == 1) {
                 //queryString = "/quickcatalog/30485/programinfo/"; 串联单
 
-                queryString = "/quickcatalog/30478/programinfo/";
+                queryString = "/quickcatalog/30471/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
