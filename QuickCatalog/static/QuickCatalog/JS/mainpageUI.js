@@ -304,8 +304,8 @@ function SectionInfo(data) {
         self.json['create_other_info'] = self.create_other_info();
         self.json['ObjectID'] = self.ObjectID();
         self.json['isNew'] = self.isNew();
-        for(i in self.json){
-            if(self.json[i] == null)
+        for (i in self.json) {
+            if (self.json[i] == null)
                 self.json[i] = "";
         }
         return self.json;
@@ -709,6 +709,73 @@ var ProgramViewModel = function ViewModel() {
                 $.ChangeToPreCatalogContentPage(0);
             }
 
+            //删除层次信息
+            self.deleteLayer = function (data, event) {
+                if (self.currentLayer == 0) return;
+                else if (self.currentLayer == 1) {
+                    if (self.currentSection().isNew() == "True")
+                        self.sections.remove(self.currentSection())
+                    else {
+                        id = self.currentSection().id();
+                        $.ajax({
+                            type: "post",
+                            url: "/quickcatalog/deleteSectionInfo/",
+                            dataType: "text",
+                            data: id.toString(),
+                            success: function (data) {
+                                self.sections.remove(self.currentSection());
+                                alert(data);
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                        });
+                    }
+                }
+                else if (self.currentLayer == 2) {
+                    if (self.currentScene().isNew() == "True")
+                        self.currentScene().section().scenes.remove(self.currentScene());
+                    else {
+                        id = self.currentScene().id();
+                        $.ajax({
+                            type: "post",
+                            url: "/quickcatalog/deleteSceneInfo/",
+                            dataType: "text",
+                            data: id.toString(),
+                            success: function (data) {
+                                self.currentScene().section().scenes.remove(self.currentScene());
+                                alert(data);
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                        });
+                    }
+                }
+                else if (self.currentLayer == 3) {
+                    if (self.currentShot().isNew() == "True")
+                        self.currentShot().scene().shots.remove(self.currentShot())
+                    else {
+                        id = self.currentShot().id();
+                        $.ajax({
+                            type: "post",
+                            url: "/quickcatalog/deleteShotInfo/",
+                            dataType: "text",
+                            data: id.toString(),
+                            success: function (data) {
+                                self.currentShot().scene().shots.remove(self.currentShot());
+                                alert(data);
+                                //self.changeToOtherLayer(0, null, null)
+                                //$("#programTreeHead").trigger("click")
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                        });
+                    }
+                }
+            };
+
             $.getJSON(queryString, function (item) {
                 self.isNew(item.isNew);
                 self.media_id(item.media_id);
@@ -1027,6 +1094,7 @@ function G(objid) {
 /********检索串联单并选中内容 刘翌翊添加textarea检索功能 2015.06.02********/
 function selectText(searchStr) {
     //传入需要检索的内容存入searchStr
+
     if (searchStr != "") {
         var textBox = document.getElementById("c2");
         var textStr = textBox.value;

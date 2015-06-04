@@ -133,17 +133,54 @@ def getPreCatalogList(request):
 
 
 def saveProgramInfo(request):
-    # try:
-    if request.method == 'POST':
-        reqArray = json.loads(request.body)
-        if reqArray["isNew"] == "True":
-            SaveNewProgramInfo(reqArray)
-        else:
-            UpdateProgramInfo(reqArray)
-        return HttpResponse('保存完成', content_type="application/text")
-        # except:
-        # return HttpResponse('提交出现问题', content_type="application/text")
+    try:
+        if request.method == 'POST':
+            reqArray = json.loads(request.body)
+            id = "0"
+            if reqArray["isNew"] == "True":
+                id = str(SaveNewProgramInfo(reqArray))
+            else:
+                id = str(UpdateProgramInfo(reqArray))
+            return HttpResponse("{'保存结果':'保存完成','节目ID':'" + id + "'}", content_type="application/json")
+    except:
+        return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
 
+
+def deleteSectionInfo(request):
+    try:
+        if request.method == 'POST':
+            section_id = request.body
+            sqlCommand = "Delete from sectioninfo where id='" + section_id + "'"
+            cursor = connection.cursor()
+            cursor.execute(sqlCommand)
+            cursor.close()
+        return HttpResponse("{'删除成功':'" + section_id + "'}", content_type="application/json")
+    except:
+        return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
+
+def deleteSceneInfo(request):
+    try:
+        if request.method == 'POST':
+            scene_id = request.body
+            sqlCommand = "Delete from sceneinfo where id='" + scene_id + "'"
+            cursor = connection.cursor()
+            cursor.execute(sqlCommand)
+            cursor.close()
+        return HttpResponse("{'删除成功':'" + scene_id + "'}", content_type="application/json")
+    except:
+        return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
+
+def deleteShotInfo(request):
+    try:
+        if request.method == 'POST':
+            shot_id = request.body
+            sqlCommand = "Delete from shotinfo where id='" + shot_id + "'"
+            cursor = connection.cursor()
+            cursor.execute(sqlCommand)
+            cursor.close()
+        return HttpResponse("{'删除成功':'" + shot_id + "'}", content_type="application/json")
+    except:
+        return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
 
 def SaveNewProgramInfo(reqArray):
     sqlCommand = "INSERT INTO MediaInfo  ( \
@@ -242,9 +279,9 @@ def SaveNewProgramInfo(reqArray):
                 \'" + reqArray["title"] + "\', \
                 \'" + reqArray["title2"] + "\', \
                 \'" + reqArray["title_alter"] + "\', \
-                \'" + reqArray["media_state"] + "\', \
-                \'" + reqArray["cataloger"] + "\', \
-                \'" + reqArray["approver"] + "\', \
+                \'" + '一审通过' + "\', \
+                \'" + str(300) + "\', \
+                \'" + str(300) + "\', \
                 \'" + reqArray["description"] + "\', \
                 \'" + reqArray["class_name"] + "\', \
                 \'" + reqArray["topic_words"] + "\', \
@@ -280,7 +317,7 @@ def SaveNewProgramInfo(reqArray):
                 \'" + reqArray["xintai"] + "\', \
                 \'" + reqArray["creater"] + "\', \
                 \'" + reqArray["rating2"] + "\', \
-                \'" + reqArray["approver2"] + "\', \
+                \'" + str(300) + "\', \
                 \'" + reqArray["reason2"] + "\', \
                 \'" + reqArray["subordinate_title"] + "\', \
                 \'" + reqArray["title_description"] + "\', \
@@ -338,6 +375,7 @@ def SaveNewProgramInfo(reqArray):
         SaveNewKeyframe(keyframe, 0, str(id))
     for section in reqArray["sections"]:
         SaveNewSection(section, str(id))
+    return id
 
 
 def SaveNewSection(section, media_id):
@@ -604,7 +642,7 @@ def UpdateProgramInfo(reqArray):
             title=\'" + reqArray["title"] + "\',\
             title2=\'" + reqArray["title2"] + "\',\
             title_alter=\'" + reqArray["title_alter"] + "\',\
-            media_state=\'" + reqArray["media_state"] + "\',\
+            media_state=\'" + '一审通过' + "\',\
             description=\'" + reqArray["description"] + "\',\
             class_name=\'" + reqArray["class_name"] + "\',\
             topic_words=\'" + reqArray["topic_words"] + "\',\
@@ -686,7 +724,7 @@ def UpdateProgramInfo(reqArray):
         else:
             UpdateSectionInfo(section)
 
-    return
+    return reqArray["id"]
 
 
 def UpdateSectionInfo(section):

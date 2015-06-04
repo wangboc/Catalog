@@ -169,7 +169,7 @@
                                                                                class="glyphicon glyphicon-camera"></span>
                         </button>
 
-                        <button type="button" id="minuslayerCtr" class="btn btn-primary"><span
+                        <button type="button" data-bind="click: function(data, event){deleteLayer(data, event)}" id="minuslayerCtr" class="btn btn-primary"><span
                                 class="glyphicon glyphicon-minus-sign"></span>
                         </button>
 
@@ -804,7 +804,7 @@
                     <div class="tree">
                         <ul class="ulCustom">
                             <li>
-                                <span data-bind="click: changeToOtherLayer(0, $data, event)" class="btn btn-danger"><i
+                                <span id="programTreeHead" data-bind="click: changeToOtherLayer(0, $data, event)" class="btn btn-danger"><i
                                         data-bind="text: title"
                                         class="glyphicon glyphicon-calendar"></i></span>
                                 <ul data-bind="foreach: sections">
