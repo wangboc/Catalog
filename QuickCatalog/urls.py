@@ -14,6 +14,6 @@ urlpatterns = patterns('',
                        url(r'^saveProgramInfo/$', views.saveProgramInfo, name='saveProgramInfo'),
                        url(r'^deleteSectionInfo/$', views.deleteSectionInfo, name='deleteSectionInfo'),
                        url(r'^deleteSceneInfo/$', views.deleteSceneInfo, name='deleteSceneInfo'),
-                       url(r'^deleteShotInfo/$', views.deleteShotInfo, name='deleteShotInfo'),
+                       url(r'^deleteKeyframe/$', views.deleteKeyframe, name='deleteKeyframe'),
 
                        )

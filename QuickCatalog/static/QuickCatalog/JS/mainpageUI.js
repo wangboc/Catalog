@@ -765,7 +765,7 @@ var ProgramViewModel = function ViewModel() {
                             success: function (data) {
                                 self.currentShot().scene().shots.remove(self.currentShot());
                                 alert(data);
-                                //self.changeToOtherLayer(0, null, null)
+
                                 //$("#programTreeHead").trigger("click")
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -774,6 +774,7 @@ var ProgramViewModel = function ViewModel() {
                         });
                     }
                 }
+                self.changeToOtherLayer(0, self, event)
             };
 
             $.getJSON(queryString, function (item) {
@@ -932,6 +933,30 @@ var ProgramViewModel = function ViewModel() {
                 timestr = data.time_start();
                 $.SetPlayPosition(timestr);
 
+            }
+        };
+
+        self.deleteKeyframe = function (id, data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    if (event.currentTarget.id == "deleteKeyframeBtn") {
+                        $.ajax({
+                            type: "post",
+                            url: "/quickcatalog/deleteKeyframe/",
+                            dataType: "text",
+                            data: id.toString(),
+                            success: function (result) {
+                                self.currentKeyframes.remove(data);
+                                alert(result);
+
+
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                        });
+                    }
+                }
             }
         };
 
@@ -1098,16 +1123,18 @@ function selectText(searchStr) {
     if (searchStr != "") {
         var textBox = document.getElementById("c2");
         var textStr = textBox.value;
-        var lines = textStr.split("\n");
-        var i = 0;
-        while (lines[i].indexOf(searchStr) == '-1') {
-            i++;
+        if (textStr != "") {
+            var lines = textStr.split("\n");
+            var i = 0;
+            while (lines[i].indexOf(searchStr) == '-1') {
+                i++;
+            }
+            textBox.focus();//可根据需要启用
+            G('c2').scrollTop = (i - 5) * 20;//此处选取CSS行高计算值为20px
+            var start = textStr.indexOf(lines[i]);
+            var end = start + lines[i].length;
+            textBox.setSelectionRange(start, end);
         }
-        textBox.focus();//可根据需要启用
-        G('c2').scrollTop = (i - 5) * 20;//此处选取CSS行高计算值为20px
-        var start = textStr.indexOf(lines[i]);
-        var end = start + lines[i].length;
-        textBox.setSelectionRange(start, end);
     }
 }
 

@@ -126,9 +126,9 @@
             {#   #}
             <video crossorigin="anonymous" id="player" width="100%" controls preload="auto"
                    class="video-js vjs-default-skin" height="350">
-                                <source src="http://10.1.70.88/1.mp4" type="video/mp4">
+                <source src="http://10.1.70.88/1.mp4" type="video/mp4">
                 {#                <source src="{% static "QuickCatalog/video/1.mp4" %}" type="video/mp4">#}
-{#                <source src="http://localhost/1.mp4" type="video/mp4">#}
+                {#                <source src="http://localhost/1.mp4" type="video/mp4">#}
 
                 {#                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/webm">#}
             </video>
@@ -156,12 +156,12 @@
                         <input data-handle-width="52"
                                data-bind="bootstrapSwitchOn: function(data, event){ addbrotherLayer(data, event)}"
                                data-label-text="切层" data-on-text="开始" data-off-text="结束" type="checkbox"
-                               name="addbrotherLayerBtn" data-on-color="success" data-off-color="warning" checked/>
+                               name="addbrotherLayerBtn" data-on-color="primary" data-off-color="warning" checked/>
 
                         <input data-handle-width="52"
                                data-bind="bootstrapSwitchOn: function(data, event){ addsubLayer(data, event)}"
                                data-label-text="子层" data-on-text="开始" data-off-text="结束" type="checkbox"
-                               name="addsubLayerBtn" data-on-color="success" data-off-color="warning" checked/>
+                               name="addsubLayerBtn" data-on-color="primary" data-off-color="warning" checked/>
 
 
                         <button type="button" data-bind="click: function(data, event){catchKeyframePic(data, event)}"
@@ -169,7 +169,8 @@
                                                                                class="glyphicon glyphicon-camera"></span>
                         </button>
 
-                        <button type="button" data-bind="click: function(data, event){deleteLayer(data, event)}" id="minuslayerCtr" class="btn btn-primary"><span
+                        <button type="button" data-bind="click: function(data, event){deleteLayer(data, event)}"
+                                id="minuslayerCtr" class="btn btn-primary"><span
                                 class="glyphicon glyphicon-minus-sign"></span>
                         </button>
 
@@ -804,7 +805,8 @@
                     <div class="tree">
                         <ul class="ulCustom">
                             <li>
-                                <span id="programTreeHead" data-bind="click: changeToOtherLayer(0, $data, event)" class="btn btn-danger"><i
+                                <span id="programTreeHead" data-bind="click: changeToOtherLayer(0, $data, event)"
+                                      class="btn btn-success"><i
                                         data-bind="text: title"
                                         class="glyphicon glyphicon-calendar"></i></span>
                                 <ul data-bind="foreach: sections">
@@ -820,7 +822,7 @@
                                                 <ul data-bind="foreach: shots">
                                                     <li>
                                                         <span data-bind="click: $root.changeToOtherLayer(3, $data, event)"
-                                                              class="btn btn-success">
+                                                              class="btn btn-primary">
                                                             <i data-bind="text:title"
                                                                class="glyphicon glyphicon-minus"></i>
                                                         </span>
@@ -874,6 +876,8 @@
                                         height="150" id="keyframe"></canvas>
                                 <div>
                                     <p data-bind="text: position" class="badge btn-success"></p>
+                                    <span class="  glyphicon glyphicon-minus-sign  btn-danger" id="deleteKeyframeBtn"
+                                          data-bind="click: $root.deleteKeyframe (id(), $data, event)"></span>
                                 </div>
                             </div>
                         </div>

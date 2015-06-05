@@ -131,6 +131,17 @@ def getPreCatalogList(request):
                          separators=(',', ':'))
     return HttpResponse(jsonstr, content_type="application/json")
 
+def deleteKeyframe(request):
+    try:
+        if request.method == 'POST':
+            keyframe_id = request.body
+            sqlCommand = "Delete from keyframe where id='" + keyframe_id + "'"
+            cursor = connection.cursor()
+            cursor.execute(sqlCommand)
+            cursor.close()
+        return HttpResponse("{'删除成功':'" + keyframe_id + "'}", content_type="application/json")
+    except:
+        return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
 
 def saveProgramInfo(request):
     try:
