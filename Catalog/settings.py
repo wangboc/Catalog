@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'Catalog.wsgi.application'
 #     'default': {
 #         'NAME': 'MAM-LINE',
 #         'ENGINE': 'sqlserver_ado',
-#         'HOST': '192.168.0.102',
+# 'HOST': 'localhost',
 #         'USER': 'sa',
-#         'PASSWORD': '',
-#     }
+#         'PASSWORD': 'wangwang123',
+# }
 # }
 
 DATABASES = {

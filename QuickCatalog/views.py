@@ -194,6 +194,13 @@ def deleteShotInfo(request):
         return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
 
 def SaveNewProgramInfo(reqArray):
+    sqlCommand = "INSERT INTO ToCatalog (media_id, title) values ('" + str(reqArray["media_id"]) + "', '" + reqArray[
+        "title"] + "')"
+    cursor = connection.cursor()
+    cursor.execute(sqlCommand)
+    cursor.execute("SELECT @@IDENTITY FROM Mediainfo")
+    media_id = cursor.fetchone()[0]
+    cursor.close()
     sqlCommand = "INSERT INTO MediaInfo  ( \
                  media_id,\
                 title,\
@@ -286,7 +293,7 @@ def SaveNewProgramInfo(reqArray):
                 ObjectID,\
                 isNew)\
                 VALUES (\
-                \'" + reqArray["media_id"] + "\', \
+                \'" + str(media_id) + "\', \
                 \'" + reqArray["title"] + "\', \
                 \'" + reqArray["title2"] + "\', \
                 \'" + reqArray["title_alter"] + "\', \
