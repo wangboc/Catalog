@@ -311,8 +311,8 @@ def SaveNewProgramInfo(reqArray):
                 \'" + reqArray["additional_logo"] + "\', \
                 \'" + reqArray["media_series"] + "\', \
                 \'" + reqArray["media_type"] + "\', \
-                \'" + reqArray["location"] + "\', \
-                \'" + reqArray["path"] + "\', \
+                \'" + "桐乡新闻2011_L" + "\', \
+                \'" + reqArray["title"] + "\', \
                 \'" + reqArray["rating"] + "\', \
                 \'" + reqArray["reason"] + "\', \
                 \'" + reqArray["zhishi"] + "\', \

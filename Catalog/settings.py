@@ -80,19 +80,19 @@ WSGI_APPLICATION = 'Catalog.wsgi.application'
 #     'default': {
 #         'NAME': 'MAM-LINE',
 #         'ENGINE': 'sqlserver_ado',
-#         'HOST': 'localhost',
+#         'HOST': '192.168.0.102',
 #         'USER': 'sa',
-#         'PASSWORD': 'wangwang123',
+#         'PASSWORD': '',
 #     }
 # }
 
 DATABASES = {
 'default': {
-'NAME': 'MAM-LINE',
+'NAME': 'MAM-LINE(tongxiang)',
 'ENGINE': 'sqlserver_ado',
-'HOST': '10.1.70.88',
+'HOST': '192.168.0.2',
 'USER': 'sa',
-'PASSWORD': 'wangwang123',
+'PASSWORD': '',
 'OPTIONS': {
             'provider': 'SQLOLEDB',
         }
