@@ -704,7 +704,7 @@ var ProgramViewModel = function ViewModel() {
             else if (type == 1) {
                 //queryString = "/quickcatalog/30485/programinfo/"; 串联单
 
-                queryString = "/quickcatalog/30471/programinfo/";
+                queryString = "/quickcatalog/30485/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
