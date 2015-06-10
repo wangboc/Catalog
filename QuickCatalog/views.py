@@ -199,10 +199,11 @@ def deleteShotInfo(request):
 
 
 def SaveNewProgramInfo(reqArray):
-    sqlCommand = "INSERT INTO uploadinfo  (high_location_name, \
+    sqlCommand = "INSERT INTO uploadinfo  (high_location_name, low_location_name,\
                  filename)\
                 VALUES (\
-                    \'" + "桐乡新闻2011" + "\', \
+                    \'" + "桐乡新闻2011_L" + "\', \
+                    \'" + "桐乡新闻2011_L" + "\', \
                 \'" + reqArray["title"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
