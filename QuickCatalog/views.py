@@ -216,7 +216,7 @@ def SaveNewProgramInfo(reqArray):
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
     cursor.execute("SELECT @@IDENTITY FROM tocatalog")
-
+    cursor.close()
     sqlCommand = "INSERT INTO MediaInfo  ( \
                  media_id,\
                 title,\
@@ -535,7 +535,7 @@ def __ParseTimeSpan__(timeold, timenew):
 
 def getPreCatalogDetail(request):
     STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
-    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-07-30.txt"
+    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-11-30.txt"
     file = file.decode('utf-8')
     input = open(file, 'r')
 
@@ -549,7 +549,7 @@ def getPreCatalogDetail(request):
     time_end_temp = ""
 
     program = {}
-    program["title"] = "桐乡新闻 2014-07-30"
+    program["title"] = "桐乡新闻-2014-11-30"
     program["media_id"] = ""
     program["title2"] = ""
     program["title_alter"] = ""
@@ -788,7 +788,7 @@ def getPreCatalogDetail(request):
 
 def getPreCatalogFile(request):
     STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
-    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-07-30.txt"
+    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-11-30.txt"
     file = file.decode('utf-8')
     input = open(file, 'r')
     text = ""
