@@ -133,15 +133,19 @@ def getPreCatalogList(request):
 
 
 def uploadfile(request):
-    # title = request.POST['title']
-    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
-    PATH = STATIC_ROOT + "\QuickCatalog\PlayList".decode('utf-8')
-    f = request.FILES[0]
-    destination = open(PATH, 'wb+')
-    for chunk in f.chunks():
-        destination.write(chunk)
-    destination.close()
-    return
+    try:
+        STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+        PATH = STATIC_ROOT + "/QuickCatalog/PlayList".decode('utf-8')
+        files = request.FILES.getlist('file_data')
+        for f in files:
+            destination = open(PATH + '/' + f._name.decode('utf-8'), 'wb+')
+            for chunk in f.chunks():
+                destination.write(chunk)
+            destination.close()
+        return HttpResponse(json.dumps('OK'), content_type="applicatoin/json")
+    except:
+        return HttpResponse(json.dumps('Error'), content_type="applicatoin/json")
+
 
 def deleteKeyframe(request):
     try:
@@ -157,17 +161,17 @@ def deleteKeyframe(request):
 
 
 def saveProgramInfo(request):
-    # try:
-    if request.method == 'POST':
-        reqArray = json.loads(request.body)
-        id = "0"
-        if reqArray["isNew"] == "True":
-            id = str(SaveNewProgramInfo(reqArray))
-        else:
-            id = str(UpdateProgramInfo(reqArray))
-        return HttpResponse("{'保存结果':'保存完成','节目ID':'" + id + "'}", content_type="application/json")
-        # except:
-        # return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
+    try:
+        if request.method == 'POST':
+            reqArray = json.loads(request.body)
+            id = "0"
+            if reqArray["isNew"] == "True":
+                id = str(SaveNewProgramInfo(reqArray))
+            else:
+                id = str(UpdateProgramInfo(reqArray))
+            return HttpResponse("{'保存结果':'保存完成','节目ID':'" + id + "'}", content_type="application/json")
+    except:
+        return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
 
 
 def deleteSectionInfo(request):

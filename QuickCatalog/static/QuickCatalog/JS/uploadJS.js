@@ -1,19 +1,12 @@
-/**
- * Created by hoh on 2015/6/17.
- */
-$(document).ready(function() {
-    $('#upload').click(function() {
-        $.ajax({
-            title: '桐乡新闻',
-            type: 'POST',
-            url : '/quickcatalog/uploadfile/',
-            enctype: "multipart/form-data",
-            data  : {
-                'file': $('#file').val()
-            },
-            success: function(data) {
-                console.log(data)
-            }
-        })
-    })
-})
+//https://github.com/kartik-v/bootstrap-fileinput#showuploadedthumbs
+$("#input-id").fileinput({
+    dropZoneEnabled: false,
+    removeLabel:'清除',
+    uploadLabel:'开始上传',
+    browseLabel: '选择上传文件',
+    uploadUrl: '/quickcatalog/uploadfile/', //
+    allowedFileExtensions: ['txt', 'TXT', 'mp4', 'MP4'],
+    overwriteInitial: false,
+    maxFileSize: 302414
+    //allowedFileTypes: ['image', 'video', 'flash'],
+});

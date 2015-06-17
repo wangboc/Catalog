@@ -703,6 +703,7 @@ var ProgramViewModel = function ViewModel() {
                 });
                 //切换到串联单页面
                 $.ChangeToPreCatalogContentPage(1);
+                $('#myModal').modal("hide");
             }
             else if (type == 1) {
                 //queryString = "/quickcatalog/30485/programinfo/"; 串联单
