@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load staticfiles %}
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "QuickCatalog/bootstrap-3.3.4-dist/css/bootstrap.min.css" %}">
     <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static "QuickCatalog/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" %}">
     <!--自定义css文件-->
     <link href="{% static "QuickCatalog/CSS/page.css" %}" rel="stylesheet">
 
@@ -59,6 +59,7 @@
                                 </div>
                                 <div class="modal-header">
                                     <h5 class="badge btn-info">上传文件</h5>
+
 
                                 </div>
                                 <div class="modal-body">
@@ -904,7 +905,7 @@
 </div>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <!-- <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script> -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="{% static "QuickCatalog/JS/jquery-2.0.3.min.js" %}"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script type="text/javascript" src="{% static "QuickCatalog/bootstrap-3.3.4-dist/js/bootstrap.min.js" %}"></script>
@@ -952,6 +953,8 @@
 
 <!-- 界面交互脚本 -->
 <script type="text/javascript" src="{% static "QuickCatalog/JS/mainpageUI.js" %}"></script>
+
+
 <!-- 自定义结束 -->
 
 </body>

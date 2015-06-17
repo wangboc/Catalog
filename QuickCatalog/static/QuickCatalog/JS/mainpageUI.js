@@ -535,6 +535,9 @@ var ProgramViewModel = function ViewModel() {
 
         };
 
+
+
+
         //点击提交按钮
         self.submit = function (data, event) {
             //todo ajax
@@ -1233,3 +1236,5 @@ function ParseTimetoSecond(timeStr) {
     return Second;
 
 }
+
+

@@ -132,6 +132,8 @@ def getPreCatalogList(request):
     return HttpResponse(jsonstr, content_type="application/json")
 
 
+
+
 def deleteKeyframe(request):
     try:
         if request.method == 'POST':
