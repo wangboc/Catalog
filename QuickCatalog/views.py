@@ -132,7 +132,16 @@ def getPreCatalogList(request):
     return HttpResponse(jsonstr, content_type="application/json")
 
 
-
+def uploadfile(request):
+    # title = request.POST['title']
+    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+    PATH = STATIC_ROOT + "\QuickCatalog\PlayList".decode('utf-8')
+    f = request.FILES[0]
+    destination = open(PATH, 'wb+')
+    for chunk in f.chunks():
+        destination.write(chunk)
+    destination.close()
+    return
 
 def deleteKeyframe(request):
     try:

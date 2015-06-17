@@ -15,5 +15,6 @@ urlpatterns = patterns('',
                        url(r'^deleteSectionInfo/$', views.deleteSectionInfo, name='deleteSectionInfo'),
                        url(r'^deleteSceneInfo/$', views.deleteSceneInfo, name='deleteSceneInfo'),
                        url(r'^deleteKeyframe/$', views.deleteKeyframe, name='deleteKeyframe'),
+                       url(r'^uploadfile/$', views.uploadfile, name='uploadfile'),
 
                        )
