@@ -47,7 +47,8 @@
         <table class="col-md-12">
             <tr>
                 <td class="col-md-4 col-xs-12">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                    <button data-bind="click: function(data, event){getprecatalogfiles(data, event)}" type="button"
+                            class="btn btn-info" data-toggle="modal" data-target="#myModal">
                         导入节目单
                     </button>
                     <!-- Modal -->
@@ -69,20 +70,27 @@
                                 </div>
                                 <div class="modal-body">
                                     <span class="badge btn-info">串联单 :</span>
-                                    <table class="table table-bordered  table-hover table-striped  table-condensed">
-                                        <tr data-bind="event: { dblclick : function(data, event){getprograminfo(0, data, event)}}">
-                                            <td>桐乡新闻 2014-11-30</td>
-                                            <td>
-                                                <button data-bind="click: function(data, event){getprograminfo(0, data, event)}">
-                                                    解析
-                                                </button>
-                                            </td>
-                                        </tr>
 
-                                    </table>
+                                    <div class="pre-scrollable">
+                                        <table data-bind="foreach: pre_catalogfiles" class="table table-bordered  table-hover table-striped  table-condensed">
+                                            <tr>
+                                                <td data-bind="text: title"></td>
+                                                <td>
+                                                    <button data-bind="click: function(data, event){$root.getprograminfo(0, data, event)}">
+                                                        解析
+                                                    </button>
+                                                    <button data-bind="click: function(data, event){$root.delete_pre_catalogfile(title,data, event)}">
+                                                        删除
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">完成</button>
+                                    <button type="button" class="btn btn-primary" data-bind="click: function(data, event){getprecatalogfiles(data, event)}">刷新</button>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">完成</button>
                                 </div>
                             </div>
                         </div>
@@ -866,7 +874,7 @@
                         <textarea cols="2" rows="14" id="li" disabled></textarea>
                     </div>
                     <div>
-                        <textarea data-bind="text: $root.playlist" name="co" rows="14" wrap="off" id="c2"
+                        <textarea data-bind="text: $root.pre_catalogfile" name="co" rows="14" wrap="off" id="c2"
                                   onkeyup="keyUp()" onfocus="keyUp()"
                                   onscroll="G('li').scrollTop = this.scrollTop;" class="grey"> </textarea>
                     </div>

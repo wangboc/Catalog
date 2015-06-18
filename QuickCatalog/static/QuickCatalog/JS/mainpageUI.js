@@ -20,6 +20,12 @@ ko.bindingHandlers.bootstrapSwitchOn = {
         }
     }
 };
+
+function PreCatalogFile(data){
+    var self = this;
+    self.title = ko.observable(data);
+}
+
 function KeyframeInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
@@ -445,8 +451,23 @@ var ProgramViewModel = function ViewModel() {
         self.sections = ko.observableArray([]);
         self.isNew = ko.observable();
         //当导入串联单时，为界面中加载串联单原文件
-        self.playlist = ko.observable();
+        self.pre_catalogfile = ko.observable();
 
+        //服务器中已有串联单文件
+        self.pre_catalogfiles = ko.observableArray([]);
+        //获取服务器中所有串联单清单
+        self.getprecatalogfiles = function (data, event) {
+            self.pre_catalogfiles.removeAll();
+            $.getJSON("/quickcatalog/getPreCatalogList/", function (item) {
+                for (i in item) {
+                    self.pre_catalogfiles.push(new PreCatalogFile(item[i]));
+                }
+            });
+        }
+        //删除指定串联单文件
+        self.delete_pre_catalogfile = function (title, data, event){
+            //todo;
+        }
 
         //切层
         self.addbrotherLayer = function (data, event) {
@@ -534,8 +555,6 @@ var ProgramViewModel = function ViewModel() {
             }
 
         };
-
-
 
 
         //点击提交按钮
@@ -699,7 +718,7 @@ var ProgramViewModel = function ViewModel() {
 
                 queryString = "/quickcatalog/getPreCatalogDetail/";
                 $.getJSON("/quickcatalog/getPreCatalogFile/", function (item) {
-                    self.playlist(item.content);
+                    self.pre_catalogfile(item.content);
                 });
                 //切换到串联单页面
                 $.ChangeToPreCatalogContentPage(1);
