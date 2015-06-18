@@ -21,7 +21,7 @@ ko.bindingHandlers.bootstrapSwitchOn = {
     }
 };
 
-function PreCatalogFile(data){
+function PreCatalogFile(data) {
     var self = this;
     self.title = ko.observable(data);
 }
@@ -465,8 +465,23 @@ var ProgramViewModel = function ViewModel() {
             });
         }
         //删除指定串联单文件
-        self.delete_pre_catalogfile = function (title, data, event){
-            //todo;
+        self.delete_pre_catalogfile = function (title, data, event) {
+            var json = title();
+            $.ajax({
+                type: "post",
+                url: "/quickcatalog/deletePreCatalogFile/",
+                dataType: "text",
+                data: json,
+                success: function (data) {
+                    for (i in self.pre_catalogfiles()) {
+                        if (self.pre_catalogfiles()[i].title() == json)
+                            self.pre_catalogfiles.remove(self.pre_catalogfiles()[i]);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
         }
 
         //切层

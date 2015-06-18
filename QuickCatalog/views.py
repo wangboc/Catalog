@@ -123,6 +123,16 @@ def getProgramInfo(request, id):
     cursor.close()
     return HttpResponse(program.toJson(), content_type="application/json")
 
+def deletePreCatalogFile(request):
+    try:
+        if request.method == 'POST':
+            title = request.body
+            STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+            PATH = STATIC_ROOT + "/QuickCatalog/PlayList/" + title.decode('utf-8')
+            os.remove(PATH)
+        return HttpResponse("{'删除成功':'" + PATH + "'}", content_type="application/json")
+    except Exception as e:
+        return HttpResponse("{'删除结果':'出现问题' + '"+e+"'}", content_type="application/json")
 
 def getPreCatalogList(request):
     STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
