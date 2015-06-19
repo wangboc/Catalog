@@ -64,15 +64,26 @@
                                 <div class="modal-header">
                                     <h5 class="badge btn-info">上传文件</h5>
 
-                                    <form enctype="multipart/form-data">
-                                        <input id="input-id" class="file" type="file" multiple data-min-file-count="1">
-                                    </form>
+                                    <div>
+                                        <form enctype="multipart/form-data">
+                                            <input id="input-id" class="file" type="file" multiple
+                                                   data-min-file-count="1">
+                                        </form>
+                                    </div>
+                                    <p></p>
+                                    <div>
+                                        <form enctype="multipart/form-data">
+                                            <input id="input-id_mp4" class="file" type="file" multiple
+                                                   data-min-file-count="1">
+                                        </form>
+                                    </div>
                                 </div>
                                 <div class="modal-body">
                                     <span class="badge btn-info">服务器存在串联单 :</span>
 
                                     <div class="pre-scrollable">
-                                        <table data-bind="foreach: pre_catalogfiles" class="table table-bordered  table-hover table-striped  table-condensed">
+                                        <table data-bind="foreach: pre_catalogfiles"
+                                               class="table table-bordered  table-hover table-striped  table-condensed">
                                             <tr>
                                                 <td data-bind="text: title"></td>
                                                 <td>
@@ -89,7 +100,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-bind="click: function(data, event){getprecatalogfiles(data, event)}">刷新</button>
+                                    <button type="button" class="btn btn-primary"
+                                            data-bind="click: function(data, event){getprecatalogfiles(data, event)}">刷新
+                                    </button>
                                     <button type="button" class="btn btn-success" data-dismiss="modal">完成</button>
                                 </div>
                             </div>
