@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import os
+
 import re
 import base64
 import types
@@ -118,7 +119,14 @@ def uploadfile(request):
         PATH = STATIC_ROOT + "/QuickCatalog/PlayList".decode('utf-8')
         files = request.FILES.getlist('file_data')
         for f in files:
-            fileurl = PATH + '/' + f._name.decode('utf-8')
+            # 由于串联单命名不规范，如 桐乡新闻 2014-0-01 .txt 这种情况中，首先将后面的空格去掉，再将前面的空格置换为'-'
+            nameArray = f.name.decode('utf-8').split('.')
+            filename = nameArray[0]
+            filename = filename.strip()
+            filename += '.txt'
+            filename = re.sub(r'\s{1,}', '-', filename)
+
+            fileurl = PATH + '/' + filename
             destination = open(fileurl, 'wb+')
             for chunk in f.chunks():
                 destination.write(chunk)
@@ -127,7 +135,7 @@ def uploadfile(request):
             # if filename[1] == "MP4" or filename[1] == "mp4":
             # ftpconnect = ftplib.FTP('10.1.70.88', 'Anonymous')
             # ftpconnect.storbinary('stor %s' % f.name.decode('utf-8').encode('gbk'), destination)
-            #     # ftpconnect.quit()
+            # # ftpconnect.quit()
             # # destination.close()
         return HttpResponse(json.dumps('OK'), content_type="applicatoin/json")
     except Exception as e:
@@ -536,7 +544,8 @@ def __ParseTimeSpan__(timeold, timenew):
 
 def getPreCatalogDetail(request):
     STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
-    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-11-30.txt"
+    title = request.GET.get('title').decode('utf-8').split('.')[0]
+    file = STATIC_ROOT + "/QuickCatalog/PlayList/" + title + '.txt'
     file = file.decode('utf-8')
     input = open(file, 'r')
 
@@ -550,7 +559,7 @@ def getPreCatalogDetail(request):
     time_end_temp = ""
 
     program = {}
-    program["title"] = "桐乡新闻-2014-11-30"
+    program["title"] = title
     program["media_id"] = ""
     program["title2"] = ""
     program["title_alter"] = ""
@@ -788,15 +797,17 @@ def getPreCatalogDetail(request):
 
 
 def getPreCatalogFile(request):
-    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
-    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-11-30.txt"
-    file = file.decode('utf-8')
-    input = open(file, 'r')
-    text = ""
-    for line in input.readlines():
-        text += line.decode('gbk')
-    input.close()
-    fileDict = dict(content=text)
-    contentjson = json.dumps(fileDict)
-    return HttpResponse(contentjson, content_type="application/json")
+    if request.method == 'POST':
+        title = request.body
+        STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+        file = STATIC_ROOT + "/QuickCatalog/PlayList/" + title
+        file = file.decode('utf-8')
+        input = open(file, 'r')
+        text = ""
+        for line in input.readlines():
+            text += line.decode('gbk')
+        input.close()
+        fileDict = dict(content=text)
+        contentjson = json.dumps(fileDict)
+        return HttpResponse(contentjson, content_type="application/json")
 

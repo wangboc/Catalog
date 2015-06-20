@@ -30,8 +30,12 @@
     {#    用于定义bootstrap-switch插件#}
     <link href="{% static "QuickCatalog/bootstrap-switch/docs/css/highlight.css" %}" rel="stylesheet">
     <link href="{% static "QuickCatalog/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" %}" rel="stylesheet">
+
+
     {#    <link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">#}
     <link href="{% static "QuickCatalog/bootstrap-switch/docs/css/main.css" %}" rel="stylesheet">
+    <link href="{% static "QuickCatalog/bootstrap-datepicker/css/bootstrap-datepicker3.css" %}"
+          rel="stylesheet">
     {#    定义结束#}
 </head>
 <body>
@@ -70,13 +74,6 @@
                                                    data-min-file-count="1">
                                         </form>
                                     </div>
-                                    <p></p>
-                                    <div>
-                                        <form enctype="multipart/form-data">
-                                            <input id="input-id_mp4" class="file" type="file" multiple
-                                                   data-min-file-count="1">
-                                        </form>
-                                    </div>
                                 </div>
                                 <div class="modal-body">
                                     <span class="badge btn-info">服务器存在串联单 :</span>
@@ -87,10 +84,10 @@
                                             <tr>
                                                 <td data-bind="text: title"></td>
                                                 <td>
-                                                    <button data-bind="click: function(data, event){$root.getprograminfo(0, data, event)}">
+                                                    <button data-bind="click: function(data, event){$root.getprograminfo(0, title, event)}">
                                                         解析
                                                     </button>
-                                                    <button data-bind="click: function(data, event){$root.delete_pre_catalogfile(title,data, event)}">
+                                                    <button data-bind="click: function(data, event){$root.delete_pre_catalogfile(title, data, event)}">
                                                         删除
                                                     </button>
                                                 </td>
@@ -152,7 +149,7 @@
             {#   #}
             <video crossorigin="anonymous" id="player" width="100%" controls preload="auto"
                    class="video-js vjs-default-skin" height="350">
-                <source src="http://10.1.70.88/1.mp4" type="video/mp4">
+
                 {#                <source src="{% static "QuickCatalog/video/1.mp4" %}" type="video/mp4">#}
                 {#                                <source src="http://localhost/1.mp4" type="video/mp4">#}
 
@@ -334,7 +331,8 @@
                                 <td>
                                     <label class="form-control-static">制作完成日期</label>
                                 </td>
-                                <td><input data-bind="value: produced_date" type="text" class="form-control"
+                                <td><input data-provide="datepicker" data-bind="value: produced_date" type="text"
+                                           class="form-control"
                                            id="Produced_date__Pro"
                                            placeholder="输入制作完成日期">
                                 </td>
@@ -343,9 +341,9 @@
                                 <td>
                                     <label class="form-control-static">首播日期</label>
                                 </td>
-                                <td><input data-bind="value: publish_date" type="text" class="form-control"
-                                           id="Publish_date_Pro"
-                                           placeholder="输入首播日期">
+                                <td><input data-provide="datepicker" id="Publish_date_Pro"
+                                           data-bind="value: publish_date"
+                                           placeholder="输入首播日期" type="text" class="form-control">
                                 </td>
                             </tr>
                             <tr>
@@ -936,6 +934,11 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script type="text/javascript" src="{% static "QuickCatalog/bootstrap-3.3.4-dist/js/bootstrap.min.js" %}"></script>
 
+{# bootstrap-datepicker js#}
+<script type="text/javascript"
+        src="{% static "QuickCatalog/bootstrap-datepicker/js/bootstrap-datepicker.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "QuickCatalog/bootstrap-datepicker/js/bootstrap-datepicker.zh-CN.min.js" %}"></script>
 <!-- 描述：video.js 带有圆点功能的 video-mark plug-->
 <script type="text/javascript" src="{% static "QuickCatalog/player/video-js/video.js" %}"></script>
 <script type="text/javascript" src="{% static "QuickCatalog/player/src/videojs.markers.js" %}"></script>
