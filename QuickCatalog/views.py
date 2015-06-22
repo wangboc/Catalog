@@ -1,9 +1,11 @@
 # coding:utf-8
 
 import os
+
 import re
 import base64
 import types
+import ftplib
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -12,43 +14,6 @@ from models import SectionInfo
 from models import SceneInfo
 from models import ShotInfo
 from models import KeyFrame
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Create your views here.
 import json
@@ -61,10 +26,10 @@ sys.setdefaultencoding('utf-8')
 
 
 def index(request):
-    cursor = connection.cursor()
-    cursor.execute("select * from mediainfo where id = %d" % 26383)
-    result = cursor.fetchone()
-    cursor.close()
+    # cursor = connection.cursor()
+    # cursor.execute("select * from mediainfo where id = %d" % 26383)
+    # result = cursor.fetchone()
+    # cursor.close()
 
     program = dict(Name="wang")
 
@@ -75,6 +40,7 @@ def index(request):
     # 26383
 
 
+# 获取节目层编目信息，该信息存储于数据库
 def getProgramInfo(request, id):
     cursor = connection.cursor()
     # 获取节目层信息
@@ -124,6 +90,20 @@ def getProgramInfo(request, id):
     return HttpResponse(program.toJson(), content_type="application/json")
 
 
+# 用于删除串联单文件
+def deletePreCatalogFile(request):
+    try:
+        if request.method == 'POST':
+            title = request.body
+            STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+            PATH = STATIC_ROOT + "/QuickCatalog/PlayList/" + title.decode('utf-8')
+            os.remove(PATH)
+        return HttpResponse("{'删除成功':'" + PATH + "'}", content_type="application/json")
+    except Exception as e:
+        return HttpResponse("{'删除结果':'出现问题' + '" + e + "'}", content_type="application/json")
+
+
+# 获取串联单文件目录
 def getPreCatalogList(request):
     STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
     jsonstr = json.dumps(os.listdir(STATIC_ROOT + "\QuickCatalog\PlayList".decode('utf-8')), ensure_ascii=False,
@@ -132,21 +112,37 @@ def getPreCatalogList(request):
     return HttpResponse(jsonstr, content_type="application/json")
 
 
+# 用于上传串联单文件
 def uploadfile(request):
     try:
         STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
         PATH = STATIC_ROOT + "/QuickCatalog/PlayList".decode('utf-8')
         files = request.FILES.getlist('file_data')
         for f in files:
-            destination = open(PATH + '/' + f._name.decode('utf-8'), 'wb+')
+            # 由于串联单命名不规范，如 桐乡新闻 2014-0-01 .txt 这种情况中，首先将后面的空格去掉，再将前面的空格置换为'-'
+            nameArray = f.name.decode('utf-8').split('.')
+            filename = nameArray[0]
+            filename = filename.strip()
+            filename += '.txt'
+            filename = re.sub(r'\s{1,}', '-', filename)
+
+            fileurl = PATH + '/' + filename
+            destination = open(fileurl, 'wb+')
             for chunk in f.chunks():
                 destination.write(chunk)
             destination.close()
+            # filename = f.name.decode('utf-8').split('.')
+            # if filename[1] == "MP4" or filename[1] == "mp4":
+            # ftpconnect = ftplib.FTP('10.1.70.88', 'Anonymous')
+            # ftpconnect.storbinary('stor %s' % f.name.decode('utf-8').encode('gbk'), destination)
+            # # ftpconnect.quit()
+            # # destination.close()
         return HttpResponse(json.dumps('OK'), content_type="applicatoin/json")
-    except:
-        return HttpResponse(json.dumps('Error'), content_type="applicatoin/json")
+    except Exception as e:
+        return HttpResponse(json.dumps(e), content_type="applicatoin/json")
 
 
+# 删除关键帧信息
 def deleteKeyframe(request):
     try:
         if request.method == 'POST':
@@ -160,6 +156,7 @@ def deleteKeyframe(request):
         return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
 
 
+# 保存节目层编目信息，如果是新节目，即串联单解析出来的内容，则新建条目。否则，更新内容
 def saveProgramInfo(request):
     try:
         if request.method == 'POST':
@@ -174,6 +171,7 @@ def saveProgramInfo(request):
         return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
 
 
+# 删除片段层信息
 def deleteSectionInfo(request):
     try:
         if request.method == 'POST':
@@ -187,6 +185,7 @@ def deleteSectionInfo(request):
         return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
 
 
+# 删除场景层信息
 def deleteSceneInfo(request):
     try:
         if request.method == 'POST':
@@ -200,6 +199,7 @@ def deleteSceneInfo(request):
         return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
 
 
+# 删除镜头层信息
 def deleteShotInfo(request):
     try:
         if request.method == 'POST':
@@ -213,6 +213,7 @@ def deleteShotInfo(request):
         return HttpResponse("{'删除结果':'出现问题'}", content_type="application/json")
 
 
+# 保存新建节目层信息
 def SaveNewProgramInfo(reqArray):
     sqlCommand = "INSERT INTO uploadinfo  (high_location_name, \
                  filename)\
@@ -275,6 +276,7 @@ def SaveNewProgramInfo(reqArray):
     return id
 
 
+# 保存新片段层信息
 def SaveNewSection(section, media_id):
     sqlCommand = "INSERT INTO SectionInfo  ( \
                     media_id,\
@@ -306,6 +308,7 @@ def SaveNewSection(section, media_id):
     return
 
 
+# 保存新场景层信息
 def SaveNewSceneInfo(scene, section_id):
     sqlCommand = "INSERT INTO SceneInfo  ( \
                     section_id,\
@@ -338,6 +341,7 @@ def SaveNewSceneInfo(scene, section_id):
     return
 
 
+# 保存新镜头层信息
 def SaveNewShotInfo(shot, scene_id):
     sqlCommand = "INSERT INTO ShotInfo  ( \
                     scene_id,\
@@ -374,6 +378,7 @@ def SaveNewShotInfo(shot, scene_id):
         SaveNewKeyframe(keyframe, 3, shot_id)
 
 
+# 保存新关键帧信息
 def SaveNewKeyframe(keyframe, layer, layerid):
     if layer == 0:
         keyframe["media_id"] = layerid
@@ -417,6 +422,7 @@ def SaveNewKeyframe(keyframe, layer, layerid):
     return
 
 
+# 更新节目层信息
 def UpdateProgramInfo(reqArray):
     sqlCommand = "Update mediainfo set \
             title=\'" + reqArray["title"] + "\',\
@@ -444,6 +450,7 @@ def UpdateProgramInfo(reqArray):
     return reqArray["id"]
 
 
+# 更新片段层信息
 def UpdateSectionInfo(section):
     sqlCommand = "Update sectioninfo set \
                title=\'" + section["title"] + "\',\
@@ -466,6 +473,7 @@ def UpdateSectionInfo(section):
     return
 
 
+# 更新场景层信息
 def UpdateSceneInfo(Scene):
     sqlCommand = "Update sceneinfo set \
                 section_id=\'" + str(Scene["section_id"]) + "\',\
@@ -489,6 +497,7 @@ def UpdateSceneInfo(Scene):
     return
 
 
+# 更新镜头层信息
 def UpdateShotInfo(Shot):
     sqlCommand = "Update shotinfo set \
                 scene_id=\'" + str(Shot["scene_id"]) + "\',\
@@ -533,24 +542,10 @@ def __ParseTimeSpan__(timeold, timenew):
     return [timeo[0], timen[0], time]  # 入点 时长 出点
 
 
-# def saveNewKeyframe(request, data):
-# keyframe = {}
-# keyframe["id"] = ""
-# keyframe["title"] = data.title
-# keyframe["keyframe"] = ""
-# keyframe["keyframeBase64"] = data.keyframeBase64
-# keyframe["position"] = data.position
-# keyframe["media_id"] = data.media_id
-# keyframe["section_id"] = data.section_id
-# keyframe["scene_id"] = data.scene_id
-# keyframe["shot_id"] = data.shot_id
-# NewKeyframe = KeyFrame(keyframe)
-# # todo
-
-
 def getPreCatalogDetail(request):
     STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
-    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-11-30.txt"
+    title = request.GET.get('title').decode('utf-8').split('.')[0]
+    file = STATIC_ROOT + "/QuickCatalog/PlayList/" + title + '.txt'
     file = file.decode('utf-8')
     input = open(file, 'r')
 
@@ -564,7 +559,7 @@ def getPreCatalogDetail(request):
     time_end_temp = ""
 
     program = {}
-    program["title"] = "桐乡新闻-2014-11-30"
+    program["title"] = title
     program["media_id"] = ""
     program["title2"] = ""
     program["title_alter"] = ""
@@ -802,15 +797,17 @@ def getPreCatalogDetail(request):
 
 
 def getPreCatalogFile(request):
-    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
-    file = STATIC_ROOT + r"\QuickCatalog\PlayList\桐乡新闻 2014-11-30.txt"
-    file = file.decode('utf-8')
-    input = open(file, 'r')
-    text = ""
-    for line in input.readlines():
-        text += line.decode('gbk')
-    input.close()
-    fileDict = dict(content=text)
-    contentjson = json.dumps(fileDict)
-    return HttpResponse(contentjson, content_type="application/json")
+    if request.method == 'POST':
+        title = request.body
+        STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+        file = STATIC_ROOT + "/QuickCatalog/PlayList/" + title
+        file = file.decode('utf-8')
+        input = open(file, 'r')
+        text = ""
+        for line in input.readlines():
+            text += line.decode('gbk')
+        input.close()
+        fileDict = dict(content=text)
+        contentjson = json.dumps(fileDict)
+        return HttpResponse(contentjson, content_type="application/json")
 

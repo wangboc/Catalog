@@ -20,6 +20,12 @@ ko.bindingHandlers.bootstrapSwitchOn = {
         }
     }
 };
+
+function PreCatalogFile(data) {
+    var self = this;
+    self.title = ko.observable(data);
+}
+
 function KeyframeInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
@@ -445,8 +451,38 @@ var ProgramViewModel = function ViewModel() {
         self.sections = ko.observableArray([]);
         self.isNew = ko.observable();
         //当导入串联单时，为界面中加载串联单原文件
-        self.playlist = ko.observable();
-
+        self.pre_catalogfile = ko.observable();
+        self.videoFile = ko.observable();
+        //服务器中已有串联单文件
+        self.pre_catalogfiles = ko.observableArray([]);
+        //获取服务器中所有串联单清单
+        self.getprecatalogfiles = function (data, event) {
+            self.pre_catalogfiles.removeAll();
+            $.getJSON("/quickcatalog/getPreCatalogList/", function (item) {
+                for (i in item) {
+                    self.pre_catalogfiles.push(new PreCatalogFile(item[i]));
+                }
+            });
+        }
+        //删除指定串联单文件
+        self.delete_pre_catalogfile = function (title, data, event) {
+            var json = title();
+            $.ajax({
+                type: "post",
+                url: "/quickcatalog/deletePreCatalogFile/",
+                dataType: "text",
+                data: json,
+                success: function (data) {
+                    for (i in self.pre_catalogfiles()) {
+                        if (self.pre_catalogfiles()[i].title() == json)
+                            self.pre_catalogfiles.remove(self.pre_catalogfiles()[i]);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
 
         //切层
         self.addbrotherLayer = function (data, event) {
@@ -534,8 +570,6 @@ var ProgramViewModel = function ViewModel() {
             }
 
         };
-
-
 
 
         //点击提交按钮
@@ -689,97 +723,104 @@ var ProgramViewModel = function ViewModel() {
             }
             self.currentKeyframes.push(NewKeyframe(self.currentLayer, id));
         };
+//删除层次信息
+        self.deleteLayer = function (data, event) {
+            if (self.currentLayer == 0) return;
+            else if (self.currentLayer == 1) {
+                if (self.currentSection().isNew() == "True")
+                    self.sections.remove(self.currentSection())
+                else {
+                    id = self.currentSection().id();
+                    $.ajax({
+                        type: "post",
+                        url: "/quickcatalog/deleteSectionInfo/",
+                        dataType: "text",
+                        data: id.toString(),
+                        success: function (data) {
+                            self.sections.remove(self.currentSection());
+                            alert(data);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(errorThrown);
+                        }
+                    });
+                }
+            }
+            else if (self.currentLayer == 2) {
+                if (self.currentScene().isNew() == "True")
+                    self.currentScene().section().scenes.remove(self.currentScene());
+                else {
+                    id = self.currentScene().id();
+                    $.ajax({
+                        type: "post",
+                        url: "/quickcatalog/deleteSceneInfo/",
+                        dataType: "text",
+                        data: id.toString(),
+                        success: function (data) {
+                            self.currentScene().section().scenes.remove(self.currentScene());
+                            alert(data);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(errorThrown);
+                        }
+                    });
+                }
+            }
+            else if (self.currentLayer == 3) {
+                if (self.currentShot().isNew() == "True")
+                    self.currentShot().scene().shots.remove(self.currentShot())
+                else {
+                    id = self.currentShot().id();
+                    $.ajax({
+                        type: "post",
+                        url: "/quickcatalog/deleteShotInfo/",
+                        dataType: "text",
+                        data: id.toString(),
+                        success: function (data) {
+                            self.currentShot().scene().shots.remove(self.currentShot());
+                            alert(data);
 
+                            //$("#programTreeHead").trigger("click")
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(errorThrown);
+                        }
+                    });
+                }
+            }
+            self.changeToOtherLayer(0, self, event)
+        };
 //获取节目层编目信息。type==0时，代表串联单解析，type==1时，代表从数据库中读取。
         self.getprograminfo = function (type, data, event) {
             self.currentLayer = 0;
             var video = document.querySelector('video');
             var videolength = ParseSecondtoTime(video.duration);
             if (type == 0) {
-
-                queryString = "/quickcatalog/getPreCatalogDetail/";
-                $.getJSON("/quickcatalog/getPreCatalogFile/", function (item) {
-                    self.playlist(item.content);
+                title = data();
+                self.videoFile("http://10.1.70.88/" + title.split('.')[0]+".mp4");
+                $('#player_html5_api').attr("src", self.videoFile());
+                queryString = "/quickcatalog/getPreCatalogDetail/?title=" + title;
+                $.ajax({
+                    type: "post",
+                    url: "/quickcatalog/getPreCatalogFile/",
+                    dataType: "text",
+                    data: title,
+                    success: function (item) {
+                        self.pre_catalogfile($.parseJSON(item).content);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
                 });
                 //切换到串联单页面
                 $.ChangeToPreCatalogContentPage(1);
                 $('#myModal').modal("hide");
             }
             else if (type == 1) {
-                //queryString = "/quickcatalog/30485/programinfo/"; 串联单
-
                 queryString = "/quickcatalog/30485/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
-
-            //删除层次信息
-            self.deleteLayer = function (data, event) {
-                if (self.currentLayer == 0) return;
-                else if (self.currentLayer == 1) {
-                    if (self.currentSection().isNew() == "True")
-                        self.sections.remove(self.currentSection())
-                    else {
-                        id = self.currentSection().id();
-                        $.ajax({
-                            type: "post",
-                            url: "/quickcatalog/deleteSectionInfo/",
-                            dataType: "text",
-                            data: id.toString(),
-                            success: function (data) {
-                                self.sections.remove(self.currentSection());
-                                alert(data);
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                alert(errorThrown);
-                            }
-                        });
-                    }
-                }
-                else if (self.currentLayer == 2) {
-                    if (self.currentScene().isNew() == "True")
-                        self.currentScene().section().scenes.remove(self.currentScene());
-                    else {
-                        id = self.currentScene().id();
-                        $.ajax({
-                            type: "post",
-                            url: "/quickcatalog/deleteSceneInfo/",
-                            dataType: "text",
-                            data: id.toString(),
-                            success: function (data) {
-                                self.currentScene().section().scenes.remove(self.currentScene());
-                                alert(data);
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                alert(errorThrown);
-                            }
-                        });
-                    }
-                }
-                else if (self.currentLayer == 3) {
-                    if (self.currentShot().isNew() == "True")
-                        self.currentShot().scene().shots.remove(self.currentShot())
-                    else {
-                        id = self.currentShot().id();
-                        $.ajax({
-                            type: "post",
-                            url: "/quickcatalog/deleteShotInfo/",
-                            dataType: "text",
-                            data: id.toString(),
-                            success: function (data) {
-                                self.currentShot().scene().shots.remove(self.currentShot());
-                                alert(data);
-
-                                //$("#programTreeHead").trigger("click")
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                alert(errorThrown);
-                            }
-                        });
-                    }
-                }
-                self.changeToOtherLayer(0, self, event)
-            };
 
             $.getJSON(queryString, function (item) {
                 self.isNew(item.isNew);

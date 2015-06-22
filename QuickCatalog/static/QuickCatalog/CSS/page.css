@@ -119,6 +119,10 @@
     color: #000
 }
 
+.tree li.parent_li > span.cur {
+    background: red
+}
+
 .ulCustom {
     -webkit-padding-start: 0;
 }
@@ -207,38 +211,38 @@ em {
     overflow: scroll;
 }
 
-
 /*刘翌翊添加 2015.06.02*/
-.tab-pane{
-    border-style: solid; border-width: 1px;border-color: lightsteelblue;
+.tab-pane {
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightsteelblue;
 }
 
-body{
+body {
     background-color: #e6e6e6;
 }
 
-#topHead{
+#topHead {
     background-image: url('../images/header_01.png');
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
 }
 
-#nav{
+#nav {
     background-image: url('../images/header_02.png');
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
 }
 
 .page-header {
-    height:53px;
+    height: 53px;
     padding-bottom: 9px;
     margin: 40px 0 20px;
     border-bottom: 1px solid #eee;
 }
 
-h2{
+h2 {
     font-size: 55px;
-    opacity:0.0;
+    opacity: 0.0;
 }
-
 
 .table > thead > tr > td.success,
 .table > tbody > tr > td.success,
