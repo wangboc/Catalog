@@ -247,6 +247,9 @@ def SaveNewProgramInfo(reqArray):
                 time_start,\
                 approver2,\
                 shengdao,\
+                publish_date,\
+                produced_date,\
+                date_of_event,\
                 isNew)\
                 VALUES (\
                 \'" + str(id) + "\', \
@@ -262,6 +265,9 @@ def SaveNewProgramInfo(reqArray):
                 \'" + reqArray["time_start"] + "\', \
                 \'" + str(300) + "\', \
                 \'" + reqArray["shengdao"] + "\', \
+                \'" + reqArray["publish_date"] + "\', \
+                \'" + reqArray["produced_date"] + "\', \
+                \'" + reqArray["date_of_event"] + "\', \
                 \'" + reqArray["isNew"] + "\')"
 
     cursor = connection.cursor()
@@ -286,6 +292,7 @@ def SaveNewSection(section, media_id):
                     key_words,\
                     time_start,\
                     time_end,\
+                    date_time,\
                     isNew)\
                     VALUES (\
                     \'" + str(media_id) + "\',\
@@ -295,6 +302,7 @@ def SaveNewSection(section, media_id):
                     \'" + section["key_words"] + "\', \
                     \'" + section["time_start"] + "\',\
                     \'" + section["time_end"] + "\',\
+                    \'" + section["date_time"] + "\',\
                     \'" + section["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -318,6 +326,7 @@ def SaveNewSceneInfo(scene, section_id):
                     key_words,\
                     time_start,\
                     time_end,\
+                    date_of_event,\
                     isNew)\
                     VALUES (\
                     \'" + str(section_id) + "\',\
@@ -327,6 +336,7 @@ def SaveNewSceneInfo(scene, section_id):
                     \'" + scene["key_words"] + "\',\
                     \'" + scene["time_start"] + "\',\
                     \'" + scene["time_end"] + "\',\
+                    \'" + scene["date_of_event"] + "\',\
                     \'" + scene["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -355,6 +365,7 @@ def SaveNewShotInfo(shot, scene_id):
                     sense_range,\
                     angle,\
                     actual_sound,\
+                    date_time,\
                     isNew)\
                     VALUES (\
                     \'" + str(scene_id) + "\',\
@@ -368,6 +379,7 @@ def SaveNewShotInfo(shot, scene_id):
                     \'" + shot["sense_range"] + "\',\
                     \'" + shot["angle"] + "\',\
                     \'" + shot["actual_sound"] + "\',\
+                    \'" + shot["date_time"] + "\',\
                     \'" + shot["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -432,6 +444,9 @@ def UpdateProgramInfo(reqArray):
             topic_words=\'" + reqArray["topic_words"] + "\',\
             key_words=\'" + reqArray["key_words"] + "\',\
             subtitle=\'" + reqArray["subtitle"] + "\',\
+            produced_date=\'" + reqArray["produced_date"] + "\',\
+            publish_date=\'" + reqArray["publish_date"] + "\',\
+            date_of_event=\'" + reqArray["date_of_event"] + "\',\
             isNew=\'" + reqArray["isNew"] + "\'\
             where id = \'" + reqArray["id"] + "\'"
 
@@ -457,6 +472,7 @@ def UpdateSectionInfo(section):
             description=\'" + section["description"] + "\',\
             topic_words=\'" + section["topic_words"] + "\',\
             key_words=\'" + section["key_words"] + "\',\
+            date_time=\'" + section["date_time"] + "\',\
             isNew=\'" + section["isNew"] + "\' \
             where id = \'" + str(section["id"]) + "\'"
     cursor = connection.cursor()
@@ -479,6 +495,7 @@ def UpdateSceneInfo(Scene):
                 section_id=\'" + str(Scene["section_id"]) + "\',\
                 title=\'" + Scene["title"] + "\', \
                 description=\'" + Scene["description"] + "\', \
+                date_of_event=\'" + Scene["date_of_event"] + "\', \
                 topic_words=\'" + Scene["topic_words"] + "\', \
                 key_words=\'" + Scene["key_words"] + "\', \
                 isNew =\'" + Scene["isNew"] + "\' \
@@ -503,6 +520,7 @@ def UpdateShotInfo(Shot):
                 scene_id=\'" + str(Shot["scene_id"]) + "\',\
                 title=\'" + Shot["title"] + "\', \
                 description=\'" + Shot["description"] + "\', \
+                date_time=\'" + Shot["date_time"] + "\', \
                 topic_words=\'" + Shot["topic_words"] + "\', \
                 key_words=\'" + Shot["key_words"] + "\', \
                 isNew =\'" + Shot["isNew"] + "\' \

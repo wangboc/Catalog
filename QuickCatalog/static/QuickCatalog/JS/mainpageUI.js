@@ -21,6 +21,7 @@ ko.bindingHandlers.bootstrapSwitchOn = {
     }
 };
 
+
 function PreCatalogFile(data) {
     var self = this;
     self.title = ko.observable(data);
@@ -797,7 +798,7 @@ var ProgramViewModel = function ViewModel() {
             var videolength = ParseSecondtoTime(video.duration);
             if (type == 0) {
                 title = data();
-                self.videoFile("http://10.1.70.88/" + title.split('.')[0]+".mp4");
+                self.videoFile("http://10.1.70.88/" + title.split('.')[0] + ".mp4");
                 $('#player_html5_api').attr("src", self.videoFile());
                 queryString = "/quickcatalog/getPreCatalogDetail/?title=" + title;
                 $.ajax({

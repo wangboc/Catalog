@@ -11,19 +11,7 @@ $("#input-id").fileinput({
     maxFileSize: 302414
     //allowedFileTypes: ['image', 'video', 'flash'],
 });
-//用于时间选择的控件
-$('#Publish_date_Pro').datepicker({
-    format: "yyyy/mm/dd",
-    language: "zh-CN",
-    autoclose: true,
-    todayHighlight: true
-});
-$('#Produced_date__Pro').datepicker({
-    format: "yyyy/mm/dd",
-    language: "zh-CN",
-    autoclose: true,
-    todayHighlight: true
-});
+
 
 //$("#input-id_mp4").fileinput({
 //    dropZoneEnabled: false,
