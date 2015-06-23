@@ -47,9 +47,12 @@ class ProgramInfo():
         self.media_column = programDic["media_column"]
         self.source_id = programDic["source_id"]
         self.post_picture = programDic["post_picture"]
-        if programDic["publish_date"] != "":
-            self.publish_date = programDic["publish_date"].strftime('%Y-%m-%d')
-            programDic["publish_date"] = self.publish_date
+        try:
+            if programDic["publish_date"] != "":
+                self.publish_date = programDic["publish_date"].strftime('%Y-%m-%d')
+                programDic["publish_date"] = self.publish_date
+        except Exception as e:
+            pass
         self.time_length = programDic["time_length"]
         self.carry_type = programDic["carry_type"]
         self.media_format = programDic["media_format"]
@@ -81,15 +84,21 @@ class ProgramInfo():
         self.episodes_totalnum = programDic["episodes_totalnum"]
         self.episodes_num = programDic["episodes_num"]
         self.tv_class = programDic["tv_class"]
-        if programDic["produced_date"] != "":
-            self.produced_date = programDic["produced_date"].strftime('%Y-%m-%d')
-            programDic["produced_date"] = self.produced_date
+        try:
+            if programDic["produced_date"] != "":
+                self.produced_date = programDic["produced_date"].strftime('%Y-%m-%d')
+                programDic["produced_date"] = self.produced_date
+        except Exception as e:
+            pass
         self.parallel_proper_title = programDic["parallel_proper_title"]
         self.parallel_series_title = programDic["parallel_series_title"]
         self.character = programDic["character"]
-        if programDic["date_of_event"] != "":
-            self.date_of_event = programDic["date_of_event"].strftime('%Y-%m-%d')
-            programDic["date_of_event"] = self.date_of_event
+        try:
+            if programDic["date_of_event"] != "":
+                self.date_of_event = programDic["date_of_event"].strftime('%Y-%m-%d')
+                programDic["date_of_event"] = self.date_of_event
+        except Exception as e:
+            pass
         self.version_des = programDic["version_des"]
         self.producer = programDic["producer"]
         self.name_of_cpo = programDic["name_of_cpo"]
@@ -148,7 +157,6 @@ class SectionInfo:
         self.__Json__ = json.dumps(self.sectionDic, ensure_ascii=False, cls=DateTimeEncoder)
         return self.__Json__
 
-
     def __init__(self, sectionDic):
         self.sceneList = []
         self.__Json__ = ""
@@ -171,9 +179,12 @@ class SectionInfo:
         self.class_name = sectionDic["class_name"]
         self.actual_sound = sectionDic["actual_sound"]
         self.program_form = sectionDic["program_form"]
-        if sectionDic["date_time"] != "":
-            self.date_time = sectionDic["date_time"].strftime('%Y-%m-%d')
-            sectionDic["date_time"] = self.date_time
+        try:
+            if sectionDic["date_time"] != "":
+                self.date_time = sectionDic["date_time"].strftime('%Y-%m-%d')
+                sectionDic["date_time"] = self.date_time
+        except Exception as e:
+            pass
         self.section_series = sectionDic["section_series"]
         self.rating2 = sectionDic["rating2"]
         self.reason2 = sectionDic["reason2"]
@@ -241,9 +252,12 @@ class SceneInfo:
         self.subtitle = sceneDic["subtitle"]
         self.rating2 = sceneDic["rating2"]
         self.reason2 = sceneDic["reason2"]
-        if sceneDic["date_of_event"] != "":
-            self.date_of_event = sceneDic["date_of_event"].strftime('%Y-%m-%d')
-            sceneDic["date_of_event"] = self.date_of_event
+        try:
+            if sceneDic["date_of_event"] != "":
+                self.date_of_event = sceneDic["date_of_event"].strftime('%Y-%m-%d')
+                sceneDic["date_of_event"] = self.date_of_event
+        except Exception as e:
+            pass
         self.natural_sound = sceneDic["natural_sound"]
         self.upload_time = sceneDic["upload_time"]
         self.reason3 = sceneDic["reason3"]
@@ -285,9 +299,12 @@ class ShotInfo:
         self.rating = shotDic["rating"]
         self.reason = shotDic["reason"]
         self.location = shotDic["location"]
-        if shotDic["date_time"] != "":
-            self.date_time = shotDic["date_time"].strftime('%Y-%m-%d')
-            shotDic["date_time"] = self.date_time
+        try:
+            if shotDic["date_time"] != "":
+                self.date_time = shotDic["date_time"].strftime('%Y-%m-%d')
+                shotDic["date_time"] = self.date_time
+        except Exception as e:
+            pass
         self.subtitle = shotDic["subtitle"]
         self.shootway = shotDic["shootway"]
         self.rating2 = shotDic["rating2"]
@@ -314,7 +331,6 @@ class KeyFrame:
         self.__Json__ = json.dumps(self.keyframeDic, ensure_ascii=False, cls=DateTimeEncoder)
 
         return self.__Json__
-
 
     def __init__(self, keyframeDic):
         self.keyframeDic = keyframeDic
@@ -346,5 +362,3 @@ class DateTimeEncoder(json.JSONEncoder):
             return None
         else:
             return json.JSONEncoder.default(self, obj)
-
-
