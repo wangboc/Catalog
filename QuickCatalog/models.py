@@ -47,7 +47,7 @@ class ProgramInfo():
         self.media_column = programDic["media_column"]
         self.source_id = programDic["source_id"]
         self.post_picture = programDic["post_picture"]
-        if programDic["publish_date"] != "":
+        if programDic["publish_date"] != "" or programDic["publish_date"] is not None:
             self.publish_date = programDic["publish_date"].strftime('%Y-%m-%d')
             programDic["publish_date"] = self.publish_date
         self.time_length = programDic["time_length"]
