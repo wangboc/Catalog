@@ -27,6 +27,30 @@ function PreCatalogFile(data) {
     self.title = ko.observable(data);
 }
 
+function CalculateTimeEnd(time_start, time_length) {
+    if (typeof(time_start) == "string") {
+        timeoL = time_start.split(':');
+        timenL = time_length.split(':');
+        timeoLength = ((parseInt(timeoL[0]) * 60 + parseInt(timeoL[1])) * 60 + parseInt(timeoL[2])) * 25 + parseInt(timeoL[3]);
+        timenLength = ((parseInt(timenL[0]) * 60 + parseInt(timenL[1])) * 60 + parseInt(timenL[2])) * 25 + parseInt(timenL[3]);
+        timeFrames = timenLength + timeoLength;
+        Frame = timeFrames % 25;
+        FrameS = (Frame).toString();
+        Second = (timeFrames - Frame) / 25 % 60;
+        SecondS = (Second).toString();
+        Minints = ((timeFrames - Frame) / 25 - Second) / 60 % 60;
+        MinintsS = (Minints).toString();
+        Hours = (((timeFrames - Frame) / 25 - Second) / 60 - Minints) / 60;
+        HoursS = (Hours).toString();
+        if (Frame < 10) FrameS = "0" + (Frame).toString();
+        if (Second < 10) SecondS = "0" + (Second).toString();
+        if (Minints < 10) MinintsS = "0" + (Minints).toString();
+        if (Hours < 10) HoursS = "0" + (Hours).toString();
+        time = HoursS + ":" + MinintsS + ":" + SecondS + ":" + FrameS;
+        return time;
+    }
+}
+
 function KeyframeInfo(data) {
     var self = this;
     self.json = $.parseJSON(data);
@@ -64,6 +88,7 @@ function ShotInfo(scene, data) {
     self.post_picture = ko.observable(self.json.post_picture);
     self.time_start = ko.observable(self.json.time_start);
     self.time_end = ko.observable(self.json.time_end);
+    self.end = ko.observable(CalculateTimeEnd(self.time_start(), self.time_end()));
     self.rating = ko.observable(self.json.rating);
     self.reason = ko.observable(self.json.reason);
     self.location = ko.observable(self.json.location);
@@ -142,6 +167,7 @@ function SceneInfo(section, data) {
     self.post_picture = ko.observable(self.json.post_picture);
     self.time_start = ko.observable(self.json.time_start);
     self.time_end = ko.observable(self.json.time_end);
+    self.end = ko.observable(CalculateTimeEnd(self.time_start(), self.time_end()));
     self.rating = ko.observable(self.json.rating);
     self.reason = ko.observable(self.json.reason);
     self.subtitle = ko.observable(self.json.subtitle);
@@ -225,6 +251,7 @@ function SectionInfo(data) {
     self.section_duty = ko.observable(self.json.section_duty);
     self.time_start = ko.observable(self.json.time_start);
     self.time_end = ko.observable(self.json.time_end);
+    self.end = ko.observable(CalculateTimeEnd(self.time_start(), self.time_end()));
     self.subtitle = ko.observable(self.json.subtitle);
     self.rating = ko.observable(self.json.rating);
     self.reason = ko.observable(self.json.reason);
@@ -445,6 +472,7 @@ var ProgramViewModel = function ViewModel() {
         self.rating3 = ko.observable();
         self.level = ko.observable();
         self.time_end = ko.observable();
+        self.end = ko.observable(CalculateTimeEnd(self.time_start(), self.time_end()));
         self.test = ko.observable();
         self.shengdao = ko.observable();
         self.ObjectID = ko.observable();
@@ -495,6 +523,7 @@ var ProgramViewModel = function ViewModel() {
                 var status = $('input[name="addbrotherLayerBtn"]').bootstrapSwitch("state");
                 if (status == true) {
                     self.currentSection().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentSection().time_start())));
+                    self.currentSection().end(CalculateTimeEnd(self.currentSection().time_start(), self.currentSection().time_end()));
                     return;
                 }
                 var newSection = NewSection(self.id());
@@ -507,6 +536,7 @@ var ProgramViewModel = function ViewModel() {
                 var status = $('input[name="addbrotherLayerBtn"]').bootstrapSwitch("state");
                 if (status == true) {
                     self.currentScene().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentScene().time_start())));
+                    self.currentScene().end(CalculateTimeEnd(self.currentScene().time_start(), self.currentScene().time_end()));
                     return;
                 }
                 var newScene = NewScene(self.currentScene().section(), self.currentScene().section_id());
@@ -519,6 +549,8 @@ var ProgramViewModel = function ViewModel() {
                 var status = $('input[name="addbrotherLayerBtn"]').bootstrapSwitch("state");
                 if (status == true) {
                     self.currentShot().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentShot().time_start())));
+                    self.currentShot().end(CalculateTimeEnd(self.currentShot().time_start(), self.currentShot().time_end()));
+
                     return;
                 }
                 var newShot = NewShot(self.currentShot().scene(), self.currentShot().scene_id());
@@ -535,6 +567,7 @@ var ProgramViewModel = function ViewModel() {
                 var status = $('input[name="addsubLayerBtn"]').bootstrapSwitch("state");
                 if (status == true) {
                     self.currentShot().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentShot().time_start())));
+                    self.currentShot().end(CalculateTimeEnd(self.currentShot().time_start(), self.currentShot().time_end()));
                     return;
                 }
             }
@@ -549,6 +582,8 @@ var ProgramViewModel = function ViewModel() {
                 var status = $('input[name="addsubLayerBtn"]').bootstrapSwitch("state");
                 if (status == true) {
                     self.currentSection().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentSection().time_start())));
+                    self.currentSection().end(CalculateTimeEnd(self.currentSection().time_start(), self.currentShot().time_end()));
+
                     return;
                 }
                 var newScene = NewScene(self.currentSection(), self.currentSection().id());
@@ -561,6 +596,8 @@ var ProgramViewModel = function ViewModel() {
                 var status = $('input[name="addsubLayerBtn"]').bootstrapSwitch("state");
                 if (status == true) {
                     self.currentScene().time_end(ParseSecondtoTime((document.querySelector('video')).currentTime - ParseTimetoSecond(self.currentScene().time_start())));
+                    self.currentScene().end(CalculateTimeEnd(self.currentScene().time_start(), self.currentShot().time_end()));
+
                     return;
                 }
                 var newShot = NewShot(self.currentScene(), self.currentScene().id());
@@ -821,7 +858,7 @@ var ProgramViewModel = function ViewModel() {
                 $('#myModal').modal("hide");
             }
             else if (type == 1) {
-                queryString = "/quickcatalog/31444/programinfo/";
+                queryString = "/quickcatalog/30444/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
