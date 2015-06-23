@@ -821,7 +821,7 @@ var ProgramViewModel = function ViewModel() {
                 $('#myModal').modal("hide");
             }
             else if (type == 1) {
-                queryString = "/quickcatalog/31439/programinfo/";
+                queryString = "/quickcatalog/31444/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
