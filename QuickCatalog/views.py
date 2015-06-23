@@ -234,7 +234,7 @@ def SaveNewProgramInfo(reqArray):
     cursor.execute("SELECT @@IDENTITY FROM tocatalog")
     cursor.close()
     sqlCommand = "INSERT INTO MediaInfo  ( \
-                 media_id,\
+                media_id,\
                 title,\
                 title_alter,\
                 media_state,\
@@ -250,6 +250,34 @@ def SaveNewProgramInfo(reqArray):
                 publish_date,\
                 produced_date,\
                 date_of_event,\
+                title_description,\
+                media_series,\
+                class_num,\
+                class_time,\
+                key_words,\
+                tv_class,\
+                character,\
+                awards,\
+                media_column,\
+                creater,\
+                media_duty,\
+                name_of_cpo,\
+                cp_statement1,\
+                media_type,\
+                xintai,\
+                time_end,\
+                color,\
+                subtitle,\
+                audio_format,\
+                aspect,\
+                zhishi,\
+                carry_type,\
+                yuzhong,\
+                audience,\
+                source_id,\
+                additional_logo,\
+                source_method,\
+                source_provider,\
                 isNew)\
                 VALUES (\
                 \'" + str(id) + "\', \
@@ -259,7 +287,7 @@ def SaveNewProgramInfo(reqArray):
                 \'" + str(300) + "\', \
                 \'" + str(300) + "\', \
                 \'" + reqArray["description"] + "\', \
-                \'" + reqArray["time_length"] + "\', \
+                \'" + reqArray["time_end"] + "\', \
                 \'" + "桐乡新闻2011_L" + "\', \
                 \'" + reqArray["title"] + "\', \
                 \'" + reqArray["time_start"] + "\', \
@@ -268,6 +296,34 @@ def SaveNewProgramInfo(reqArray):
                 \'" + reqArray["publish_date"] + "\', \
                 \'" + reqArray["produced_date"] + "\', \
                 \'" + reqArray["date_of_event"] + "\', \
+                \'" + reqArray["title_description"] + "\', \
+                \'" + reqArray["media_series"] + "\', \
+                \'" + reqArray["class_num"] + "\', \
+                \'" + reqArray["class_time"] + "\', \
+                \'" + reqArray["key_words"] + "\', \
+                \'" + reqArray["tv_class"] + "\', \
+                \'" + reqArray["character"] + "\', \
+                \'" + reqArray["awards"] + "\', \
+                \'" + reqArray["media_column"] + "\', \
+                \'" + reqArray["creater"] + "\', \
+                \'" + reqArray["media_duty"] + "\', \
+                \'" + reqArray["name_of_cpo"] + "\', \
+                \'" + reqArray["cp_statement1"] + "\', \
+                \'" + reqArray["media_type"] + "\', \
+                \'" + reqArray["xintai"] + "\', \
+                \'" + reqArray["time_end"] + "\', \
+                \'" + reqArray["color"] + "\', \
+                \'" + reqArray["subtitle"] + "\', \
+                \'" + reqArray["audio_format"] + "\', \
+                \'" + reqArray["aspect"] + "\', \
+                \'" + reqArray["zhishi"] + "\', \
+                \'" + reqArray["carry_type"] + "\', \
+                \'" + reqArray["yuzhong"] + "\', \
+                \'" + reqArray["audience"] + "\', \
+                \'" + reqArray["source_id"] + "\', \
+                \'" + reqArray["additional_logo"] + "\', \
+                \'" + reqArray["source_method"] + "\', \
+                \'" + reqArray["source_provider"] + "\', \
                 \'" + reqArray["isNew"] + "\')"
 
     cursor = connection.cursor()
@@ -293,6 +349,18 @@ def SaveNewSection(section, media_id):
                     time_start,\
                     time_end,\
                     date_time,\
+                    section_series,\
+                    class_name,\
+                    awards,\
+                    actual_sound,\
+                    creater,\
+                    section_duty,\
+                    program_form,\
+                    subtitle,\
+                    years_covered,\
+                    spatial,\
+                    data_source_way,\
+                    data_source_man,\
                     isNew)\
                     VALUES (\
                     \'" + str(media_id) + "\',\
@@ -303,6 +371,18 @@ def SaveNewSection(section, media_id):
                     \'" + section["time_start"] + "\',\
                     \'" + section["time_end"] + "\',\
                     \'" + section["date_time"] + "\',\
+                    \'" + section["section_series"] + "\',\
+                    \'" + section["class_name"] + "\',\
+                    \'" + section["awards"] + "\',\
+                    \'" + section["actual_sound"] + "\',\
+                    \'" + section["creater"] + "\',\
+                    \'" + section["section_duty"] + "\',\
+                    \'" + section["program_form"] + "\',\
+                    \'" + section["subtitle"] + "\',\
+                    \'" + section["years_covered"] + "\',\
+                    \'" + section["spatial"] + "\',\
+                    \'" + section["data_source_way"] + "\',\
+                    \'" + section["data_source_man"] + "\',\
                     \'" + section["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -327,6 +407,8 @@ def SaveNewSceneInfo(scene, section_id):
                     time_start,\
                     time_end,\
                     date_of_event,\
+                    natural_sound,\
+                    subtitle,\
                     isNew)\
                     VALUES (\
                     \'" + str(section_id) + "\',\
@@ -337,6 +419,8 @@ def SaveNewSceneInfo(scene, section_id):
                     \'" + scene["time_start"] + "\',\
                     \'" + scene["time_end"] + "\',\
                     \'" + scene["date_of_event"] + "\',\
+                    \'" + scene["natural_sound"] + "\',\
+                    \'" + scene["subtitle"] + "\',\
                     \'" + scene["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -366,6 +450,7 @@ def SaveNewShotInfo(shot, scene_id):
                     angle,\
                     actual_sound,\
                     date_time,\
+                    shootway,\
                     isNew)\
                     VALUES (\
                     \'" + str(scene_id) + "\',\
@@ -380,6 +465,7 @@ def SaveNewShotInfo(shot, scene_id):
                     \'" + shot["angle"] + "\',\
                     \'" + shot["actual_sound"] + "\',\
                     \'" + shot["date_time"] + "\',\
+                    \'" + shot["shootway"] + "\',\
                     \'" + shot["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -447,6 +533,34 @@ def UpdateProgramInfo(reqArray):
             produced_date=\'" + reqArray["produced_date"] + "\',\
             publish_date=\'" + reqArray["publish_date"] + "\',\
             date_of_event=\'" + reqArray["date_of_event"] + "\',\
+            title_description=\'" + reqArray["title_description"] + "\',\
+            media_series=\'" + reqArray["media_series"] + "\',\
+            class_num=\'" + reqArray["class_num"] + "\',\
+            class_time=\'" + reqArray["class_time"] + "\',\
+            tv_class=\'" + reqArray["tv_class"] + "\',\
+            character=\'" + reqArray["character"] + "\',\
+            awards=\'" + reqArray["awards"] + "\',\
+            media_column=\'" + reqArray["media_column"] + "\',\
+            creater=\'" + reqArray["creater"] + "\',\
+            media_duty=\'" + reqArray["media_duty"] + "\',\
+            name_of_cpo=\'" + reqArray["name_of_cpo"] + "\',\
+            cp_statement1=\'" + reqArray["cp_statement1"] + "\',\
+            media_type=\'" + reqArray["media_type"] + "\',\
+            xintai=\'" + reqArray["xintai"] + "\',\
+            time_end=\'" + reqArray["time_end"] + "\',\
+            time_length=\'" + reqArray["time_end"] + "\',\
+            time_start=\'" + reqArray["time_start"] + "\',\
+            color=\'" + reqArray["color"] + "\',\
+            audio_format=\'" + reqArray["audio_format"] + "\',\
+            aspect=\'" + reqArray["aspect"] + "\',\
+            zhishi=\'" + reqArray["zhishi"] + "\',\
+            carry_type=\'" + reqArray["carry_type"] + "\',\
+            yuzhong=\'" + reqArray["yuzhong"] + "\',\
+            audience=\'" + reqArray["audience"] + "\',\
+            source_id=\'" + reqArray["source_id"] + "\',\
+            additional_logo=\'" + reqArray["additional_logo"] + "\',\
+            source_method=\'" + reqArray["source_method"] + "\',\
+            source_provider=\'" + reqArray["source_provider"] + "\',\
             isNew=\'" + reqArray["isNew"] + "\'\
             where id = \'" + reqArray["id"] + "\'"
 
@@ -473,6 +587,20 @@ def UpdateSectionInfo(section):
             topic_words=\'" + section["topic_words"] + "\',\
             key_words=\'" + section["key_words"] + "\',\
             date_time=\'" + section["date_time"] + "\',\
+            section_series=\'" + section["section_series"] + "\',\
+            class_name=\'" + section["class_name"] + "\',\
+            awards=\'" + section["awards"] + "\',\
+            actual_sound=\'" + section["actual_sound"] + "\',\
+            creater=\'" + section["creater"] + "\',\
+            section_duty=\'" + section["section_duty"] + "\',\
+            program_form=\'" + section["program_form"] + "\',\
+            subtitle=\'" + section["subtitle"] + "\',\
+            time_end=\'" + section["time_end"] + "\',\
+            time_start=\'" + section["time_start"] + "\',\
+            years_covered=\'" + section["years_covered"] + "\',\
+            spatial=\'" + section["spatial"] + "\',\
+            data_source_way=\'" + section["data_source_way"] + "\',\
+            data_source_man=\'" + section["data_source_man"] + "\',\
             isNew=\'" + section["isNew"] + "\' \
             where id = \'" + str(section["id"]) + "\'"
     cursor = connection.cursor()
@@ -495,9 +623,13 @@ def UpdateSceneInfo(Scene):
                 section_id=\'" + str(Scene["section_id"]) + "\',\
                 title=\'" + Scene["title"] + "\', \
                 description=\'" + Scene["description"] + "\', \
+                natural_sound=\'" + Scene["natural_sound"] + "\', \
                 date_of_event=\'" + Scene["date_of_event"] + "\', \
                 topic_words=\'" + Scene["topic_words"] + "\', \
                 key_words=\'" + Scene["key_words"] + "\', \
+                time_end=\'" + Scene["time_end"] + "\', \
+                time_start=\'" + Scene["time_start"] + "\', \
+                subtitle=\'" + Scene["subtitle"] + "\', \
                 isNew =\'" + Scene["isNew"] + "\' \
             where id = \'" + str(Scene["id"]) + "\'"
     cursor = connection.cursor()
@@ -523,6 +655,13 @@ def UpdateShotInfo(Shot):
                 date_time=\'" + Shot["date_time"] + "\', \
                 topic_words=\'" + Shot["topic_words"] + "\', \
                 key_words=\'" + Shot["key_words"] + "\', \
+                location=\'" + Shot["location"] + "\', \
+                shootway=\'" + Shot["shootway"] + "\', \
+                sense_range=\'" + Shot["sense_range"] + "\', \
+                angle=\'" + Shot["angle"] + "\', \
+                actual_sound=\'" + Shot["actual_sound"] + "\', \
+                time_start=\'" + Shot["time_start"] + "\', \
+                time_end=\'" + Shot["time_end"] + "\', \
                 isNew =\'" + Shot["isNew"] + "\' \
             where id = \'" + str(Shot["id"]) + "\'"
     cursor = connection.cursor()

@@ -572,7 +572,12 @@ var ProgramViewModel = function ViewModel() {
 
         };
 
-
+        self.getvideolength = function (date, event) {
+            var video = document.querySelector('video');
+            var videolength = ParseSecondtoTime(video.duration);
+            if (videolength != "NaN:NaN:NaN:NaN")
+                self.time_end(videolength);
+        };
         //点击提交按钮
         self.submit = function (data, event) {
             //todo ajax
@@ -593,6 +598,7 @@ var ProgramViewModel = function ViewModel() {
 
         //将节目层JSON序列化
         self.ToProgramJson = function () {
+            self.getvideolength();
             var jsonString = '{"media_id":"' + self.media_id() + '", ' +
                 '"title":"' + self.title() + '", ' +
                 '"title2":"' + self.title2() + '", ' +
@@ -794,12 +800,9 @@ var ProgramViewModel = function ViewModel() {
 //获取节目层编目信息。type==0时，代表串联单解析，type==1时，代表从数据库中读取。
         self.getprograminfo = function (type, data, event) {
             self.currentLayer = 0;
-            var video = document.querySelector('video');
-            var videolength = ParseSecondtoTime(video.duration);
             if (type == 0) {
                 title = data();
-                self.videoFile("http://10.1.70.88/" + title.split('.')[0] + ".mp4");
-                $('#player_html5_api').attr("src", self.videoFile());
+
                 queryString = "/quickcatalog/getPreCatalogDetail/?title=" + title;
                 $.ajax({
                     type: "post",
@@ -818,12 +821,13 @@ var ProgramViewModel = function ViewModel() {
                 $('#myModal').modal("hide");
             }
             else if (type == 1) {
-                queryString = "/quickcatalog/30485/programinfo/";
+                queryString = "/quickcatalog/31439/programinfo/";
                 //切换到关键帧预览页面
                 $.ChangeToPreCatalogContentPage(0);
             }
 
             $.getJSON(queryString, function (item) {
+
                 self.isNew(item.isNew);
                 self.media_id(item.media_id);
                 self.title(item.title);
@@ -912,7 +916,7 @@ var ProgramViewModel = function ViewModel() {
                 self.approve3_time(item.approve3_time);
                 self.rating3(item.rating3);
                 self.level(item.level);
-                self.time_end(videolength);
+                //self.time_end(videolength);
                 self.test(item.test);
                 self.shengdao(item.shengdao);
                 self.ObjectID(item.ObjectID);
@@ -927,10 +931,12 @@ var ProgramViewModel = function ViewModel() {
                 });
                 self.sections(sectionlist);
 
-
+                self.videoFile("http://10.1.70.88/" + self.title() + ".mp4");
+                $('#player_html5_api').attr("src", self.videoFile());
                 $.ChangeToCatalogTree();
                 $.ResetTree();
                 $.SetPlayPosition("00:00:00:00");
+                self.getvideolength();
             });
 
         };
@@ -976,6 +982,7 @@ var ProgramViewModel = function ViewModel() {
                     self.currentLayer = 3;
                     selectText(self.currentShot().title());
                 }
+                self.getvideolength();
                 timestr = data.time_start();
                 $.SetPlayPosition(timestr);
 
