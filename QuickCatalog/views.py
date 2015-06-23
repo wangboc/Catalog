@@ -158,7 +158,7 @@ def deleteKeyframe(request):
 
 # 保存节目层编目信息，如果是新节目，即串联单解析出来的内容，则新建条目。否则，更新内容
 def saveProgramInfo(request):
-    try:
+    # try:
         if request.method == 'POST':
             reqArray = json.loads(request.body)
             id = "0"
@@ -167,8 +167,8 @@ def saveProgramInfo(request):
             else:
                 id = str(UpdateProgramInfo(reqArray))
             return HttpResponse("{'保存结果':'保存完成','节目ID':'" + id + "'}", content_type="application/json")
-    except:
-        return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
+    # except:
+    #     return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
 
 
 # 删除片段层信息
@@ -215,19 +215,28 @@ def deleteShotInfo(request):
 
 # 保存新建节目层信息
 def SaveNewProgramInfo(reqArray):
-    sqlCommand = "INSERT INTO uploadinfo  (high_location_name, \
+    sqlCommand = "INSERT INTO uploadinfo  (high_location_name,low_location_name, \
                  filename)\
                 VALUES (\
                     \'" + "桐乡新闻2011" + "\', \
+                    \'" + "桐乡新闻2011_L" + "\', \
                 \'" + reqArray["title"] + "\')"
+
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
     cursor.execute("SELECT @@IDENTITY FROM uploadinfo")
     id = cursor.fetchone()[0]
-    sqlCommand = "INSERT INTO tocatalog  (media_id,  \
+    sqlCommand = "INSERT INTO tocatalog  (media_id, media_state,path, location, \
+                cataloger,\
+                approver,\
                  title)\
                 VALUES (\
                \'" + str(id) + "\', \
+               \'" + "一审通过" + "\', \
+               \'" + reqArray["title"] + "\', \
+               \'" + "桐乡新闻2011_L" + "\', \
+               \'" + str(300) + "\', \
+               \'" + str(300) + "\', \
                 \'" + reqArray["title"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -278,6 +287,8 @@ def SaveNewProgramInfo(reqArray):
                 additional_logo,\
                 source_method,\
                 source_provider,\
+                rating,\
+                rating2,\
                 isNew)\
                 VALUES (\
                 \'" + str(id) + "\', \
@@ -324,6 +335,8 @@ def SaveNewProgramInfo(reqArray):
                 \'" + reqArray["additional_logo"] + "\', \
                 \'" + reqArray["source_method"] + "\', \
                 \'" + reqArray["source_provider"] + "\', \
+                \'" + "5" + "\', \
+                \'" + "5" + "\', \
                 \'" + reqArray["isNew"] + "\')"
 
     cursor = connection.cursor()
@@ -361,6 +374,8 @@ def SaveNewSection(section, media_id):
                     spatial,\
                     data_source_way,\
                     data_source_man,\
+                    rating,\
+                    rating2,\
                     isNew)\
                     VALUES (\
                     \'" + str(media_id) + "\',\
@@ -383,6 +398,8 @@ def SaveNewSection(section, media_id):
                     \'" + section["spatial"] + "\',\
                     \'" + section["data_source_way"] + "\',\
                     \'" + section["data_source_man"] + "\',\
+                    \'" + "5" + "\',\
+                    \'" + "5" + "\',\
                     \'" + section["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -409,6 +426,8 @@ def SaveNewSceneInfo(scene, section_id):
                     date_of_event,\
                     natural_sound,\
                     subtitle,\
+                    rating,\
+                    rating2,\
                     isNew)\
                     VALUES (\
                     \'" + str(section_id) + "\',\
@@ -421,6 +440,8 @@ def SaveNewSceneInfo(scene, section_id):
                     \'" + scene["date_of_event"] + "\',\
                     \'" + scene["natural_sound"] + "\',\
                     \'" + scene["subtitle"] + "\',\
+                    \'" +"5"+ "\',\
+                    \'" +"5"+ "\',\
                     \'" + scene["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -451,6 +472,8 @@ def SaveNewShotInfo(shot, scene_id):
                     actual_sound,\
                     date_time,\
                     shootway,\
+                    rating,\
+                    rating2,\
                     isNew)\
                     VALUES (\
                     \'" + str(scene_id) + "\',\
@@ -466,6 +489,8 @@ def SaveNewShotInfo(shot, scene_id):
                     \'" + shot["actual_sound"] + "\',\
                     \'" + shot["date_time"] + "\',\
                     \'" + shot["shootway"] + "\',\
+                    \'" + "5" + "\',\
+                    \'" + "5" + "\',\
                     \'" + shot["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
