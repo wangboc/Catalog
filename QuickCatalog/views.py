@@ -159,16 +159,16 @@ def deleteKeyframe(request):
 # 保存节目层编目信息，如果是新节目，即串联单解析出来的内容，则新建条目。否则，更新内容
 def saveProgramInfo(request):
     # try:
-        if request.method == 'POST':
-            reqArray = json.loads(request.body)
-            id = "0"
-            if reqArray["isNew"] == "True":
-                id = str(SaveNewProgramInfo(reqArray))
-            else:
-                id = str(UpdateProgramInfo(reqArray))
-            return HttpResponse("{'保存结果':'保存完成','节目ID':'" + id + "'}", content_type="application/json")
-    # except:
-    #     return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
+    if request.method == 'POST':
+        reqArray = json.loads(request.body)
+        id = "0"
+        if reqArray["isNew"] == "True":
+            id = str(SaveNewProgramInfo(reqArray))
+        else:
+            id = str(UpdateProgramInfo(reqArray))
+        return HttpResponse("{'保存结果':'保存完成','节目ID':'" + id + "'}", content_type="application/json")
+        # except:
+        # return HttpResponse("{'保存结果':'提交出现问题'}", content_type="application/json")
 
 
 # 删除片段层信息
@@ -440,8 +440,8 @@ def SaveNewSceneInfo(scene, section_id):
                     \'" + scene["date_of_event"] + "\',\
                     \'" + scene["natural_sound"] + "\',\
                     \'" + scene["subtitle"] + "\',\
-                    \'" +"5"+ "\',\
-                    \'" +"5"+ "\',\
+                    \'" + "5" + "\',\
+                    \'" + "5" + "\',\
                     \'" + scene["isNew"] + "\')"
     cursor = connection.cursor()
     cursor.execute(sqlCommand)
@@ -732,13 +732,16 @@ def getPreCatalogDetail(request):
     input = open(file, 'r')
 
     timeold = "1900-01-01  00:00:00:00"
-    # 用于去除存在口播【创建人】的段落
+    # 用于去除存在口播n的段落
     isNouseParagraph = False
-    # 用于去除存在口播【创建人】的段落 结束
+    # 用于去除存在口播n的段落 结束
     descriptionTemp = ""
     titleTemp = ""
     time_start_temp = ""
     time_end_temp = ""
+    has_koubo_section = False
+    new_time_start = "00:00:00:00"
+    new_time_length = "00:00:00:00"
 
     program = {}
     program["title"] = title
@@ -854,8 +857,13 @@ def getPreCatalogDetail(request):
                     section = {}
                     section["title"] = titleTemp
                     section["description"] = descriptionTemp
-                    section["time_start"] = time_start_temp
-                    section["time_end"] = time_end_temp
+                    if has_koubo_section:
+                        section["time_start"] = new_time_start
+                        section["time_end"] = __ParseTimeSpan__(time_end_temp, new_time_length)[2]
+                        has_koubo_section = False
+                    else:
+                        section["time_start"] = time_start_temp
+                        section["time_end"] = time_end_temp
                     section["id"] = ""
                     section["media_id"] = ""
                     section["topic_words"] = ""
@@ -900,6 +908,7 @@ def getPreCatalogDetail(request):
                     # ===========================================================================================
                 elif isNouseParagraph:
                     isNouseParagraph = False
+
             details = RexDateString.split(line)
 
             descriptionTemp = details[1]
@@ -910,14 +919,17 @@ def getPreCatalogDetail(request):
             timeold = timelist[2]  # 设定下一片段层开始时间
             SectionCount += 1
 
-            # 用于去除存在口播【创建人】的段落
-            nouserKeyword = "创建人"
-            nouserKeyword = nouserKeyword.decode('utf8')
-            RexkeywordString = re.compile(u"创建人")
+            # 用于去除存在口播 n的段落
+
+            RexkeywordString = re.compile(u"口播\s?\d")
             p = RexkeywordString.search(line)
             if (p):
                 isNouseParagraph = True
-                # 用于去除存在口播【创建人】的段落 结束
+                # 新段落的入点和时长，需要加上口播片段。虽然去掉了口播片段的内容，但从时间上还需要展现。也就是将入点提前
+                has_koubo_section = True
+                new_time_start = time_start_temp
+                new_time_length = time_end_temp
+                # 用于去除存在口播 n的段落 结束
 
 
         else:
