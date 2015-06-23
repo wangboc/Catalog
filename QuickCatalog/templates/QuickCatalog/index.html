@@ -920,7 +920,7 @@
                     <div data-bind="foreach:currentKeyframes" class="row text-center">
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <canvas data-bind="attr:{id: 'canvas' + id()}, event:{change: $root.drawImage($data, event)}"
+                                <canvas  data-bind="attr:{id: 'canvas' + id()}, event:{change: $root.drawImage($data, event),click:$root.SetToKeyframePosition(position, $data, event)}"
                                         width="150"
                                         height="150" id="keyframe"></canvas>
                                 <div>
@@ -967,31 +967,31 @@
 <!-- 描述：video.js 带有圆点功能的 video-mark plug-->
 <script type="text/javascript" src="{% static "QuickCatalog/player/video-js/video.js" %}"></script>
 <script type="text/javascript" src="{% static "QuickCatalog/player/src/videojs.markers.js" %}"></script>
-<script>
-    var player = videojs('player');
-
-    //load the marker plugin
-    player.markers({
-        markers: [
-            {
-                time: 950,
-                text: "put"
-            },
-            {
-                time: 16,
-                text: "any"
-            },
-            {
-                time: 23.6,
-                text: "text"
-            },
-            {
-                time: 28,
-                text: "here"
-            }
-        ]
-    });
-</script>
+{#<script>#}
+{#    var player = videojs('player');#}
+{##}
+{#    //load the marker plugin#}
+{#    player.markers({#}
+{#        markers: [#}
+{#            {#}
+{#                time: 950,#}
+{#                text: "put"#}
+{#            },#}
+{#            {#}
+{#                time: 16,#}
+{#                text: "any"#}
+{#            },#}
+{#            {#}
+{#                time: 23.6,#}
+{#                text: "text"#}
+{#            },#}
+{#            {#}
+{#                time: 28,#}
+{#                text: "here"#}
+{#            }#}
+{#        ]#}
+{#    });#}
+{#</script>#}
 <!-- video.js 结束 -->
 <!-- 自定义JS -->
 <!-- bootstrap-switch脚本 -->

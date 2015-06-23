@@ -560,7 +560,9 @@ var ProgramViewModel = function ViewModel() {
                 self.currentLayer = 3;
             }
         };
-
+        self.SetToKeyframePosition = function(position, data, event){
+            $.SetPlayPosition(position());
+        };
         //子层
         self.addsubLayer = function (data, event) {
             if (self.currentLayer == 3) {
