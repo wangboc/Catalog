@@ -5,6 +5,7 @@ $("#input-id").fileinput({
     removeLabel: '清除',
     uploadLabel: '开始上传',
     browseLabel: '选择串联单',
+    allowedPreviewTypes:'null',
     uploadUrl: '/quickcatalog/uploadfile/', //
     allowedFileExtensions: ['txt', 'TXT'],
     overwriteInitial: false,
