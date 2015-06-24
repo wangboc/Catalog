@@ -560,7 +560,7 @@ var ProgramViewModel = function ViewModel() {
                 self.currentLayer = 3;
             }
         };
-        self.SetToKeyframePosition = function(position, data, event){
+        self.SetToKeyframePosition = function (position, data, event) {
             $.SetPlayPosition(position());
         };
         //子层
@@ -1052,6 +1052,62 @@ var ProgramViewModel = function ViewModel() {
             }
         };
 
+        self.AddProCreater = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableCreater_Pro').datagrid("insertRow", {row: {"message": " "}});
+                }
+            }
+        };
+        self.DelProCreater = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableCreater_Pro').datagrid("deleteRow");
+                }
+            }
+        };
+        self.AddProDuty = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableDuty_Pro').datagrid("insertRow", {row: {"other": " "}});
+                }
+            }
+        };
+        self.DelProDuty = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableDuty_Pro').datagrid("deleteRow");
+                }
+            }
+        };
+        self.AddProColumn = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableColumn_Pro').datagrid("insertRow", {row: {"name": " "}});
+                }
+            }
+        };
+        self.DelProColumn = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableColumn_Pro').datagrid("deleteRow");
+                }
+            }
+        };
+        self.AddProAward = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableAward_Pro').datagrid("insertRow", {row: {"name": " "}});
+                }
+            }
+        };
+        self.DelProAward = function (data, event) {
+            if (event) {
+                if (event.type == "click") {
+                    $('#tableAward_Pro').datagrid("deleteRow");
+                }
+            }
+        }
 
     }
     ;

@@ -282,35 +282,204 @@
                                 <td>
                                     <label class="form-control-static">获奖</label>
                                 </td>
-                                <td><input readonly="true" data-bind="value: awards" type="text" class="form-control"
-                                           id="Awards_list__Pro" placeholder="输入获奖">
+
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td><input readonly="true" data-bind="value: awards" type="text"
+                                                       class="form-control"
+                                                       id="Awards_list__Pro" placeholder="输入获奖">
+                                            </td>
+                                            <td>
+                                                <button id="InsertAward_ProBtn" type="button" class="btn btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#Award_proModal">
+                                                    添加
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="modal fade" id="Award_proModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span
+                                                            aria-hidden="true"> </span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">获奖</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table id="tableAward_Pro" class="table table-hover"></table>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button data-bind="click: $root.AddProAward ($data, event)"
+                                                            type="button" class="btn btn-success">
+                                                        添加
+                                                    </button>
+                                                    <button data-bind="click: $root.DelProAward($data, event)"
+                                                            type="button" class="btn btn-danger">
+                                                        删除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">栏目</label>
                                 </td>
-                                <td><input readonly="true" data-bind="value: media_column" type="text"
-                                           class="form-control"
-                                           id="Column_list__Pro" placeholder="输入栏目">
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td><input readonly="true" data-bind="value: media_column" type="text"
+                                                       class="form-control"
+                                                       id="Column_list__Pro" placeholder="输入栏目">
+                                            </td>
+                                            <td>
+                                                <button id="InsertColumn_ProBtn" type="button" class="btn btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#Column_proModal">
+                                                    添加
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="modal fade" id="Column_proModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span
+                                                            aria-hidden="true"> </span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">栏目</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table id="tableColumn_Pro" class="table table-hover"></table>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button data-bind="click: $root.AddProColumn ($data, event)"
+                                                            type="button" class="btn btn-success">
+                                                        添加
+                                                    </button>
+                                                    <button data-bind="click: $root.DelProColumn($data, event)"
+                                                            type="button" class="btn btn-danger">
+                                                        删除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
+
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">创建者项</label>
                                 </td>
-                                <td><input readonly="true" data-bind="value: creater" type="text" class="form-control"
-                                           id="Creater_list__Pro" placeholder="输入创建者项">
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td><input readonly="true" data-bind="value: creater" type="text"
+                                                       class="form-control"
+                                                       id="Creater_list__Pro" placeholder="输入创建者项">
+                                            </td>
+                                            <td>
+                                                <button id="InsertCreater_ProBtn" type="button" class="btn btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#creater_proModal">
+                                                    添加
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="modal fade" id="creater_proModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span
+                                                            aria-hidden="true"> </span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">创建者项</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table id="tableCreater_Pro" class="table table-hover"></table>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button data-bind="click: $root.AddProCreater ($data, event)"
+                                                            type="button" class="btn btn-success">
+                                                        添加
+                                                    </button>
+                                                    <button data-bind="click: $root.DelProCreater($data, event)"
+                                                            type="button" class="btn btn-danger">
+                                                        删除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="form-control-static">其他责任者项</label>
                                 </td>
-                                <td><input readonly="true" data-bind="value: media_duty" type="text"
-                                           class="form-control"
-                                           id="Duty_list__Pro" placeholder="输入其他责任者项">
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td><input readonly="true" data-bind="value: media_duty" type="text"
+                                                       class="form-control"
+                                                       id="Duty_list__Pro" placeholder="输入其他责任者项">
+                                            </td>
+                                            <td>
+                                                <button id="InsertDuty_ProBtn" type="button" class="btn btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#Duty_proModal">
+                                                    添加
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="modal fade" id="Duty_proModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span
+                                                            aria-hidden="true"> </span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">其他责任者项</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table id="tableDuty_Pro" class="table table-hover"></table>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button data-bind="click: $root.AddProDuty ($data, event)"
+                                                            type="button" class="btn btn-success">
+                                                        添加
+                                                    </button>
+                                                    <button data-bind="click: $root.DelProDuty($data, event)"
+                                                            type="button" class="btn btn-danger">
+                                                        删除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
+
                             </tr>
                             <tr>
                                 <td>
@@ -572,7 +741,8 @@
                             </tr>
                             <tr>
                                 <td><label class="form-control-static">时间范围</label></td>
-                                <td><input data-bind="value: years_covered" type="text" class="form-control"
+                                <td><input readonly="true" data-bind="value: years_covered" type="text"
+                                           class="form-control"
                                            id="Years_covered__Sec"
                                            placeholder="输入时间范围">
                                 </td>
@@ -920,7 +1090,7 @@
                     <div data-bind="foreach:currentKeyframes" class="row text-center">
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <canvas  data-bind="attr:{id: 'canvas' + id()}, event:{change: $root.drawImage($data, event),click:$root.SetToKeyframePosition(position, $data, event)}"
+                                <canvas data-bind="attr:{id: 'canvas' + id()}, event:{change: $root.drawImage($data, event),click:$root.SetToKeyframePosition(position, $data, event)}"
                                         width="150"
                                         height="150" id="keyframe"></canvas>
                                 <div>
@@ -1012,6 +1182,9 @@
 <script src="{% static "QuickCatalog/bootstrap-fileinput/js/fileinput.min.js" %}" type="text/javascript"></script>
 {# 上传脚本 #}
 <script type="text/javascript" src="{% static "QuickCatalog/JS/uploadJS.js" %}"></script>
+{#Datagrid控件#}
+<script type="text/javascript" src="{% static "QuickCatalog/Jquery-Boostrap/jquery.bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "QuickCatalog/JS/DataGridsJS.js" %}"></script>
 
 <!-- 自定义结束 -->
 
