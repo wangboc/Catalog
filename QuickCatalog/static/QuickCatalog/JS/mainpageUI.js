@@ -972,7 +972,7 @@ var ProgramViewModel = function ViewModel() {
 
                 var programDes = "";
                 for (var i = 0; i < self.sections().length; i++) {
-                    if (self.sections()[i].description().replace(/[\r]/g, "").replace(/[\n]/g, "") != "[内容]"&&self.sections()[i].description().replace(/[\s*]/g, "") != "")
+                    if (self.sections()[i].description().replace(/[\s*]/g, "") != "[内容]"&&self.sections()[i].description().replace(/[\s*]/g, "") != "")
                         programDes += self.sections()[i].description();
                 }
                 self.description(programDes);
