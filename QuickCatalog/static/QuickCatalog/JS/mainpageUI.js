@@ -1045,7 +1045,7 @@ var ProgramViewModel = function ViewModel() {
                             data: id.toString(),
                             success: function (result) {
                                 self.currentKeyframes.remove(data);
-                                alert(result);
+                                alert("删除成功");
 
 
                             },
