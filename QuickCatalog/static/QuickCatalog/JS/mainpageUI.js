@@ -970,6 +970,12 @@ var ProgramViewModel = function ViewModel() {
                 });
                 self.sections(sectionlist);
 
+                var programDes = "";
+                for (var i = 0; i < self.sections().length; i++) {
+                    if (self.sections()[i].description().replace(/[\r]/g, "").replace(/[\n]/g, "") != "[内容]"&&self.sections()[i].description().replace(/[\s*]/g, "") != "")
+                        programDes += self.sections()[i].description();
+                }
+                self.description(programDes);
                 self.videoFile("http://10.1.70.88/" + self.title() + ".mp4");
                 $('#player_html5_api').attr("src", self.videoFile());
                 $.ChangeToCatalogTree();
