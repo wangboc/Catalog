@@ -972,8 +972,8 @@ var ProgramViewModel = function ViewModel() {
 
                 var programDes = "";
                 for (var i = 0; i < self.sections().length; i++) {
-                    if (self.sections()[i].description().replace(/[\s*]/g, "") != "[内容]"&&self.sections()[i].description().replace(/[\s*]/g, "") != "")
-                        programDes += self.sections()[i].description();
+                    if (self.sections()[i].title().replace(/[\s*]/g, "") != "[内容]"&&self.sections()[i].title().replace(/[\s*]/g, "") != "")
+                        programDes += self.sections()[i].title() + "\n";
                 }
                 self.description(programDes);
                 self.videoFile("http://10.1.70.88/" + self.title() + ".mp4");
